@@ -1,0 +1,8 @@
+{
+  "name": "SIC · Portal de Competencia",
+  "description": "Sistema Integral de Competencia (SIC). Portal digital de la Superintendencia de Competencia para presentar denuncias, solicitar autorizaciones, realizar consultas y dar seguimiento a expedientes en línea.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

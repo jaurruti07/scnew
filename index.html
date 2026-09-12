@@ -1,0 +1,2533 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>SIC · Portal de Competencia — Superintendencia de Competencia</title>
+<meta name="description" content="Sistema Integral de Competencia (SIC). Presente denuncias, solicite autorizaciones, realice consultas y dé seguimiento a sus expedientes en línea.">
+
+<!-- TIPOGRAFÍA INSTITUCIONAL -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+
+<!-- ICONOGRAFÍA -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+/* ==========================================================================
+   DESIGN TOKENS
+   ========================================================================== */
+:root {
+    /* ======================================================================
+       PALETA OFICIAL · SUPERINTENDENCIA DE COMPETENCIA DE GUATEMALA
+       ====================================================================== */
+    --sc-azul-profundo:      #002765; /* 0, 39, 101  - Parte superior y zonas de mayor contraste */
+    --sc-azul-institucional: #022D60; /* 2, 45, 96   - Tipografía SC y elementos corporativos */
+    --sc-azul-brillante:     #0090E6; /* 0, 144, 230 - Lateral derecho del escudo y transición */
+    --sc-turquesa:           #029F9C; /* 2, 159, 156 - Parte inferior del isotipo */
+    --sc-turquesa-oscuro:    #016F89; /* 1, 111, 137 - Transición interior del isotipo */
+    --sc-blanco:             #FFFFFF; /* 255,255,255 - S, nodos y fondo */
+
+    /* DESIGN SYSTEM TOKENS */
+    --navy:                  #002765; /* Azul marino profundo */
+    --navy-mid:              #022D60; /* Azul institucional */
+    --navy-light:            #016F89; /* Turquesa oscuro */
+    --blue:                  #022D60; /* Azul institucional */
+    --blue-bright:           #0090E6; /* Azul brillante */
+    --cyan:                  #029F9C; /* Turquesa */
+    --cyan-dim:              #016F89; /* Turquesa oscuro */
+    --amber:                 #F5A623;
+    --green:                 #029F9C;
+
+    --surface:               #F4F8FC;
+    --surface-card:          #FFFFFF;
+    --text-main:             #022D60; /* Tipografía SC institucional */
+    --text-muted:            #385473;
+    --text-light:            #7692AE;
+    --border:                rgba(2,45,96,0.14);
+
+    --radius-xl:  24px;
+    --radius-2xl: 32px;
+
+    --shadow-sm:  0 2px 8px rgba(0,39,101,0.06);
+    --shadow-md:  0 6px 24px rgba(0,39,101,0.10);
+    --shadow-lg:  0 16px 48px rgba(0,39,101,0.14);
+
+    --grad-institucional: linear-gradient(135deg, #002765 0%, #022D60 55%, #016F89 100%);
+    --grad-acento:        linear-gradient(90deg, #029F9C, #0090E6);
+    --grad-escudo:        linear-gradient(135deg, #029F9C 0%, #016F89 50%, #0090E6 100%);
+}
+
+/* ==========================================================================
+   RESET
+   ========================================================================== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+    font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+    background: var(--surface);
+    color: var(--text-main);
+    font-size: 1rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5 { font-family: 'Sora', sans-serif; line-height: 1.15; color: var(--text-main); }
+
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+img, svg { display: block; max-width: 100%; }
+button, input, select, textarea { font-family: inherit; font-size: inherit; color: inherit; }
+button { cursor: pointer; border: none; background: none; }
+
+::selection { background: rgba(0,194,224,0.25); color: var(--navy); }
+
+/* ==========================================================================
+   LAYOUT
+   ========================================================================== */
+.container { width: 100%; max-width: 1300px; margin: 0 auto; padding: 0 28px; }
+
+.section { padding: 4rem 0; }
+.section--tight { padding: 3rem 0; }
+
+.section-head { max-width: 780px; margin-bottom: 2.4rem; }
+.section-head.center { margin-left: auto; margin-right: auto; text-align: center; }
+
+.sec-label {
+    display: inline-flex; align-items: center; gap: .55rem;
+    font-size: .68rem; font-weight: 700; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--cyan-dim); margin-bottom: .9rem;
+}
+.sec-label::before {
+    content: ''; width: 22px; height: 2px; border-radius: 2px;
+    background: var(--grad-acento);
+}
+.section-head.center .sec-label::after {
+    content: ''; width: 22px; height: 2px; border-radius: 2px;
+    background: var(--grad-acento);
+}
+
+.sec-title {
+    font-size: clamp(1.7rem, 3vw, 2.4rem);
+    font-weight: 800; letter-spacing: -0.025em;
+}
+.sec-sub { margin-top: .9rem; color: var(--text-muted); font-size: .95rem; max-width: 680px; }
+.section-head.center .sec-sub { margin-left: auto; margin-right: auto; }
+
+/* ==========================================================================
+   HEADER (ESTILO BLANCO INSTITUCIONAL)
+   ========================================================================== */
+.site-header {
+    position: sticky; top: 0; z-index: 200;
+    background: #FFFFFF;
+    box-shadow: 0 4px 24px rgba(0, 39, 101, 0.08);
+    border-bottom: 1px solid rgba(0, 39, 101, 0.10);
+    transition: all 0.3s ease;
+}
+
+.navbar {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 20px; height: 80px; position: relative;
+}
+
+.logo-area { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+.gov-logo-img { height: 48px; width: auto; max-height: 52px; object-fit: contain; }
+
+.nav-menu {
+    display: flex; align-items: center; gap: .3rem; list-style: none;
+}
+.nav-menu a {
+    display: block;
+    font-size: .8rem; font-weight: 700; letter-spacing: .04em;
+    text-transform: uppercase;
+    color: var(--sc-azul-profundo);
+    padding: .55rem 1rem; border-radius: 50px;
+    transition: all .2s ease;
+}
+.nav-menu a:hover {
+    color: var(--sc-azul-brillante);
+    background: rgba(0, 144, 230, 0.08);
+}
+.nav-menu a.active {
+    color: var(--sc-azul-profundo);
+    background: rgba(0, 39, 101, 0.08);
+    border: 1px solid rgba(0, 39, 101, 0.18);
+    font-weight: 800;
+}
+
+.nav-menu a.nav-cta {
+    background: var(--sc-azul-profundo); color: #FFFFFF !important;
+    padding: .65rem 1.4rem; font-weight: 700; margin-left: .5rem;
+    box-shadow: 0 4px 16px rgba(0, 39, 101, 0.25);
+    border: 1px solid transparent;
+}
+.nav-menu a.nav-cta:hover {
+    background: var(--sc-azul-brillante); color: #FFFFFF !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 22px rgba(0, 144, 230, 0.40);
+}
+
+.menu-toggle {
+    display: none; align-items: center; justify-content: center;
+    width: 44px; height: 44px; border-radius: 12px;
+    color: var(--sc-azul-profundo); font-size: 1.2rem;
+    border: 1px solid rgba(0, 39, 101, 0.2);
+    background: rgba(0, 39, 101, 0.04);
+    transition: all .2s ease;
+}
+.menu-toggle:hover { background: rgba(0, 39, 101, 0.10); }
+
+@media (max-width: 992px) {
+    .menu-toggle { display: flex; }
+    .nav-menu {
+        position: absolute; top: 100%; left: 0; right: 0;
+        background: #FFFFFF;
+        padding: 1.2rem;
+        flex-direction: column; align-items: stretch;
+        gap: .6rem;
+        border-radius: 0 0 20px 20px;
+        border-bottom: 1px solid rgba(0, 39, 101, 0.15);
+        box-shadow: 0 16px 40px rgba(0, 39, 101, 0.18);
+        display: none;
+    }
+    .nav-menu.open { display: flex; }
+    .nav-menu a { text-align: center; }
+    .nav-menu a.nav-cta { margin-left: 0; margin-top: .4rem; }
+}
+
+/* ==========================================================================
+   HERO CARRUSEL DE IMÁGENES
+   ========================================================================== */
+.hero-carousel-section {
+    position: relative; overflow: hidden;
+    background: var(--sc-azul-profundo);
+    color: #FFFFFF;
+    padding: 0;
+}
+
+.carousel-container {
+    position: relative;
+    width: 100%;
+    min-height: 560px;
+}
+
+.carousel-track {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.carousel-slide {
+    position: absolute; inset: 0;
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.75s cubic-bezier(0.4, 0, 0.2, 1), transform 0.75s ease, visibility 0.75s ease;
+    transform: scale(0.98);
+    display: flex; align-items: center; justify-content: center;
+    padding: 5rem 0 4.8rem;
+    z-index: 1;
+    text-align: center;
+}
+
+.carousel-slide.active {
+    position: relative;
+    opacity: 1; visibility: visible;
+    transform: scale(1);
+    z-index: 2;
+}
+
+.slide-bg {
+    position: absolute; inset: 0; z-index: 0;
+}
+
+.slide-bg-1 {
+    background: linear-gradient(135deg, #002765 0%, #022D60 50%, #016F89 100%);
+}
+.slide-bg-2 {
+    background: linear-gradient(135deg, #022D60 0%, #016F89 60%, #029F9C 100%);
+}
+.slide-bg-3 {
+    background: linear-gradient(135deg, #002765 0%, #0090E6 65%, #016F89 100%);
+}
+.slide-bg-4 {
+    background: linear-gradient(135deg, #016F89 0%, #022D60 55%, #029F9C 100%);
+}
+
+.slide-bg::after {
+    content: ''; position: absolute; inset: 0;
+    background:
+        radial-gradient(circle at 75% 25%, rgba(2, 159, 156, 0.28), transparent 65%),
+        radial-gradient(circle at 20% 80%, rgba(0, 144, 230, 0.25), transparent 65%);
+    pointer-events: none;
+}
+
+.hero-logo-sc {
+    height: 64px; width: auto; max-height: 70px; object-fit: contain;
+    filter: drop-shadow(0 4px 16px rgba(0,0,0,0.45));
+}
+
+.hero-badge-icon {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: rgba(2, 159, 156, 0.2);
+    border: 1px solid rgba(2, 159, 156, 0.5);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 1.6rem; color: #FFFFFF;
+    margin-bottom: 1.2rem;
+    box-shadow: 0 0 24px rgba(2, 159, 156, 0.45);
+}
+
+.carousel-btn {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 48px; height: 48px; border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #FFFFFF; font-size: 1.1rem;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; z-index: 10;
+    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+    transition: all 0.25s ease;
+}
+.carousel-btn:hover {
+    background: #FFFFFF; color: #002765;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    transform: translateY(-50%) scale(1.08);
+}
+.prev-btn { left: 24px; }
+.next-btn { right: 24px; }
+
+.carousel-dots {
+    position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%);
+    display: flex; align-items: center; gap: 10px; z-index: 10;
+}
+.carousel-dots .dot {
+    width: 36px; height: 6px; border-radius: 4px;
+    background: rgba(255, 255, 255, 0.3);
+    border: none; padding: 0; cursor: pointer;
+    overflow: hidden; position: relative;
+    transition: background 0.3s ease, width 0.3s ease;
+}
+.carousel-dots .dot.active {
+    width: 52px; background: rgba(255, 255, 255, 0.4);
+}
+.carousel-dots .dot .progress-bar {
+    position: absolute; top: 0; left: 0; bottom: 0;
+    width: 0%; background: #029F9C; border-radius: 4px;
+}
+.carousel-dots .dot.active .progress-bar {
+    animation: carouselProgress 5s linear forwards;
+}
+@keyframes carouselProgress {
+    0% { width: 0%; }
+    100% { width: 100%; }
+}
+
+.hero-inner {
+    position: relative; z-index: 2;
+    display: flex; flex-direction: column; align-items: center;
+}
+
+.hero-eyebrow {
+    display: inline-flex; align-items: center; gap: .6rem;
+    padding: .45rem 1.15rem; border-radius: 50px;
+    border: 1px solid rgba(2,159,156,0.40);
+    background: rgba(2,159,156,0.12);
+    color: #FFFFFF;
+    font-size: .68rem; font-weight: 700;
+    letter-spacing: .09em; text-transform: uppercase;
+    margin-bottom: 1.5rem;
+}
+.hero-eyebrow span {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--cyan);
+    box-shadow: 0 0 10px var(--cyan);
+    animation: blink 1.8s ease-in-out infinite;
+}
+
+.hero h1 {
+    font-size: clamp(2.6rem, 6vw, 4.2rem);
+    font-weight: 800; letter-spacing: -0.03em;
+    color: #FFFFFF; max-width: 16ch;
+}
+.hero h1 em {
+    font-style: normal;
+    background: var(--grad-acento);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; color: transparent;
+}
+
+.hero-lema {
+    margin-top: 1.1rem;
+    font-style: italic; font-size: 1.05rem;
+    color: rgba(255,255,255,0.72);
+    letter-spacing: .01em;
+}
+
+.hero-sub {
+    margin-top: 1.1rem; max-width: 620px;
+    font-size: .97rem; color: rgba(255,255,255,0.60);
+}
+
+.hero-actions {
+    margin-top: 2.3rem;
+    display: flex; flex-wrap: wrap; gap: 14px; justify-content: center;
+}
+
+/* ==========================================================================
+   BOTONES
+   ========================================================================== */
+.btn-primary {
+    display: inline-flex; align-items: center; gap: .6rem;
+    background: var(--cyan); color: var(--navy);
+    border-radius: 50px; padding: .85rem 2rem;
+    font-size: .88rem; font-weight: 700;
+    box-shadow: 0 0 32px rgba(0,194,224,0.35);
+    transition: all .25s cubic-bezier(0.4,0,0.2,1);
+}
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 44px rgba(0,194,224,0.50);
+    background: #25D2ED;
+}
+
+.btn-outline {
+    display: inline-flex; align-items: center; gap: .6rem;
+    background: transparent; color: rgba(255,255,255,0.80);
+    border: 1px solid rgba(255,255,255,0.20);
+    border-radius: 50px; padding: .85rem 2rem;
+    font-size: .88rem; font-weight: 600;
+    transition: all .25s cubic-bezier(0.4,0,0.2,1);
+}
+.btn-outline:hover {
+    border-color: var(--cyan); color: var(--cyan);
+    transform: translateY(-3px);
+    box-shadow: 0 0 28px rgba(0,194,224,0.22);
+}
+
+.btn-reset {
+    display: inline-flex; align-items: center; gap: .55rem;
+    background: var(--navy); color: #FFFFFF;
+    border-radius: 50px; padding: .75rem 1.6rem;
+    font-size: .82rem; font-weight: 600;
+    transition: all .25s cubic-bezier(0.4,0,0.2,1);
+}
+.btn-reset:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+
+.btn-ghost {
+    display: inline-flex; align-items: center; gap: .5rem;
+    background: var(--surface); color: var(--text-muted);
+    border: 1.5px solid var(--border);
+    border-radius: 50px; padding: .7rem 1.5rem;
+    font-size: .82rem; font-weight: 600;
+    transition: all .2s ease;
+}
+.btn-ghost:hover { border-color: var(--blue-bright); color: var(--blue-bright); }
+
+/* ==========================================================================
+   STATS RIBBON
+   ========================================================================== */
+.stats-ribbon {
+    background: var(--navy-mid);
+    border-top: 1px solid rgba(0,194,224,0.12);
+    border-bottom: 1px solid rgba(0,194,224,0.12);
+}
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); }
+
+.stat {
+    padding: 2rem 1.5rem; text-align: center;
+    border-right: 1px solid rgba(0,194,224,0.12);
+    transition: background .2s ease;
+}
+.stat:last-child { border-right: none; }
+.stat:hover { background: rgba(0,194,224,0.06); }
+.stat i { color: var(--cyan); font-size: 1.3rem; margin-bottom: .7rem; }
+.stat .num {
+    display: block;
+    font-family: 'Sora', sans-serif;
+    font-size: 1.8rem; font-weight: 800;
+    color: #FFFFFF; letter-spacing: -0.02em; line-height: 1;
+}
+.stat .lbl {
+    display: block; margin-top: .55rem;
+    font-size: .72rem; font-weight: 700;
+    letter-spacing: .08em; text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+}
+
+/* ==========================================================================
+   FILTROS
+   ========================================================================== */
+.filters {
+    background: var(--surface-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-2xl);
+    padding: 2rem 2.5rem;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 2rem;
+}
+
+.filter-row {
+    display: grid; grid-template-columns: 1.7fr 1fr auto;
+    gap: 14px; align-items: center;
+}
+
+.input-wrap { position: relative; }
+.input-wrap i {
+    position: absolute; left: 1.15rem; top: 50%; transform: translateY(-50%);
+    color: var(--text-muted); font-size: .85rem; pointer-events: none;
+}
+.input-wrap input { padding-left: 2.7rem; }
+
+input[type="text"], input[type="search"], input[type="password"], select {
+    width: 100%;
+    border-radius: 50px;
+    border: 1.5px solid var(--border);
+    background: var(--surface);
+    padding: .78rem 1.15rem;
+    font-size: .85rem; font-weight: 500;
+    color: var(--text-main);
+    outline: none;
+    transition: all .2s ease;
+    appearance: none;
+    -webkit-appearance: none;
+}
+input::placeholder { color: var(--text-muted); opacity: .8; }
+input:focus, select:focus {
+    border-color: var(--blue-bright);
+    background: #FFFFFF;
+    box-shadow: 0 0 0 3px rgba(43,130,201,0.12);
+}
+
+.select-wrap { position: relative; }
+.select-wrap::after {
+    content: '\f078';
+    font-family: 'Font Awesome 6 Free'; font-weight: 900;
+    font-size: .65rem; color: var(--text-muted);
+    position: absolute; right: 1.2rem; top: 50%;
+    transform: translateY(-50%); pointer-events: none;
+}
+.select-wrap select { padding-right: 2.6rem; cursor: pointer; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 1.4rem; }
+
+.chip {
+    border-radius: 50px;
+    padding: .48rem 1.15rem;
+    font-size: .74rem; font-weight: 700;
+    letter-spacing: .04em; text-transform: uppercase;
+    border: 1.5px solid var(--border);
+    background: var(--surface-card);
+    color: #CBD5E1;
+    transition: all .2s ease;
+}
+.chip:hover { transform: translateY(-2px); color: var(--text-muted); }
+.chip.active {
+    background: #DCFCE7; color: #16A34A;
+    border-color: rgba(34,197,94,0.30);
+}
+
+/* ==========================================================================
+   TARJETAS
+   ========================================================================== */
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+
+.card {
+    background: var(--surface-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding: 2rem;
+    box-shadow: var(--shadow-sm);
+    transition: all .25s cubic-bezier(0.4,0,0.2,1);
+    position: relative;
+    overflow: hidden;
+}
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+    border-color: rgba(43,130,201,0.30);
+}
+
+.card-icon {
+    width: 48px; height: 48px; border-radius: 14px;
+    background: linear-gradient(135deg, #EBF5FF, #D2EAFF);
+    color: var(--blue-bright);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.15rem;
+    margin-bottom: 1.15rem;
+    transition: transform .25s ease;
+}
+.card:hover .card-icon { transform: scale(1.08); }
+
+.card h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: .55rem; }
+.card p { font-size: .86rem; color: var(--text-muted); line-height: 1.6; }
+
+.card-tag {
+    display: inline-block;
+    font-size: .62rem; font-weight: 700;
+    letter-spacing: .08em; text-transform: uppercase;
+    color: var(--cyan-dim);
+    margin-bottom: .8rem;
+}
+
+.card-link {
+    display: inline-flex; align-items: center; gap: .45rem;
+    margin-top: 1.3rem;
+    font-size: .78rem; font-weight: 700;
+    letter-spacing: .04em; text-transform: uppercase;
+    color: var(--blue-bright);
+    transition: gap .2s ease, color .2s ease;
+}
+.card-link:hover { gap: .75rem; color: var(--cyan-dim); }
+
+/* ==========================================================================
+   BADGES / CHIPS INTERNOS
+   ========================================================================== */
+.badge-yes {
+    display: inline-block;
+    background: rgba(34,197,94,0.12); color: #16A34A;
+    border: 1px solid rgba(34,197,94,0.25);
+    border-radius: 50px; padding: .22rem .8rem;
+    font-size: .68rem; font-weight: 700; letter-spacing: .04em;
+}
+.badge-no {
+    display: inline-block;
+    background: rgba(100,116,139,0.12); color: #64748B;
+    border: 1px solid rgba(100,116,139,0.20);
+    border-radius: 50px; padding: .22rem .8rem;
+    font-size: .68rem; font-weight: 700; letter-spacing: .04em;
+}
+.badge-cyan {
+    display: inline-block;
+    background: rgba(0,194,224,0.12); color: var(--cyan-dim);
+    border: 1px solid rgba(0,194,224,0.25);
+    border-radius: 50px; padding: .22rem .8rem;
+    font-size: .68rem; font-weight: 700; letter-spacing: .04em;
+}
+.badge-amber {
+    display: inline-block;
+    background: rgba(245,166,35,0.12); color: #B8791A;
+    border: 1px solid rgba(245,166,35,0.28);
+    border-radius: 50px; padding: .22rem .8rem;
+    font-size: .68rem; font-weight: 700; letter-spacing: .04em;
+}
+
+/* ==========================================================================
+   MACROPROCESOS
+   ========================================================================== */
+.macro-card { display: flex; flex-direction: column; }
+
+.macro-head { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1rem; }
+
+.macro-num {
+    font-family: 'Sora', sans-serif;
+    font-size: .78rem; font-weight: 800;
+    color: var(--navy);
+    background: var(--grad-acento);
+    width: 38px; height: 38px; flex-shrink: 0;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 16px rgba(0,194,224,0.30);
+}
+
+.macro-title { font-size: 1.12rem; font-weight: 800; letter-spacing: -0.015em; }
+
+.flow {
+    display: flex; flex-wrap: wrap; align-items: center;
+    gap: 7px; margin-top: 1.3rem;
+    padding-top: 1.3rem;
+    border-top: 1px dashed var(--border);
+}
+.flow-step {
+    font-size: .7rem; font-weight: 600;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    padding: .32rem .78rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+.flow i { color: var(--cyan); font-size: .55rem; }
+
+.macro-list { margin-top: 1.2rem; display: grid; gap: .5rem; }
+.macro-list li {
+    display: flex; align-items: flex-start; gap: .6rem;
+    font-size: .82rem; color: var(--text-muted);
+}
+.macro-list li i { color: var(--cyan); font-size: .6rem; margin-top: .5rem; flex-shrink: 0; }
+
+/* ==========================================================================
+   THEME DARK
+   ========================================================================== */
+.theme-dark {
+    background: var(--grad-institucional);
+    color: rgba(255,255,255,0.80);
+    padding: 4.5rem 0;
+    position: relative;
+    overflow: hidden;
+}
+.theme-dark::before {
+    content: ''; position: absolute;
+    width: 620px; height: 620px; border-radius: 50%;
+    top: -300px; right: -200px;
+    background: radial-gradient(circle, rgba(0,194,224,0.16), transparent 70%);
+    pointer-events: none;
+}
+.theme-dark .container { position: relative; z-index: 2; }
+.theme-dark .sec-title { color: #FFFFFF; }
+.theme-dark .sec-sub { color: rgba(255,255,255,0.60); }
+.theme-dark .sec-label { color: var(--cyan); }
+
+.theme-dark .card {
+    background: #0F1E2E;
+    border-color: rgba(0,194,224,0.15);
+    box-shadow: none;
+}
+.theme-dark .card:hover {
+    border-color: rgba(0,194,224,0.40);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.35);
+}
+.theme-dark .card h3 { color: #FFFFFF; }
+.theme-dark .card p { color: rgba(255,255,255,0.58); }
+.theme-dark .card-icon {
+    background: rgba(0,194,224,0.10);
+    color: var(--cyan);
+}
+.theme-dark .card-tag { color: var(--cyan); }
+.theme-dark .flow { border-top-color: rgba(0,194,224,0.15); }
+.theme-dark .flow-step {
+    background: rgba(255,255,255,0.04);
+    border-color: rgba(0,194,224,0.18);
+    color: rgba(255,255,255,0.62);
+}
+
+/* ==========================================================================
+   NIVELES DEL MOTOR
+   ========================================================================== */
+.level-card { text-align: left; }
+.level-num {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.6rem; font-weight: 800;
+    letter-spacing: -0.03em;
+    background: var(--grad-acento);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; color: transparent;
+    line-height: 1;
+    margin-bottom: .9rem;
+    display: block;
+}
+.level-q {
+    font-size: .84rem; font-weight: 600;
+    color: var(--text-main); line-height: 1.5;
+}
+
+/* ==========================================================================
+   FORMULARIO ADAPTATIVO
+   ========================================================================== */
+.demo-card { padding: 2.4rem; }
+
+.demo-grid {
+    display: grid; grid-template-columns: 1fr 1.25fr;
+    gap: 2.5rem; align-items: start;
+}
+
+.opt-list { display: grid; gap: 10px; }
+
+.opt-btn {
+    display: flex; align-items: center; gap: .8rem;
+    width: 100%; text-align: left;
+    padding: .95rem 1.2rem;
+    border-radius: 50px;
+    border: 1.5px solid var(--border);
+    background: var(--surface);
+    font-size: .84rem; font-weight: 600;
+    color: var(--text-muted);
+    transition: all .22s cubic-bezier(0.4,0,0.2,1);
+}
+.opt-btn i { color: var(--text-light); font-size: .9rem; transition: color .2s ease; }
+.opt-btn:hover { transform: translateX(4px); border-color: rgba(43,130,201,0.35); color: var(--text-main); }
+.opt-btn.active {
+    background: var(--navy); color: #FFFFFF;
+    border-color: var(--navy);
+    box-shadow: 0 8px 24px rgba(5,17,31,0.22);
+}
+.opt-btn.active i { color: var(--cyan); }
+
+.flow-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding: 1.8rem;
+    min-height: 100%;
+}
+.flow-panel-title {
+    font-family: 'Sora', sans-serif;
+    font-size: .95rem; font-weight: 700;
+    margin-bottom: .3rem;
+}
+.flow-panel-sub {
+    font-size: .74rem; font-weight: 700;
+    letter-spacing: .07em; text-transform: uppercase;
+    color: var(--cyan-dim); margin-bottom: 1.2rem;
+}
+
+.q-list { display: grid; gap: .55rem; }
+.q-item {
+    display: flex; align-items: flex-start; gap: .75rem;
+    background: var(--surface-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: .85rem 1.1rem;
+    font-size: .83rem; font-weight: 500;
+    color: var(--text-main);
+    opacity: 0;
+    transform: translateY(8px);
+    animation: qIn .35s cubic-bezier(0.4,0,0.2,1) forwards;
+}
+.q-item i { color: var(--cyan); font-size: .72rem; margin-top: .32rem; flex-shrink: 0; }
+
+@keyframes qIn { to { opacity: 1; transform: translateY(0); } }
+
+/* ==========================================================================
+   PANEL DE ANÁLISIS (SALIDA DEL MOTOR)
+   ========================================================================== */
+.alert-list { display: grid; gap: .9rem; margin-top: 1.4rem; }
+.alert-item {
+    display: flex; gap: 1rem;
+    padding: 1rem 1.2rem;
+    border-radius: 16px;
+    background: rgba(245,166,35,0.06);
+    border: 1px solid rgba(245,166,35,0.22);
+    border-left: 3px solid var(--amber);
+}
+.alert-item i { color: var(--amber); font-size: .95rem; margin-top: .2rem; }
+.alert-item h4 { font-size: .84rem; font-weight: 700; margin-bottom: .18rem; }
+.alert-item p { font-size: .8rem; color: var(--text-muted); line-height: 1.55; }
+
+/* ==========================================================================
+   FRONTERA JURÍDICA
+   ========================================================================== */
+.rule-box {
+    border-radius: var(--radius-xl);
+    padding: 1.8rem;
+    height: 100%;
+}
+.rule-box--no {
+    background: rgba(239,68,68,0.06);
+    border: 1px solid rgba(239,68,68,0.20);
+}
+.rule-box--yes {
+    background: rgba(34,197,94,0.06);
+    border: 1px solid rgba(34,197,94,0.22);
+}
+.rule-box h4 {
+    font-size: .95rem; font-weight: 700;
+    margin-bottom: 1.2rem; color: #FFFFFF;
+    display: flex; align-items: center; gap: .6rem;
+}
+.rule-box--no h4 i { color: #F87171; }
+.rule-box--yes h4 i { color: var(--green); }
+
+.rule-quote {
+    font-size: .86rem; line-height: 1.6;
+    padding: .85rem 1.1rem;
+    border-radius: 14px;
+    margin-bottom: .7rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
+    color: rgba(255,255,255,0.72);
+}
+.rule-box--no .rule-quote { color: rgba(255,255,255,0.50); text-decoration: line-through; text-decoration-color: rgba(248,113,113,0.5); }
+.rule-box--yes .rule-quote { color: rgba(255,255,255,0.85); }
+
+.principle {
+    text-align: center;
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(1.3rem, 2.6vw, 1.9rem);
+    font-weight: 800; letter-spacing: -0.025em;
+    color: #FFFFFF;
+    margin-bottom: 2.4rem;
+}
+.principle em {
+    font-style: normal;
+    background: var(--grad-acento);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; color: transparent;
+}
+
+/* ==========================================================================
+   EXPEDIENTE / TIMELINE
+   ========================================================================== */
+.exp-layout { display: grid; grid-template-columns: 1fr 1.15fr; gap: 22px; align-items: start; }
+
+.field { margin-bottom: 1.1rem; }
+.field label {
+    display: block;
+    font-size: .7rem; font-weight: 700;
+    letter-spacing: .07em; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: .45rem;
+}
+
+.exp-meta {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 1rem; flex-wrap: wrap;
+    padding-bottom: 1.2rem; margin-bottom: 1.4rem;
+    border-bottom: 1px dashed var(--border);
+}
+.exp-code {
+    font-family: 'Sora', sans-serif;
+    font-size: 1rem; font-weight: 800; letter-spacing: -0.01em;
+    color: var(--navy);
+}
+.exp-code span { color: var(--text-muted); font-weight: 600; font-size: .78rem; display: block; letter-spacing: .04em; }
+
+.timeline { position: relative; padding-left: 2.2rem; }
+.timeline::before {
+    content: ''; position: absolute;
+    left: 9px; top: 8px; bottom: 8px;
+    width: 2px; border-radius: 2px;
+    background: linear-gradient(180deg, var(--green), rgba(0,194,224,0.35), rgba(26,92,143,0.12));
+}
+
+.tl-item { position: relative; padding-bottom: 1.35rem; }
+.tl-item:last-child { padding-bottom: 0; }
+
+.tl-dot {
+    position: absolute; left: -2.2rem; top: 2px;
+    width: 20px; height: 20px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .55rem; color: #FFFFFF;
+    background: var(--text-light);
+    border: 3px solid var(--surface-card);
+    box-shadow: 0 0 0 1px var(--border);
+}
+.tl-item.done .tl-dot { background: var(--green); }
+.tl-item.active .tl-dot {
+    background: var(--cyan);
+    box-shadow: 0 0 0 1px rgba(0,194,224,0.4), 0 0 14px rgba(0,194,224,0.6);
+    animation: pulseDot 2s ease-in-out infinite;
+}
+.tl-item.warn .tl-dot { background: var(--amber); }
+.tl-item.pending .tl-dot { background: #CBD5E1; }
+
+.tl-title { font-size: .86rem; font-weight: 700; color: var(--text-main); }
+.tl-item.pending .tl-title { color: var(--text-muted); font-weight: 600; }
+.tl-desc { font-size: .76rem; color: var(--text-muted); margin-top: .12rem; }
+
+@keyframes pulseDot {
+    0%, 100% { box-shadow: 0 0 0 1px rgba(0,194,224,0.4), 0 0 10px rgba(0,194,224,0.45); }
+    50%      { box-shadow: 0 0 0 1px rgba(0,194,224,0.5), 0 0 22px rgba(0,194,224,0.85); }
+}
+
+/* ==========================================================================
+   TABLA MATRIZ
+   ========================================================================== */
+.table-wrap {
+    background: var(--surface-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+}
+.table-scroll { overflow-x: auto; }
+
+table { width: 100%; border-collapse: collapse; min-width: 720px; }
+thead th {
+    background: var(--navy-mid);
+    color: #FFFFFF;
+    text-align: left;
+    font-family: 'Sora', sans-serif;
+    font-size: .68rem; font-weight: 700;
+    letter-spacing: .09em; text-transform: uppercase;
+    padding: 1.05rem 1.4rem;
+}
+tbody td {
+    padding: 1.05rem 1.4rem;
+    border-top: 1px solid var(--border);
+    font-size: .84rem;
+    color: var(--text-main);
+    vertical-align: middle;
+}
+tbody tr { transition: background .2s ease; }
+tbody tr:hover { background: rgba(0,194,224,0.045); }
+tbody td strong { font-weight: 700; }
+tbody td.muted { color: var(--text-muted); }
+
+.table-note {
+    display: flex; align-items: flex-start; gap: .7rem;
+    margin-top: 1.2rem;
+    font-size: .8rem; color: var(--text-muted);
+    background: rgba(0,194,224,0.06);
+    border: 1px solid rgba(0,194,224,0.16);
+    border-radius: 16px;
+    padding: 1rem 1.2rem;
+}
+.table-note i { color: var(--cyan-dim); margin-top: .22rem; }
+
+/* ==========================================================================
+   OBSERVATORIO
+   ========================================================================== */
+.obs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.obs-item {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(0,194,224,0.15);
+    border-radius: 20px;
+    padding: 1.4rem 1.5rem;
+    transition: all .25s cubic-bezier(0.4,0,0.2,1);
+}
+.obs-item:hover {
+    background: rgba(0,194,224,0.08);
+    border-color: rgba(0,194,224,0.4);
+    transform: translateY(-4px);
+}
+.obs-item i { color: var(--cyan); font-size: 1.1rem; margin-bottom: .7rem; }
+.obs-item h4 { font-size: .88rem; font-weight: 700; color: #FFFFFF; margin-bottom: .3rem; }
+.obs-item p { font-size: .78rem; color: rgba(255,255,255,0.55); line-height: 1.55; }
+
+/* ==========================================================================
+   CTA BAND
+   ========================================================================== */
+.cta-band {
+    background: var(--grad-institucional);
+    padding: 4.5rem 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+.cta-band::before {
+    content: ''; position: absolute;
+    width: 700px; height: 700px; border-radius: 50%;
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(0,194,224,0.16), transparent 68%);
+    pointer-events: none;
+}
+.cta-band .container { position: relative; z-index: 2; }
+.cta-band h2 {
+    color: #FFFFFF;
+    font-size: clamp(1.6rem, 3.2vw, 2.3rem);
+    font-weight: 800; letter-spacing: -0.025em;
+    max-width: 20ch; margin: 0 auto;
+}
+.cta-band p {
+    color: rgba(255,255,255,0.62);
+    font-size: .95rem; max-width: 620px;
+    margin: 1.1rem auto 0;
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+.footer {
+    background: var(--navy);
+    padding: 4rem 0 0;
+    color: rgba(255,255,255,0.60);
+}
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 3rem;
+    padding-bottom: 3rem;
+}
+.footer-brand .gov-logo { height: 52px; margin-bottom: 1.2rem; }
+.footer-brand p { font-size: .84rem; line-height: 1.7; max-width: 420px; color: rgba(255,255,255,0.55); }
+
+.footer h5 {
+    font-family: 'Sora', sans-serif;
+    font-size: .78rem; font-weight: 700;
+    letter-spacing: .09em; text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 1.2rem;
+}
+.footer-links { display: grid; gap: .65rem; }
+.footer-links a {
+    font-size: .84rem;
+    color: rgba(255,255,255,0.60);
+    transition: color .2s ease, transform .2s ease;
+    display: inline-block;
+}
+.footer-links a:hover { color: var(--cyan); transform: translateX(3px); }
+
+.footer-bottom {
+    border-top: 1px solid rgba(0,194,224,0.12);
+    padding: 1.6rem 0;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 1.5rem; flex-wrap: wrap;
+}
+.footer-bottom p { font-size: .75rem; color: rgba(255,255,255,0.45); }
+.footer-logos { display: flex; align-items: center; gap: 1.2rem; }
+.footer-logos span {
+    font-size: .7rem; font-weight: 700;
+    letter-spacing: .08em; text-transform: uppercase;
+    color: rgba(255,255,255,0.40);
+}
+
+/* ==========================================================================
+   TOAST
+   ========================================================================== */
+.toast {
+    position: fixed;
+    left: 50%; bottom: 34px;
+    transform: translate(-50%, 24px);
+    background: var(--navy-light);
+    color: #FFFFFF;
+    border: 1px solid rgba(0,194,224,0.28);
+    border-radius: 50px;
+    padding: .85rem 1.7rem;
+    font-size: .84rem; font-weight: 600;
+    box-shadow: 0 16px 48px rgba(5,17,31,0.35);
+    display: flex; align-items: center; gap: .65rem;
+    opacity: 0; pointer-events: none;
+    z-index: 500;
+    max-width: calc(100vw - 40px);
+    transition: opacity .3s ease, transform .3s cubic-bezier(0.4,0,0.2,1);
+}
+.toast i { color: var(--cyan); }
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+/* ==========================================================================
+   ANIMACIONES
+   ========================================================================== */
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.3; }
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+@media (max-width: 1080px) {
+    .grid-4 { grid-template-columns: repeat(2, 1fr); }
+    .obs-grid { grid-template-columns: repeat(2, 1fr); }
+    .demo-grid { grid-template-columns: 1fr; gap: 1.8rem; }
+    .exp-layout { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 900px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .stat:nth-child(2) { border-right: none; }
+    .stat:nth-child(1), .stat:nth-child(2) { border-bottom: 1px solid rgba(0,194,224,0.12); }
+    .filter-row { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; gap: 2.2rem; }
+    .section { padding: 3.2rem 0; }
+}
+
+@media (max-width: 680px) {
+    .container { padding: 0 18px; }
+    .navbar { height: 68px; }
+    .gov-logo, .gov-logo-img { height: 44px; }
+    .menu-toggle { display: flex; }
+
+    .nav-menu {
+        position: absolute;
+        top: 76px; left: 0; right: 0;
+        flex-direction: column;
+        align-items: stretch;
+        gap: .25rem;
+        background: rgba(5,17,31,0.97);
+        -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(0,194,224,0.15);
+        border-radius: 12px;
+        padding: 1rem;
+        display: none;
+        box-shadow: var(--shadow-lg);
+    }
+    .nav-menu.open { display: flex; }
+    .nav-menu a { padding: .8rem 1rem; }
+    .nav-menu a.nav-cta { margin-left: 0; text-align: center; justify-content: center; display: flex; }
+
+    .hero { padding: 4.2rem 0 3.6rem; }
+    .hero-actions { width: 100%; flex-direction: column; }
+    .btn-primary, .btn-outline { width: 100%; justify-content: center; }
+
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .stat { padding: 1.5rem 1rem; }
+    .stat .num { font-size: 1.5rem; }
+
+    .filters { padding: 1.4rem 1.2rem; border-radius: 24px; }
+    .card { padding: 1.6rem; }
+    .demo-card { padding: 1.6rem; }
+    .grid-4, .obs-grid { grid-template-columns: 1fr; }
+    .theme-dark, .cta-band { padding: 3.2rem 0; }
+    .footer-bottom { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<!-- ==========================================================================
+     HEADER (BLANCO INSTITUCIONAL)
+     ========================================================================== -->
+<header class="site-header">
+    <div class="container">
+        <nav class="navbar">
+            <div class="logo-area">
+                <a href="index.html" title="Superintendencia de Competencia · Portal de Competencia" style="display:flex; align-items:center; gap:14px; text-decoration:none;">
+                    <img src="img/logo-gobierno-gt-web.png" alt="Gobierno de Guatemala" class="gov-logo-img" style="height:46px; width:auto; max-height:48px; object-fit:contain;">
+                    <div style="width:1px; height:34px; background:rgba(0,39,101,0.18);"></div>
+                    <img src="img/logo-sc.png" alt="Superintendencia de Competencia" class="gov-logo-img" style="height:48px; width:auto; max-height:50px; object-fit:contain;">
+                </a>
+            </div>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú de navegación">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#servicios" class="active">Servicios</a></li>
+                <li><a href="macroprocesos.html">Macroprocesos</a></li>
+                <li><a href="talento.html">Trabaja con nosotros</a></li>
+                <li><a href="#motor">Motor de análisis</a></li>
+                <li><a href="#expediente">Expediente</a></li>
+                <li><a href="#observatorio">Observatorio</a></li>
+                <li><a href="#servicios" class="nav-cta">Iniciar trámite</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- ==========================================================================
+     HERO CARRUSEL BANNER
+     ========================================================================== -->
+<section class="hero-carousel-section">
+    <div class="carousel-container" id="heroCarousel">
+        <div class="carousel-track">
+
+            <!-- SLIDE 1: PORTAL SIC -->
+            <div class="carousel-slide active" data-slide="0">
+                <div class="slide-bg slide-bg-1"></div>
+                <div class="container hero-inner">
+                    <div class="hero-logo-banner" style="margin-bottom:1.2rem;">
+                        <img src="img/logo-sc-blanco.png" alt="Superintendencia de Competencia" class="hero-logo-sc">
+                    </div>
+                    <div class="hero-eyebrow">
+                        <span></span>
+                        Sistema Integral de Competencia · SIC
+                    </div>
+                    <h1>Competencia<br><em>en Línea</em></h1>
+                    <p class="hero-lema">+ competencia, mejores mercados, + oportunidades.</p>
+                    <p class="hero-sub">
+                        La puerta digital de entrada a la Superintendencia de Competencia. Presente denuncias,
+                        solicite autorizaciones, realice consultas y dé seguimiento a sus expedientes desde un
+                        único punto de acceso, con trazabilidad completa en cada etapa.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="#servicios" class="btn-primary">
+                            <i class="fas fa-file-circle-plus"></i> Iniciar un trámite
+                        </a>
+                        <a href="#expediente" class="btn-outline">
+                            <i class="fas fa-folder-open"></i> Consultar expediente
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 2: DEFENSA DE LA COMPETENCIA -->
+            <div class="carousel-slide" data-slide="1">
+                <div class="slide-bg slide-bg-2"></div>
+                <div class="container hero-inner">
+                    <div class="hero-badge-icon">
+                        <i class="fas fa-shield-halved"></i>
+                    </div>
+                    <div class="hero-eyebrow">
+                        <span></span>
+                        Macroproceso Misional · Defensa
+                    </div>
+                    <h1>Investigación &<br><em>Protección del Mercado</em></h1>
+                    <p class="hero-lema">Prevenimos y sancionamos prácticas anticompetitivas.</p>
+                    <p class="hero-sub">
+                        Canal confidencial para denunciar acuerdos colusorios entre competidores, abuso de posición dominante
+                        y barreras artificiales que afecten la libre competencia en Guatemala.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="#servicios" class="btn-primary">
+                            <i class="fas fa-bullhorn"></i> Denunciar una práctica
+                        </a>
+                        <a href="macroprocesos.html" class="btn-outline">
+                            <i class="fas fa-sitemap"></i> Ver Macroprocesos
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 3: CONCENTRACIONES ECONÓMICAS -->
+            <div class="carousel-slide" data-slide="2">
+                <div class="slide-bg slide-bg-3"></div>
+                <div class="container hero-inner">
+                    <div class="hero-badge-icon">
+                        <i class="fas fa-handshake-simple"></i>
+                    </div>
+                    <div class="hero-eyebrow">
+                        <span></span>
+                        Control Preventivo · Fusiones & Adquisiciones
+                    </div>
+                    <h1>Evaluación de<br><em>Concentraciones Económicas</em></h1>
+                    <p class="hero-lema">Garantizamos la estructura competitiva del país.</p>
+                    <p class="hero-sub">
+                        Presente notificaciones previas de fusiones y adquisiciones corporativas con un proceso 100% digital,
+                        guiado por criterios técnicos transparentes y tiempos de respuesta garantizados.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="#servicios" class="btn-primary">
+                            <i class="fas fa-building-circle-check"></i> Notificar Concentración
+                        </a>
+                        <a href="#motor" class="btn-outline">
+                            <i class="fas fa-calculator"></i> Motor de Análisis
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 4: PROMOCIÓN Y OBSERVATORIO -->
+            <div class="carousel-slide" data-slide="3">
+                <div class="slide-bg slide-bg-4"></div>
+                <div class="container hero-inner">
+                    <div class="hero-badge-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="hero-eyebrow">
+                        <span></span>
+                        Inteligencia Económica · Promoción
+                    </div>
+                    <h1>Observatorio de<br><em>Competencia & Mercados</em></h1>
+                    <p class="hero-lema">Estudios técnicos, datos abiertos y abogacía de la competencia.</p>
+                    <p class="hero-sub">
+                        Acceda a análisis sectoriales, alertas de mercado e indicadores económicos clave para impulsar
+                        la productividad, la inversión y el beneficio de los consumidores guatemaltecos.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="#observatorio" class="btn-primary">
+                            <i class="fas fa-chart-pie"></i> Explorar Observatorio
+                        </a>
+                        <a href="talento.html" class="btn-outline">
+                            <i class="fas fa-users"></i> Trabaja con Nosotros
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- CONTROLES CARRUSEL -->
+        <button class="carousel-btn prev-btn" id="carouselPrev" aria-label="Diapositiva anterior">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="carousel-btn next-btn" id="carouselNext" aria-label="Diapositiva siguiente">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+
+        <div class="carousel-dots" id="carouselDots">
+            <button class="dot active" data-index="0" aria-label="Diapositiva 1"><span class="progress-bar"></span></button>
+            <button class="dot" data-index="1" aria-label="Diapositiva 2"><span class="progress-bar"></span></button>
+            <button class="dot" data-index="2" aria-label="Diapositiva 3"><span class="progress-bar"></span></button>
+            <button class="dot" data-index="3" aria-label="Diapositiva 4"><span class="progress-bar"></span></button>
+        </div>
+    </div>
+</section>
+
+<!-- ==========================================================================
+     STATS RIBBON
+     ========================================================================== -->
+<div class="stats-ribbon">
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat">
+                <i class="fas fa-diagram-project"></i>
+                <span class="num">4</span>
+                <span class="lbl">Macroprocesos digitales</span>
+            </div>
+            <div class="stat">
+                <i class="fas fa-folder-tree"></i>
+                <span class="num">1</span>
+                <span class="lbl">Expediente electrónico único</span>
+            </div>
+            <div class="stat">
+                <i class="fas fa-layer-group"></i>
+                <span class="num">5</span>
+                <span class="lbl">Servicios transversales</span>
+            </div>
+            <div class="stat">
+                <i class="fas fa-clock-rotate-left"></i>
+                <span class="num">100%</span>
+                <span class="lbl">Trazabilidad y seguimiento</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<main>
+
+    <!-- ======================================================================
+         CATÁLOGO DE SERVICIOS + FILTROS
+         ====================================================================== -->
+    <section class="section" id="servicios">
+        <div class="container">
+            <div class="section-head">
+                <div class="sec-label">¿Qué necesitas hacer?</div>
+                <h2 class="sec-title">Un catálogo de actuaciones, no un laberinto de trámites</h2>
+                <p class="sec-sub">
+                    La interfaz se presenta desde la perspectiva del ciudadano y del agente económico.
+                    Detrás de cada opción opera la arquitectura de cuatro macroprocesos y un expediente
+                    electrónico único.
+                </p>
+            </div>
+
+            <!-- FILTROS -->
+            <div class="filters">
+                <div class="filter-row">
+                    <div class="input-wrap">
+                        <i class="fas fa-magnifying-glass"></i>
+                        <input type="search" id="searchInput" placeholder="Buscar un servicio o actuación…" aria-label="Buscar servicio">
+                    </div>
+                    <div class="select-wrap">
+                        <select id="catSelect" aria-label="Filtrar por macroproceso">
+                            <option value="all">Todos los macroprocesos</option>
+                            <option value="defensa">Defensa de la competencia</option>
+                            <option value="concentraciones">Concentraciones económicas</option>
+                            <option value="procedimiento">Procedimiento y cumplimiento</option>
+                            <option value="promocion">Promoción y desarrollo</option>
+                            <option value="transversal">Servicios transversales</option>
+                        </select>
+                    </div>
+                    <button class="btn-reset" id="resetFilters">
+                        <i class="fas fa-rotate-left"></i> Limpiar
+                    </button>
+                </div>
+
+                <div class="chips" id="chipRow">
+                    <button class="chip active" data-cat="all">Todos</button>
+                    <button class="chip" data-cat="defensa">Defensa</button>
+                    <button class="chip" data-cat="concentraciones">Concentraciones</button>
+                    <button class="chip" data-cat="procedimiento">Procedimiento</button>
+                    <button class="chip" data-cat="promocion">Promoción</button>
+                    <button class="chip" data-cat="transversal">Transversal</button>
+                </div>
+            </div>
+
+            <!-- GRID DE SERVICIOS -->
+            <div class="grid-3" id="serviceGrid">
+
+                <article class="card service-card" data-cat="defensa" data-name="reportar posible práctica anticompetitiva denuncia acuerdo fijación de precios reparto de mercado abuso de posición dominante">
+                    <div class="card-icon"><i class="fas fa-triangle-exclamation"></i></div>
+                    <span class="card-tag">Defensa de la competencia</span>
+                    <h3>Reportar una posible práctica anticompetitiva</h3>
+                    <p>Denuncie acuerdos entre competidores, fijación de precios, reparto de mercado, abuso de posición dominante o prácticas de exclusión.</p>
+                    <a href="#" class="card-link">Iniciar <i class="fas fa-arrow-right"></i></a>
+                </article>
+
+                <article class="card service-card" data-cat="defensa" data-name="solicitar investigación de parte hechos competencia">
+                    <div class="card-icon"><i class="fas fa-magnifying-glass"></i></div>
+                    <span class="card-tag">Defensa de la competencia</span>
+                    <h3>Solicitar una investigación de parte</h3>
+                    <p>Solicite el inicio de una investigación sobre hechos que puedan constituir una infracción a la Ley de Competencia.</p>
+                    <a href="#" class="card-link">Iniciar <i class="fas fa-arrow-right"></i></a>
+                </article>
+
+                <article class="card service-card" data-cat="defensa" data-name="aportar información adicional documento evidencia expediente coadyuvante">
+                    <div class="card-icon"><i class="fas fa-file-circle-plus"></i></div>
+                    <span class="card-tag">Defensa de la competencia</span>
+                    <h3>Aportar información a un expediente</h3>
+                    <p>Complemente una denuncia con documentos, evidencia o nuevos elementos probatorios antes de que concluya la investigación preliminar.</p>
+                    <a href="#" class="card-link">Iniciar <i class="fas fa-arrow-right"></i></a>
+                </article>
+
+                <article class="card service-card" data-cat="concentraciones" data-name="saber si operación requiere autorización umbrales asistente previo orientación">
+                    <div class="card-icon"><i class="fas fa-circle-question"></i></div>
+                    <span class="card-tag">Concentraciones económicas</span>
+                    <h3>¿Mi operación requiere autorización?</h3>
+                    <p>Asistente previo que orienta sobre umbrales, tipo de operación, procedimiento aplicable y documentación requerida.</p>
+                    <a href="#" class="card-link">Consultar <i class="fas fa-arrow-right"></i></a>
+                </article>
+
+                <article class="card service-card" data-cat="concentraciones" data-name="solicitar autorización previa concentración económica">
+                    <div class="card-icon"><i class="fas fa-file-signature"></i></div>
+                    <span class="card-tag">Concentraciones económicas</span>
+                    <h3>Solicitar autorización de concentración</h3>
+                    <p>Presente su solicitud de autorización previa con la información económica y de mercado que exige la normativa.</p>
+                    <a href="#" class="card-link">Iniciar <i class="fas fa-arrow-right"></i></a>
+                </article>
+
+                <article class="card service-card" data-cat="concentraciones" data-name="notificar concentración notificación operación">
+                    <div class="card-icon"><i class="fas fa-bell"></i></div>
+                    <span class="card-tag">Concentraciones económicas</span>
+                    <h3>Notificar una concentración</h3>
+                    <p>Notifique una operación de concentración conforme al procedimiento y los umbrales legalmente previstos.</p>
+                    <a href="#" class="card-link">Iniciar <i class="fas fa-arrow-right"></i></a>
+                </article>
+
+                <article class="card service-card" data-cat="procedimiento" data-name="presentar descargos ofrecer prueba defensa procedimiento administrativo">
+                    <div class="card-icon"><i class="fas fa-scale-balanced"></i></div>
+                    <span class="card-tag">Procedimiento y cumplimiento</span>
+                    <h3>Presentar descargos y ofrecer prueba</h3>
+                    <p>Ejercite su defensa dentro de un procedimiento administrativo: argumentos, documentos, diligencias y prueba.</p>
+                    <a href="#" class="card-link">Iniciar <i class="fas fa-arrow-right"></i></a>
+                </article>
+
+                <article class="card service-card" data-cat="procedimiento" data-name="solicitar exención reducción de sanción compromisos cese beneficio">
+                    <div class="card-icon"><i class="fas fa-shield-halved"></i></div>
+                    <span class="card-tag">Procedimiento y cumplimiento</span>
+                    <h3>Solicitar exención o reducción de sanción</h3>
+                    <p>Acceda a los mecanismos especiales previstos legalmente, incluidos compromisos de cese y terminación anticipada.</p>
+                    <a href="#" class="card-link">Iniciar <i class="fas fa-arrow-right"></i></a>
+                </article>
+
+                <article class="card service-card" data-cat="promocion" data-name="reportar barrera regulatoria competencia reporte ciudadano">
+                    <div class="card-icon"><i class="fas fa-road-barrier"></i></div>
+                    <span class="card-tag">Promoción y desarrollo</span>
+                    <h3>Reportar una barrera regulatoria</h3>
+                    <p>Reporte ciudadano de normas, procedimientos o prácticas que restrinjan indebidamente la competencia. No requiere interés jurídico directo.</p>
+                    <a href="#" class="card-link">Reportar <i class="fas fa-arrow-right"></i></a>
+                </article>
+
+                <article class="card service-card" data-cat="promocion" data-name="solicitar opinión técnica proyecto normativo regulación entidad pública">
+                    <div class="card-icon"><i class="fas fa-file-lines"></i></div>
+                    <span class="card-tag">Promoción y desarrollo</span>
+                    <h3>Solicitar una opinión técnica</h3>
+                    <p>Solicite opinión sobre proyectos normativos, regulaciones o actuaciones de entidades públicas con incidencia en competencia.</p>
+                    <a href="#" class="card-link">Solicitar <i class="fas fa-arrow-right"></i></a>
+                </article>
+
+                <article class="card service-card" data-cat="promocion" data-name="realizar consulta orientación ley competencia asesoría general">
+                    <div class="card-icon"><i class="fas fa-comments"></i></div>
+                    <span class="card-tag">Promoción y desarrollo</span>
+                    <h3>Realizar una consulta u orientación</h3>
+                    <p>Resuelva dudas generales sobre la Ley de Competencia, posibles prácticas, concentraciones y eficiencias.</p>
+                    <a href="#" class="card-link">Consultar <i class="fas fa-arrow-right"></i></a>
+                </article>
+
+                <article class="card service-card" data-cat="transversal" data-name="consultar estado expediente seguimiento número de gestión">
+                    <div class="card-icon"><i class="fas fa-folder-open"></i></div>
+                    <span class="card-tag">Servicio transversal</span>
+                    <h3>Consultar el estado de mi expediente</h3>
+                    <p>Acceda con su número de expediente y credenciales para conocer la etapa, el responsable y los próximos hitos.</p>
+                    <a href="#" class="card-link">Consultar <i class="fas fa-arrow-right"></i></a>
+                </article>
+
+            </div>
+
+            <p id="emptyState" style="display:none; text-align:center; color:var(--text-muted); font-size:.88rem; padding:2.5rem 0;">
+                <i class="fas fa-circle-info" style="color:var(--cyan-dim); margin-right:.5rem;"></i>
+                No se encontraron servicios con los criterios seleccionados.
+            </p>
+        </div>
+    </section>
+
+    <!-- ======================================================================
+         CUATRO MACROPROCESOS
+         ====================================================================== -->
+    <section class="section" id="macroprocesos" style="padding-top:1rem;">
+        <div class="container">
+            <div class="section-head">
+                <div class="sec-label">Arquitectura funcional</div>
+                <h2 class="sec-title">Cuatro macroprocesos y un expediente electrónico único</h2>
+                <p class="sec-sub">
+                    La estructura respeta la lógica de la Ley de Competencia: no convierte cada actuación
+                    procesal en un trámite autónomo, sino que la inserta dentro de la etapa que le corresponde.
+                </p>
+                <div style="margin-top:1.2rem;">
+                    <a href="macroprocesos.html" class="btn-primary" style="font-size:.84rem; padding:.65rem 1.6rem; display:inline-flex;">
+                        <i class="fas fa-sitemap"></i> Ver mapa institucional de Macroprocesos (Misionales, Estratégicos y de Apoyo)
+                    </a>
+                </div>
+            </div>
+
+            <div class="grid-2">
+
+                <article class="card macro-card">
+                    <div class="macro-head">
+                        <div class="macro-num">01</div>
+                        <div>
+                            <h3 class="macro-title">Defensa de la competencia</h3>
+                            <p style="font-size:.84rem; color:var(--text-muted); margin-top:.35rem;">
+                                Denuncias, solicitudes de investigación, coadyuvancia, información adicional
+                                y actuaciones derivadas de la investigación preliminar.
+                            </p>
+                        </div>
+                    </div>
+                    <ul class="macro-list">
+                        <li><i class="fas fa-circle"></i> Denuncia de práctica anticompetitiva</li>
+                        <li><i class="fas fa-circle"></i> Solicitud de investigación de parte</li>
+                        <li><i class="fas fa-circle"></i> Subsanación, información adicional y nuevos elementos probatorios</li>
+                        <li><i class="fas fa-circle"></i> Investigación preliminar, requerimientos y verificaciones</li>
+                        <li><i class="fas fa-circle"></i> Archivo o solicitud de apertura del procedimiento</li>
+                    </ul>
+                    <div class="flow">
+                        <span class="flow-step">Inicio</span><i class="fas fa-chevron-right"></i>
+                        <span class="flow-step">Complementación</span><i class="fas fa-chevron-right"></i>
+                        <span class="flow-step">Investigación</span><i class="fas fa-chevron-right"></i>
+                        <span class="flow-step">Participación</span><i class="fas fa-chevron-right"></i>
+                        <span class="flow-step">Resultado</span>
+                    </div>
+                </article>
+
+                <article class="card macro-card">
+                    <div class="macro-head">
+                        <div class="macro-num">02</div>
+                        <div>
+                            <h3 class="macro-title">Concentraciones económicas</h3>
+                            <p style="font-size:.84rem; color:var(--text-muted); margin-top:.35rem;">
+                                Orientación previa, presentación, evaluación, decisión, seguimiento y ruta
+                                especial para concentraciones irregulares.
+                            </p>
+                        </div>
+                    </div>
+                    <ul class="macro-list">
+                        <li><i class="fas fa-circle"></i> ¿La operación constituye una concentración? ¿Supera umbrales?</li>
+                        <li><i class="fas fa-circle"></i> Solicitud de autorización previa o notificación</li>
+                        <li><i class="fas fa-circle"></i> Integración del expediente: tasas, subsanaciones, confidencialidad</li>
+                        <li><i class="fas fa-circle"></i> Evaluación de mercado relevante, poder de mercado y eficiencias</li>
+                        <li><i class="fas fa-circle"></i> Autorización, condicionamiento, denegatoria y seguimiento</li>
+                    </ul>
+                    <div class="flow">
+                        <span class="flow-step">Orientación previa</span><i class="fas fa-chevron-right"></i>
+                        <span class="flow-step">Presentación</span><i class="fas fa-chevron-right"></i>
+                        <span class="flow-step">Evaluación</span><i class="fas fa-chevron-right"></i>
+                        <span class="flow-step">Decisión</span><i class="fas fa-chevron-right"></i>
+                        <span class="flow-step">Seguimiento</span>
+                    </div>
+                </article>
+
+                <article class="card macro-card">
+                    <div class="macro-head">
+                        <div class="macro-num">03</div>
+                        <div>
+                            <h3 class="macro-title">Procedimiento administrativo y cumplimiento</h3>
+                            <p style="font-size:.84rem; color:var(--text-muted); margin-top:.35rem;">
+                                Apertura, defensa, resolución, mecanismos especiales, impugnación y
+                                cumplimiento de lo resuelto.
+                            </p>
+                        </div>
+                    </div>
+                    <ul class="macro-list">
+                        <li><i class="fas fa-circle"></i> Resolución de apertura, notificación y acceso al expediente</li>
+                        <li><i class="fas fa-circle"></i> Descargos, argumentos, ofrecimiento de prueba y diligencias</li>
+                        <li><i class="fas fa-circle"></i> Audiencia oral y resolución final</li>
+                        <li><i class="fas fa-circle"></i> Exención o reducción de sanción y compromisos de cese</li>
+                        <li><i class="fas fa-circle"></i> Recursos, pago de multas, convenios y seguimiento</li>
+                    </ul>
+                    <div class="flow">
+                        <span class="flow-step">Apertura</span><i class="fas fa-chevron-right"></i>
+                        <span class="flow-step">Defensa</span><i class="fas fa-chevron-right"></i>
+                        <span class="flow-step">Resolución</span><i class="fas fa-chevron-right"></i>
+                        <span class="flow-step">Mecanismos especiales</span><i class="fas fa-chevron-right"></i>
+                        <span class="flow-step">Cumplimiento</span>
+                    </div>
+                </article>
+
+                <article class="card macro-card">
+                    <div class="macro-head">
+                        <div class="macro-num">04</div>
+                        <div>
+                            <h3 class="macro-title">Promoción y desarrollo de la competencia</h3>
+                            <p style="font-size:.84rem; color:var(--text-muted); margin-top:.35rem;">
+                                Orientación, opiniones técnicas, estudios de mercado, barreras regulatorias,
+                                programas de cumplimiento y cultura de competencia.
+                            </p>
+                        </div>
+                    </div>
+                    <ul class="macro-list">
+                        <li><i class="fas fa-circle"></i> Consultas y orientación sobre la Ley de Competencia</li>
+                        <li><i class="fas fa-circle"></i> Opiniones técnicas sobre regulación y actuaciones públicas</li>
+                        <li><i class="fas fa-circle"></i> Estudios sectoriales y análisis de mercados</li>
+                        <li><i class="fas fa-circle"></i> Reporte ciudadano de barreras regulatorias</li>
+                        <li><i class="fas fa-circle"></i> Programas voluntarios de cumplimiento, guías y capacitación</li>
+                    </ul>
+                    <div class="flow">
+                        <span class="flow-step">Orientación</span><i class="fas fa-chevron-right"></i>
+                        <span class="flow-step">Opiniones</span><i class="fas fa-chevron-right"></i>
+                        <span class="flow-step">Estudios</span><i class="fas fa-chevron-right"></i>
+                        <span class="flow-step">Barreras</span><i class="fas fa-chevron-right"></i>
+                        <span class="flow-step">Cultura</span>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- SISTEMA DE GESTIÓN DE TALENTO (SGT) BANNER -->
+            <div style="margin-top:2.5rem; background:linear-gradient(135deg, var(--navy-mid), var(--navy-light)); border:1px solid rgba(0,194,224,0.22); border-radius:var(--radius-xl); padding:2.2rem; color:#FFF; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1.5rem;">
+                <div style="max-width:720px;">
+                    <span style="background:rgba(0,194,224,0.15); color:var(--cyan); border:1px solid rgba(0,194,224,0.3); margin-bottom:.6rem; display:inline-block; font-size:.72rem; font-weight:700; padding:.3rem .8rem; border-radius:50px; text-transform:uppercase;">
+                        <i class="fas fa-users-gear"></i> Gestión del Talento Institucional
+                    </span>
+                    <h3 style="font-size:1.4rem; color:#FFF; margin-bottom:.4rem;">Trabaja con Nosotros · Convocatorias y Banco de Talento</h3>
+                    <p style="font-size:.88rem; color:rgba(255,255,255,0.72); line-height:1.6;">
+                        Plataforma Digital de Talento, Reclutamiento y Selección (SGT). Postúlese a plazas vacantes o regístrese en el Banco Permanente de Talento bajo un modelo de selección por mérito con verificación objetiva y trazabilidad digital.
+                    </p>
+                </div>
+                <div>
+                    <a href="talento.html" class="btn-primary" style="font-size:.84rem; padding:.75rem 1.8rem; display:inline-flex;">
+                        <i class="fas fa-briefcase"></i> Convocatorias y Postulación <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======================================================================
+         ARQUITECTURA DE TRES CAPAS (DARK)
+         ====================================================================== -->
+    <section class="theme-dark">
+        <div class="container">
+            <div class="section-head center">
+                <div class="sec-label">Arquitectura del sistema</div>
+                <h2 class="sec-title">Tres capas que articulan todo el ciclo de actuación</h2>
+                <p class="sec-sub">
+                    Desde el acceso del ciudadano hasta la inteligencia institucional que fortalece
+                    la capacidad técnica de la Superintendencia.
+                </p>
+            </div>
+
+            <div class="grid-3">
+
+                <article class="card">
+                    <div class="card-icon"><i class="fas fa-door-open"></i></div>
+                    <span class="card-tag">Capa 1</span>
+                    <h3>Portal ciudadano</h3>
+                    <p>El usuario ingresa y selecciona lo que necesita hacer: denunciar, solicitar autorización, consultar, aportar información o notificar. Interfaz orientada a la necesidad, no a la estructura legal.</p>
+                </article>
+
+                <article class="card">
+                    <div class="card-icon"><i class="fas fa-gears"></i></div>
+                    <span class="card-tag">Capa 2</span>
+                    <h3>Motor de gestión</h3>
+                    <p>Genera el expediente, valida información, clasifica la actuación, identifica la dirección competente, asigna, controla plazos, genera alertas y notifica.</p>
+                </article>
+
+                <article class="card">
+                    <div class="card-icon"><i class="fas fa-brain"></i></div>
+                    <span class="card-tag">Capa 3</span>
+                    <h3>Inteligencia institucional</h3>
+                    <p>Identifica criterios relevantes, señala información faltante, estructura la evidencia, recupera precedentes, calcula indicadores y facilita el análisis económico y jurídico.</p>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ======================================================================
+         MOTOR DE REGLAS + FORMULARIO ADAPTATIVO
+         ====================================================================== -->
+    <section class="section" id="motor">
+        <div class="container">
+            <div class="section-head">
+                <div class="sec-label">Motor de reglas, criterios y asistencia al análisis</div>
+                <h2 class="sec-title">Dejar de recibir documentos y empezar a recibir casos estructurados</h2>
+                <p class="sec-sub">
+                    El sistema no reemplaza al analista: transforma la información en el origen para que
+                    llegue estructurada, clasificada y con los elementos relevantes ya identificados.
+                </p>
+            </div>
+
+            <div class="grid-4" style="margin-bottom:2.4rem;">
+                <article class="card level-card">
+                    <span class="level-num">N1</span>
+                    <h3 style="font-size:.95rem; margin-bottom:.5rem;">Validación</h3>
+                    <p class="level-q">¿La solicitud está completa y cumple los requisitos de admisibilidad?</p>
+                </article>
+                <article class="card level-card">
+                    <span class="level-num">N2</span>
+                    <h3 style="font-size:.95rem; margin-bottom:.5rem;">Clasificación</h3>
+                    <p class="level-q">¿Qué tipo de actuación es y a qué macroproceso corresponde?</p>
+                </article>
+                <article class="card level-card">
+                    <span class="level-num">N3</span>
+                    <h3 style="font-size:.95rem; margin-bottom:.5rem;">Orientación</h3>
+                    <p class="level-q">¿Qué criterios jurídicos y económicos deben ser considerados por el analista?</p>
+                </article>
+                <article class="card level-card">
+                    <span class="level-num">N4</span>
+                    <h3 style="font-size:.95rem; margin-bottom:.5rem;">Inteligencia</h3>
+                    <p class="level-q">¿Qué patrones, precedentes o información relacionada podrían ser relevantes?</p>
+                </article>
+            </div>
+
+            <!-- FORMULARIO ADAPTATIVO -->
+            <div class="card demo-card">
+                <div class="section-head" style="margin-bottom:1.8rem;">
+                    <div class="sec-label">Formulario adaptativo</div>
+                    <h2 class="sec-title" style="font-size:1.35rem;">Las preguntas cambian según lo que usted reporta</h2>
+                    <p class="sec-sub" style="font-size:.88rem;">
+                        Seleccione un tipo de conducta y observe cómo el sistema genera automáticamente
+                        las preguntas de seguimiento correspondientes.
+                    </p>
+                </div>
+
+                <div class="demo-grid">
+                    <div>
+                        <p style="font-size:.7rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--text-muted); margin-bottom:.9rem;">
+                            Tipo de conducta o actuación
+                        </p>
+                        <div class="opt-list" id="optList">
+                            <button class="opt-btn active" data-flow="acuerdo">
+                                <i class="fas fa-handshake"></i> Acuerdo entre competidores
+                            </button>
+                            <button class="opt-btn" data-flow="abuso">
+                                <i class="fas fa-arrow-trend-up"></i> Abuso de posición dominante
+                            </button>
+                            <button class="opt-btn" data-flow="concentracion">
+                                <i class="fas fa-diagram-project"></i> Concentración económica
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="flow-panel">
+                        <div class="flow-panel-title" id="flowTitle">Acuerdo entre competidores</div>
+                        <div class="flow-panel-sub" id="flowSub">Defensa de la competencia</div>
+                        <div class="q-list" id="flowQuestions"><!-- JS --></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SALIDA DEL MOTOR PARA EL ANALISTA -->
+            <div class="card" style="margin-top:22px;">
+                <span class="card-tag">Lo que ve el analista</span>
+                <h3 style="font-size:1.15rem;">Aspectos que requieren valoración</h3>
+                <p style="max-width:760px;">
+                    El motor no decide. Estructura los elementos identificados y señala lo que falta,
+                    para que la autoridad competente ejerza su valoración técnica y jurídica.
+                </p>
+
+                <div class="alert-list">
+                    <div class="alert-item">
+                        <i class="fas fa-triangle-exclamation"></i>
+                        <div>
+                            <h4>1. Existencia de la conducta</h4>
+                            <p>Se identifican elementos compatibles con la conducta denunciada.</p>
+                        </div>
+                    </div>
+                    <div class="alert-item">
+                        <i class="fas fa-triangle-exclamation"></i>
+                        <div>
+                            <h4>2. Elementos subjetivos</h4>
+                            <p>Información insuficiente para el análisis de los elementos subjetivos.</p>
+                        </div>
+                    </div>
+                    <div class="alert-item">
+                        <i class="fas fa-triangle-exclamation"></i>
+                        <div>
+                            <h4>3. Eximentes o atenuantes potencialmente aplicables</h4>
+                            <p>Se identificó una circunstancia que podría ser jurídicamente relevante para la consecuencia jurídica.</p>
+                        </div>
+                    </div>
+                    <div class="alert-item">
+                        <i class="fas fa-triangle-exclamation"></i>
+                        <div>
+                            <h4>4. Evidencia</h4>
+                            <p>Falta documentación que permita corroborar extremos relevantes del caso.</p>
+                        </div>
+                    </div>
+                    <div class="alert-item">
+                        <i class="fas fa-circle-check" style="color:var(--cyan);"></i>
+                        <div>
+                            <h4>5. Acción sugerida</h4>
+                            <p>Solicitar información adicional al denunciante antes de concluir la investigación preliminar.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======================================================================
+         FRONTERA JURÍDICA (DARK)
+         ====================================================================== -->
+    <section class="theme-dark">
+        <div class="container">
+            <div class="section-head center">
+                <div class="sec-label">Frontera jurídica</div>
+                <h2 class="sec-title">Un principio rector para todo el sistema</h2>
+            </div>
+
+            <p class="principle">La máquina <em>orienta</em>. La autoridad <em>decide</em>.</p>
+
+            <div class="grid-2">
+                <div class="rule-box rule-box--no">
+                    <h4><i class="fas fa-circle-xmark"></i> El sistema nunca dirá</h4>
+                    <div class="rule-quote">“No existe infracción.”</div>
+                    <div class="rule-quote">“Debe imponerse una multa.”</div>
+                    <p style="font-size:.8rem; color:rgba(255,255,255,0.5); margin-top:1rem;">
+                        El sistema no sustituye la valoración de la autoridad competente ni se convierte
+                        en una autoridad decisoria algorítmica.
+                    </p>
+                </div>
+
+                <div class="rule-box rule-box--yes">
+                    <h4><i class="fas fa-circle-check"></i> El sistema sí dirá</h4>
+                    <div class="rule-quote">“Se identifican elementos que requieren valoración conforme a los criterios X, Y y Z.”</div>
+                    <div class="rule-quote">“La información proporcionada podría resultar relevante para analizar la aplicabilidad de [criterio].”</div>
+                    <p style="font-size:.8rem; color:rgba(255,255,255,0.6); margin-top:1rem;">
+                        Esto protege la independencia técnica y jurídica del funcionario y preserva
+                        la trazabilidad de cada decisión.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======================================================================
+         EXPEDIENTE ELECTRÓNICO
+         ====================================================================== -->
+    <section class="section" id="expediente">
+        <div class="container">
+            <div class="section-head">
+                <div class="sec-label">El corazón del sistema</div>
+                <h2 class="sec-title">Un expediente electrónico único, con trazabilidad completa</h2>
+                <p class="sec-sub">
+                    El ciudadano ve el estado de su expediente. El analista ve el expediente de competencia
+                    completo: información, mercado, conducta, evidencia, actuaciones, plazos y responsables.
+                </p>
+            </div>
+
+            <div class="exp-layout">
+
+                <!-- CONSULTA -->
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-key"></i></div>
+                    <h3 style="font-size:1.1rem;">Consulta de gestión</h3>
+                    <p style="margin-bottom:1.6rem;">
+                        Ingrese su número de expediente y su contraseña para conocer la etapa actual,
+                        la dirección responsable y los próximos hitos.
+                    </p>
+
+                    <form id="expForm">
+                        <div class="field">
+                            <label for="expCode">Número de expediente</label>
+                            <input type="text" id="expCode" placeholder="SC-2026-DEN-000125" value="SC-2026-DEN-000125">
+                        </div>
+                        <div class="field">
+                            <label for="expPass">Contraseña</label>
+                            <input type="password" id="expPass" placeholder="••••••••">
+                        </div>
+                        <button type="submit" class="btn-primary" style="width:100%; justify-content:center;">
+                            <i class="fas fa-magnifying-glass"></i> Consultar estado
+                        </button>
+                    </form>
+
+                    <div style="margin-top:1.6rem; padding-top:1.4rem; border-top:1px dashed var(--border); display:flex; gap:.6rem; align-items:flex-start;">
+                        <i class="fas fa-shield-halved" style="color:var(--cyan-dim); margin-top:.25rem; font-size:.85rem;"></i>
+                        <p style="font-size:.76rem; color:var(--text-muted);">
+                            El acceso al expediente se realiza mediante credenciales personales e intransferibles.
+                            Toda consulta queda registrada para efectos de trazabilidad.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- TIMELINE -->
+                <div class="card">
+                    <div class="exp-meta">
+                        <div class="exp-code">
+                            SC-2026-DEN-000125
+                            <span>Denuncia · Defensa de la competencia</span>
+                        </div>
+                        <span class="badge-cyan">En análisis</span>
+                    </div>
+
+                    <div class="timeline">
+                        <div class="tl-item done">
+                            <div class="tl-dot"><i class="fas fa-check"></i></div>
+                            <div class="tl-title">Solicitud recibida</div>
+                            <div class="tl-desc">Expediente generado y acuse enviado al presentante.</div>
+                        </div>
+                        <div class="tl-item done">
+                            <div class="tl-dot"><i class="fas fa-check"></i></div>
+                            <div class="tl-title">Validación documental</div>
+                            <div class="tl-desc">Requisitos de admisibilidad verificados por el motor de validación.</div>
+                        </div>
+                        <div class="tl-item done">
+                            <div class="tl-dot"><i class="fas fa-check"></i></div>
+                            <div class="tl-title">Asignada a Dirección de Investigación</div>
+                            <div class="tl-desc">Asignación automática conforme a la matriz de competencias interna.</div>
+                        </div>
+                        <div class="tl-item active">
+                            <div class="tl-dot"><i class="fas fa-circle"></i></div>
+                            <div class="tl-title">En análisis</div>
+                            <div class="tl-desc">Investigación preliminar en curso. Criterios relevantes identificados.</div>
+                        </div>
+                        <div class="tl-item warn">
+                            <div class="tl-dot"><i class="fas fa-exclamation"></i></div>
+                            <div class="tl-title">Requerimiento de información</div>
+                            <div class="tl-desc">Se requiere documentación adicional para corroborar extremos del caso.</div>
+                        </div>
+                        <div class="tl-item pending">
+                            <div class="tl-dot"><i class="fas fa-circle"></i></div>
+                            <div class="tl-title">Análisis concluido</div>
+                            <div class="tl-desc">Pendiente de cierre de la etapa de investigación preliminar.</div>
+                        </div>
+                        <div class="tl-item pending">
+                            <div class="tl-dot"><i class="fas fa-circle"></i></div>
+                            <div class="tl-title">Resolución</div>
+                            <div class="tl-desc">Decisión de la autoridad competente.</div>
+                        </div>
+                        <div class="tl-item pending">
+                            <div class="tl-dot"><i class="fas fa-circle"></i></div>
+                            <div class="tl-title">Notificación</div>
+                            <div class="tl-desc">Comunicación electrónica al presentante y a los involucrados.</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ======================================================================
+         SERVICIOS TRANSVERSALES
+         ====================================================================== -->
+    <section class="section" style="padding-top:1rem;">
+        <div class="container">
+            <div class="section-head">
+                <div class="sec-label">Capa transversal</div>
+                <h2 class="sec-title">Servicios comunes a todos los procedimientos</h2>
+                <p class="sec-sub">
+                    Una persona que presenta una denuncia y una empresa que solicita autorización de
+                    concentración tienen la misma experiencia tecnológica, aunque estén en procedimientos
+                    jurídicos distintos.
+                </p>
+            </div>
+
+            <div class="grid-3">
+                <article class="card">
+                    <div class="card-icon"><i class="fas fa-folder-tree"></i></div>
+                    <h3>Expediente digital</h3>
+                    <p>Consulta de documentos, actuaciones, historial y trazabilidad completa de cada expediente.</p>
+                </article>
+                <article class="card">
+                    <div class="card-icon"><i class="fas fa-envelope-circle-check"></i></div>
+                    <h3>Notificaciones</h3>
+                    <p>Recepción de resoluciones, requerimientos, vencimientos, audiencias y cambios de estado.</p>
+                </article>
+                <article class="card">
+                    <div class="card-icon"><i class="fas fa-cloud-arrow-up"></i></div>
+                    <h3>Presentación de documentos</h3>
+                    <p>Carga de información, documentos adicionales, subsanaciones y respuesta a requerimientos.</p>
+                </article>
+                <article class="card">
+                    <div class="card-icon"><i class="fas fa-list-check"></i></div>
+                    <h3>Seguimiento</h3>
+                    <p>Número de expediente, estado, etapa, responsable y próximos hitos del procedimiento.</p>
+                </article>
+                <article class="card">
+                    <div class="card-icon"><i class="fas fa-magnifying-glass-chart"></i></div>
+                    <h3>Transparencia</h3>
+                    <p>Resoluciones publicables, estudios, opiniones, estadísticas e información pública.</p>
+                </article>
+                <article class="card" style="display:flex; flex-direction:column; justify-content:center; background:var(--grad-institucional); border-color:transparent;">
+                    <h3 style="color:#FFFFFF; font-size:1rem;">Un solo expediente,<br>cuatro macroprocesos</h3>
+                    <p style="color:rgba(255,255,255,0.62); margin-top:.6rem;">
+                        El sistema conoce qué actuaciones son jurídicamente posibles en cada etapa del expediente.
+                    </p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======================================================================
+         MATRIZ DE ASIGNACIÓN INSTITUCIONAL
+         ====================================================================== -->
+    <section class="section" style="padding-top:1rem;">
+        <div class="container">
+            <div class="section-head">
+                <div class="sec-label">Matriz de competencias interna</div>
+                <h2 class="sec-title">Asignación basada en reglas configurables</h2>
+                <p class="sec-sub">
+                    La asignación no está enterrada en el código. Si cambia la estructura orgánica,
+                    el administrador modifica tipo de actuación → dirección → responsable.
+                </p>
+            </div>
+
+            <div class="table-wrap">
+                <div class="table-scroll">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Actuación</th>
+                                <th>Dirección responsable</th>
+                                <th>Asignación</th>
+                                <th>Notificación automática</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Denuncia por práctica anticompetitiva</strong></td>
+                                <td class="muted">Dirección de Investigación</td>
+                                <td><span class="badge-yes">Asigna</span></td>
+                                <td><span class="badge-yes">Sí</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Solicitud de autorización de concentración</strong></td>
+                                <td class="muted">Área correspondiente (según reglas)</td>
+                                <td><span class="badge-yes">Asigna</span></td>
+                                <td><span class="badge-yes">Sí</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Consulta económica</strong></td>
+                                <td class="muted">Estudios / Análisis</td>
+                                <td><span class="badge-yes">Asigna</span></td>
+                                <td><span class="badge-yes">Sí</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Asunto jurídico o recurso</strong></td>
+                                <td class="muted">Dirección Jurídica</td>
+                                <td><span class="badge-yes">Asigna</span></td>
+                                <td><span class="badge-yes">Sí</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Reporte de barrera regulatoria</strong></td>
+                                <td class="muted">Promoción y Desarrollo</td>
+                                <td><span class="badge-yes">Asigna</span></td>
+                                <td><span class="badge-no">No</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mecanismo de exención o reducción</strong></td>
+                                <td class="muted">Jurídica + Investigación</td>
+                                <td><span class="badge-yes">Asigna</span></td>
+                                <td><span class="badge-yes">Sí</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="table-note">
+                <i class="fas fa-sliders"></i>
+                <span>
+                    Las reglas de asignación, plazos y validaciones son configurables por la propia
+                    Superintendencia. El sistema no decide sobre el fondo: solo enruta, controla
+                    oportunidades y estructura la información.
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======================================================================
+         OBSERVATORIO (DARK)
+         ====================================================================== -->
+    <section class="theme-dark" id="observatorio">
+        <div class="container">
+            <div class="section-head center">
+                <div class="sec-label">Observatorio e inteligencia de competencia</div>
+                <h2 class="sec-title">La plataforma como infraestructura de información</h2>
+                <p class="sec-sub">
+                    Después de unos años, la base de datos del sistema alimenta la política pública
+                    de competencia, los estudios de mercado, la prevención y la fiscalización.
+                </p>
+            </div>
+
+            <div class="obs-grid">
+                <div class="obs-item">
+                    <i class="fas fa-chart-column"></i>
+                    <h4>Denuncias y sectores</h4>
+                    <p>Número de denuncias por sector, mercado y tipo de conducta reportada.</p>
+                </div>
+                <div class="obs-item">
+                    <i class="fas fa-users-viewfinder"></i>
+                    <h4>Agentes recurrentes</h4>
+                    <p>Identificación de agentes económicos con participación reiterada en expedientes.</p>
+                </div>
+                <div class="obs-item">
+                    <i class="fas fa-stopwatch"></i>
+                    <h4>Tiempos de resolución</h4>
+                    <p>Medición de plazos por etapa, cuellos de botella y oportunidad de las decisiones.</p>
+                </div>
+                <div class="obs-item">
+                    <i class="fas fa-map-location-dot"></i>
+                    <h4>Patrones geográficos</h4>
+                    <p>Distribución territorial de las actuaciones y de los mercados afectados.</p>
+                </div>
+                <div class="obs-item">
+                    <i class="fas fa-arrow-trend-up"></i>
+                    <h4>Tendencias</h4>
+                    <p>Evolución de consultas, autorizaciones, opiniones técnicas y barreras reportadas.</p>
+                </div>
+                <div class="obs-item">
+                    <i class="fas fa-book-open-reader"></i>
+                    <h4>Precedentes internos</h4>
+                    <p>Recuperación de criterios y resoluciones previas para fortalecer el análisis.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======================================================================
+         CTA FINAL
+         ====================================================================== -->
+    <section class="cta-band">
+        <div class="container">
+            <h2>Presente su denuncia en Competencia en Línea</h2>
+            <p>
+                Consulte su expediente, solicite su autorización y dé seguimiento a sus actuaciones
+                desde un único punto digital, con transparencia y trazabilidad en cada etapa.
+            </p>
+            <div class="hero-actions">
+                <a href="#servicios" class="btn-primary">
+                    <i class="fas fa-file-circle-plus"></i> Iniciar un trámite
+                </a>
+                <a href="#expediente" class="btn-outline">
+                    <i class="fas fa-folder-open"></i> Consultar expediente
+                </a>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<!-- ==========================================================================
+     FOOTER
+     ========================================================================== -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+
+            <div class="footer-brand">
+                <a href="index.html" style="display:inline-block; margin-bottom:1.1rem;" title="Superintendencia de Competencia">
+                    <img src="img/logo-sc-blanco.png" alt="Superintendencia de Competencia" class="footer-logo-sc" style="height:54px; width:auto; max-height:58px; object-fit:contain;">
+                </a>
+                <p>
+                    Sistema Integral de Competencia (SIC): la puerta digital de entrada a la
+                    Superintendencia de Competencia. Tecnología al servicio de la transparencia,
+                    la seguridad jurídica y la promoción de la competencia.
+                </p>
+            </div>
+
+            <div>
+                <h5>Servicios</h5>
+                <div class="footer-links">
+                    <a href="#servicios">Presentar una denuncia</a>
+                    <a href="#servicios">Solicitar autorización</a>
+                    <a href="#servicios">Notificar una concentración</a>
+                    <a href="#servicios">Reportar una barrera regulatoria</a>
+                    <a href="#expediente">Consultar expediente</a>
+                </div>
+            </div>
+
+            <div>
+                <h5>Institucional</h5>
+                <div class="footer-links">
+                    <a href="macroprocesos.html">Macroprocesos</a>
+                    <a href="talento.html">Trabaja con nosotros</a>
+                    <a href="#motor">Motor de análisis</a>
+                    <a href="#observatorio">Observatorio</a>
+                    <a href="#">Marco legal</a>
+                    <a href="#">Transparencia</a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 Superintendencia de Competencia. Todos los derechos reservados.</p>
+            <div class="footer-logos" style="display:flex; align-items:center; gap:1.4rem; flex-wrap:wrap;">
+                <div style="display:inline-flex; align-items:center; gap:9px;">
+                    <img src="img/logo-gobierno-gt-web.png" alt="Gobierno de Guatemala" style="height:36px; width:auto; object-fit:contain; filter:drop-shadow(0 2px 6px rgba(0,0,0,0.3));">
+                    <span style="font-size:.82rem; font-weight:600; color:var(--text-muted);">Gobierno de Guatemala</span>
+                </div>
+                <span style="color:rgba(255,255,255,0.25);">·</span>
+                <div style="display:inline-flex; align-items:center; gap:9px;">
+                    <img src="img/logo-sc-blanco.png" alt="Superintendencia de Competencia" style="height:32px; width:auto; object-fit:contain;">
+                    <span style="font-size:.82rem; font-weight:600; color:var(--text-muted);">Superintendencia de Competencia</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- ==========================================================================
+     TOAST
+     ========================================================================== -->
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ==========================================================================
+   0. CARRUSEL DE IMÁGENES / HERO
+   ========================================================================== */
+const heroCarousel = document.getElementById('heroCarousel');
+if (heroCarousel) {
+    const slides = Array.from(heroCarousel.querySelectorAll('.carousel-slide'));
+    const dots = Array.from(heroCarousel.querySelectorAll('.carousel-dots .dot'));
+    const prevBtn = document.getElementById('carouselPrev');
+    const nextBtn = document.getElementById('carouselNext');
+    let currentSlide = 0;
+    let slideInterval = null;
+
+    function goToSlide(index) {
+        slides[currentSlide].classList.remove('active');
+        dots[currentSlide].classList.remove('active');
+        currentSlide = (index + slides.length) % slides.length;
+        slides[currentSlide].classList.add('active');
+        dots[currentSlide].classList.add('active');
+    }
+
+    function startAutoSlide() {
+        stopAutoSlide();
+        slideInterval = setInterval(() => {
+            goToSlide(currentSlide + 1);
+        }, 5000);
+    }
+
+    function stopAutoSlide() {
+        if (slideInterval) clearInterval(slideInterval);
+    }
+
+    if (slides.length > 0) {
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                goToSlide(currentSlide - 1);
+                startAutoSlide();
+            });
+        }
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                goToSlide(currentSlide + 1);
+                startAutoSlide();
+            });
+        }
+        dots.forEach((dot, idx) => {
+            dot.addEventListener('click', () => {
+                goToSlide(idx);
+                startAutoSlide();
+            });
+        });
+
+        heroCarousel.addEventListener('mouseenter', stopAutoSlide);
+        heroCarousel.addEventListener('mouseleave', startAutoSlide);
+
+        startAutoSlide();
+    }
+}
+
+/* ==========================================================================
+   1. MENÚ MÓVIL
+   ========================================================================== */
+const menuToggle = document.getElementById('menuToggle');
+const navMenu    = document.getElementById('navMenu');
+
+menuToggle.addEventListener('click', () => {
+    navMenu.classList.toggle('open');
+    const icon = menuToggle.querySelector('i');
+    icon.className = navMenu.classList.contains('open') ? 'fas fa-xmark' : 'fas fa-bars';
+});
+
+navMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+        navMenu.classList.remove('open');
+        menuToggle.querySelector('i').className = 'fas fa-bars';
+    });
+});
+
+/* ==========================================================================
+   2. TOAST
+   ========================================================================== */
+const toastEl = document.getElementById('toast');
+let toastTimer;
+
+function showToast(message, icon = 'fa-circle-check') {
+    toastEl.innerHTML = `<i class="fas ${icon}"></i> ${message}`;
+    toastEl.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2200);
+}
+
+/* ==========================================================================
+   3. FILTROS DEL CATÁLOGO DE SERVICIOS
+   ========================================================================== */
+const searchInput  = document.getElementById('searchInput');
+const catSelect    = document.getElementById('catSelect');
+const chips        = Array.from(document.querySelectorAll('.chip[data-cat]'));
+const cards        = Array.from(document.querySelectorAll('.service-card'));
+const emptyState   = document.getElementById('emptyState');
+const resetBtn     = document.getElementById('resetFilters');
+
+let activeCat = 'all';
+
+function normalize(str) {
+    return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
+function applyFilters() {
+    const query = normalize(searchInput.value.trim());
+    const sel   = catSelect.value;
+    let visible = 0;
+
+    cards.forEach(card => {
+        const haystack = normalize(card.dataset.name + ' ' + card.textContent);
+        const cat      = card.dataset.cat;
+
+        const matchQuery = !query || haystack.includes(query);
+        const matchChip  = activeCat === 'all' || cat === activeCat;
+        const matchSel   = sel === 'all' || cat === sel;
+
+        const show = matchQuery && matchChip && matchSel;
+        card.style.display = show ? '' : 'none';
+        if (show) visible++;
+    });
+
+    emptyState.style.display = visible === 0 ? 'block' : 'none';
+}
+
+searchInput.addEventListener('input', applyFilters);
+catSelect.addEventListener('change', () => {
+    activeCat = catSelect.value;
+    chips.forEach(c => c.classList.toggle('active', c.dataset.cat === activeCat));
+    applyFilters();
+});
+
+chips.forEach(chip => {
+    chip.addEventListener('click', () => {
+        activeCat = chip.dataset.cat;
+        catSelect.value = activeCat;
+        chips.forEach(c => c.classList.toggle('active', c === chip));
+        applyFilters();
+    });
+});
+
+resetBtn.addEventListener('click', () => {
+    searchInput.value = '';
+    catSelect.value = 'all';
+    activeCat = 'all';
+    chips.forEach(c => c.classList.toggle('active', c.dataset.cat === 'all'));
+    applyFilters();
+    showToast('Filtros restablecidos', 'fa-rotate-left');
+});
+
+/* ==========================================================================
+   4. FORMULARIO ADAPTATIVO (MOTOR DE ORIENTACIÓN)
+   ========================================================================== */
+const FLUJOS = {
+    acuerdo: {
+        titulo: 'Acuerdo entre competidores',
+        sub: 'Defensa de la competencia · Práctica anticompetitiva',
+        preguntas: [
+            '¿Las empresas involucradas compiten entre sí?',
+            '¿Existe conocimiento de una comunicación o reunión entre ellas?',
+            '¿Se acordaron precios?',
+            '¿Se acordaron clientes o territorios?',
+            '¿Existe evidencia documental?',
+            '¿Desde cuándo ocurre la conducta?',
+            '¿La conducta continúa actualmente?'
+        ]
+    },
+    abuso: {
+        titulo: 'Abuso de posición dominante',
+        sub: 'Defensa de la competencia · Práctica de exclusión',
+        preguntas: [
+            '¿Cuál es el producto o servicio involucrado?',
+            '¿En qué territorio ocurre la conducta?',
+            '¿Quién considera que posee posición dominante?',
+            '¿Qué participación aproximada tiene en el mercado?',
+            '¿Qué conducta realiza concretamente?',
+            '¿Qué competidores han sido afectados?',
+            '¿Existe una barrera para entrar al mercado?'
+        ]
+    },
+    concentracion: {
+        titulo: 'Concentración económica',
+        sub: 'Concentraciones económicas · Autorización o notificación',
+        preguntas: [
+            '¿Quiénes son los agentes económicos involucrados?',
+            '¿La operación implica un cambio de control?',
+            '¿Se superan los umbrales legalmente previstos?',
+            '¿En qué mercado o sector operan las partes?',
+            '¿Existen solapamientos horizontales o verticales?',
+            '¿La operación ya se perfeccionó?',
+            '¿Se ofrecen condiciones o compromisos?'
+        ]
+    }
+};
+
+const optButtons   = Array.from(document.querySelectorAll('.opt-btn'));
+const flowTitle    = document.getElementById('flowTitle');
+const flowSub      = document.getElementById('flowSub');
+const flowQuestions = document.getElementById('flowQuestions');
+
+function renderFlow(key) {
+    const flow = FLUJOS[key];
+    if (!flow) return;
+
+    flowTitle.textContent = flow.titulo;
+    flowSub.textContent   = flow.sub;
+
+    flowQuestions.innerHTML = '';
+    flow.preguntas.forEach((pregunta, index) => {
+        const item = document.createElement('div');
+        item.className = 'q-item';
+        item.style.animationDelay = (index * 45) + 'ms';
+        item.innerHTML = `<i class="fas fa-circle-question"></i><span>${pregunta}</span>`;
+        flowQuestions.appendChild(item);
+    });
+}
+
+optButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+        optButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderFlow(btn.dataset.flow);
+    });
+});
+
+// Estado inicial
+renderFlow('acuerdo');
+
+/* ==========================================================================
+   5. CONSULTA DE EXPEDIENTE
+   ========================================================================== */
+const expForm = document.getElementById('expForm');
+
+expForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const code = document.getElementById('expCode').value.trim() || 'SC-2026-DEN-000125';
+    showToast('Consultando expediente ' + code + '…', 'fa-spinner');
+
+    setTimeout(() => {
+        showToast('Expediente ' + code + ' · Estado: En análisis', 'fa-folder-open');
+        const timeline = document.querySelector('.timeline');
+        if (timeline) {
+            timeline.style.transition = 'opacity .3s ease';
+            timeline.style.opacity = '0.35';
+            setTimeout(() => { timeline.style.opacity = '1'; }, 220);
+        }
+    }, 700);
+});
+
+/* ==========================================================================
+   6. NAVEGACIÓN ACTIVA SEGÚN SCROLL
+   ========================================================================== */
+const navLinks = Array.from(document.querySelectorAll('.nav-menu a[href^="#"]'))
+    .filter(a => !a.classList.contains('nav-cta'));
+
+const sections = navLinks
+    .map(a => document.querySelector(a.getAttribute('href')))
+    .filter(Boolean);
+
+window.addEventListener('scroll', () => {
+    const scrollPos = window.scrollY + 140;
+    let current = null;
+
+    sections.forEach(section => {
+        if (section.offsetTop <= scrollPos) current = section.id;
+    });
+
+    navLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+    });
+}, { passive: true });
+
+/* ==========================================================================
+   7. ENLACES DE TARJETA (DEMO)
+   ========================================================================== */
+document.querySelectorAll('.card-link').forEach(link => {
+    link.addEventListener('click', (event) => {
+        event.preventDefault();
+        const title = link.closest('.card').querySelector('h3');
+        showToast('Iniciando: ' + title.textContent, 'fa-arrow-right');
+    });
+});
+</script>
+
+</body>
+</html>

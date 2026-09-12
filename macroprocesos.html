@@ -1,0 +1,1844 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Macroprocesos · Superintendencia de Competencia — SIC</title>
+<meta name="description" content="Mapa de Macroprocesos de la Superintendencia de Competencia: Procesos Misionales, Estratégicos y de Apoyo para garantizar la libre competencia y eficiencia económica.">
+
+<!-- TIPOGRAFÍA INSTITUCIONAL -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+
+<!-- ICONOGRAFÍA -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+/* ==========================================================================
+   DESIGN TOKENS
+   ========================================================================== */
+:root {
+    --sc-azul-profundo:      #002765;
+    --sc-azul-institucional: #022D60;
+    --sc-azul-brillante:     #0090E6;
+    --sc-turquesa:           #029F9C;
+    --sc-turquesa-oscuro:    #016F89;
+    --sc-blanco:             #FFFFFF;
+
+    --navy:                  #002765;
+    --navy-mid:              #022D60;
+    --navy-light:            #016F89;
+    --blue:                  #022D60;
+    --blue-bright:           #0090E6;
+    --cyan:                  #029F9C;
+    --cyan-dim:              #016F89;
+    --amber:                 #F5A623;
+    --green:                 #029F9C;
+    --purple:                #0090E6;
+
+    --surface:       #F4F8FC;
+    --surface-card:  #FFFFFF;
+    --text-main:     #022D60;
+    --text-muted:    #385473;
+    --text-light:    #7692AE;
+    --border:        rgba(2,45,96,0.14);
+
+    --radius-xl:  24px;
+    --radius-2xl: 32px;
+
+    --shadow-sm:  0 2px 8px rgba(0,39,101,0.06);
+    --shadow-md:  0 6px 24px rgba(0,39,101,0.10);
+    --shadow-lg:  0 16px 48px rgba(0,39,101,0.14);
+
+    --grad-institucional: linear-gradient(135deg, var(--sc-azul-profundo), var(--sc-turquesa-oscuro));
+    --grad-acento:        linear-gradient(90deg, var(--sc-turquesa), var(--sc-azul-brillante));
+    --grad-misional:      linear-gradient(135deg, var(--sc-turquesa), var(--sc-azul-profundo));
+    --grad-estrategico:   linear-gradient(135deg, var(--sc-azul-brillante), var(--sc-azul-profundo));
+    --grad-apoyo:         linear-gradient(135deg, var(--sc-turquesa-oscuro), var(--sc-azul-institucional));
+}
+
+/* ==========================================================================
+   RESET & BASE
+   ========================================================================== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+    font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+    background: var(--surface);
+    color: var(--text-main);
+    font-size: 1rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5 { font-family: 'Sora', sans-serif; line-height: 1.15; color: var(--text-main); }
+
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+img, svg { display: block; max-width: 100%; }
+button, input, select, textarea { font-family: inherit; font-size: inherit; color: inherit; }
+button { cursor: pointer; border: none; background: none; }
+
+::selection { background: rgba(0,194,224,0.25); color: var(--navy); }
+
+/* ==========================================================================
+   LAYOUT
+   ========================================================================== */
+.container { width: 100%; max-width: 1300px; margin: 0 auto; padding: 0 28px; }
+
+.section { padding: 4rem 0; }
+.section--tight { padding: 2.8rem 0; }
+
+.section-head { max-width: 820px; margin-bottom: 2.5rem; }
+.section-head.center { margin-left: auto; margin-right: auto; text-align: center; }
+
+.sec-label {
+    display: inline-flex; align-items: center; gap: .55rem;
+    font-size: .68rem; font-weight: 700; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--cyan-dim); margin-bottom: .9rem;
+}
+.sec-label::before {
+    content: ''; width: 22px; height: 2px; border-radius: 2px;
+    background: var(--grad-acento);
+}
+.section-head.center .sec-label::after {
+    content: ''; width: 22px; height: 2px; border-radius: 2px;
+    background: var(--grad-acento);
+}
+
+.sec-title {
+    font-size: clamp(1.7rem, 3vw, 2.4rem);
+    font-weight: 800; letter-spacing: -0.025em;
+}
+.sec-sub { margin-top: .9rem; color: var(--text-muted); font-size: .95rem; max-width: 720px; }
+.section-head.center .sec-sub { margin-left: auto; margin-right: auto; }
+
+/* ==========================================================================
+   HEADER (ESTILO BLANCO INSTITUCIONAL)
+   ========================================================================== */
+.site-header {
+    position: sticky; top: 0; z-index: 200;
+    background: #FFFFFF;
+    box-shadow: 0 4px 24px rgba(0, 39, 101, 0.08);
+    border-bottom: 1px solid rgba(0, 39, 101, 0.10);
+    transition: all 0.3s ease;
+}
+
+.navbar {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 24px; height: 80px; position: relative;
+}
+
+.logo-area { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+.gov-logo-img { height: 48px; width: auto; max-height: 52px; object-fit: contain; }
+
+.nav-menu {
+    display: flex; align-items: center; gap: .3rem; list-style: none;
+}
+.nav-menu a {
+    display: block;
+    font-size: .8rem; font-weight: 700; letter-spacing: .04em;
+    text-transform: uppercase;
+    color: var(--sc-azul-profundo);
+    padding: .55rem 1rem; border-radius: 50px;
+    transition: all .2s ease;
+}
+.nav-menu a:hover {
+    color: var(--sc-azul-brillante);
+    background: rgba(0, 144, 230, 0.08);
+}
+.nav-menu a.active {
+    color: var(--sc-azul-profundo);
+    background: rgba(0, 39, 101, 0.08);
+    border: 1px solid rgba(0, 39, 101, 0.18);
+    font-weight: 800;
+}
+
+.nav-menu a.nav-cta {
+    background: var(--sc-azul-profundo); color: #FFFFFF !important;
+    padding: .65rem 1.4rem; font-weight: 700; margin-left: .5rem;
+    box-shadow: 0 4px 16px rgba(0, 39, 101, 0.25);
+    border: 1px solid transparent;
+}
+.nav-menu a.nav-cta:hover {
+    background: var(--sc-azul-brillante); color: #FFFFFF !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 22px rgba(0, 144, 230, 0.40);
+}
+
+.menu-toggle {
+    display: none; align-items: center; justify-content: center;
+    width: 44px; height: 44px; border-radius: 12px;
+    color: var(--sc-azul-profundo); font-size: 1.2rem;
+    border: 1px solid rgba(0, 39, 101, 0.2);
+    background: rgba(0, 39, 101, 0.04);
+    transition: all .2s ease;
+}
+.menu-toggle:hover { background: rgba(0, 39, 101, 0.10); }
+
+/* ==========================================================================
+   HERO
+   ========================================================================== */
+.hero {
+    position: relative; overflow: hidden;
+    background: var(--grad-institucional);
+    padding: 5.5rem 0 4.8rem;
+    text-align: center;
+    isolation: isolate;
+}
+
+.hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background-image:
+        linear-gradient(rgba(0,194,224,0.065) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,194,224,0.065) 1px, transparent 1px);
+    background-size: 48px 48px;
+    -webkit-mask-image: radial-gradient(ellipse at 50% 42%, #000 26%, transparent 76%);
+    mask-image: radial-gradient(ellipse at 50% 42%, #000 26%, transparent 76%);
+}
+
+.hero::before {
+    content: ''; position: absolute; z-index: 0;
+    width: 660px; height: 660px; border-radius: 50%;
+    top: -260px; right: -180px;
+    background: radial-gradient(circle, rgba(0,194,224,0.22), transparent 68%);
+}
+.hero::after {
+    content: ''; position: absolute; z-index: 0;
+    width: 580px; height: 580px; border-radius: 50%;
+    bottom: -280px; left: -150px;
+    background: radial-gradient(circle, rgba(43,130,201,0.22), transparent 68%);
+}
+
+.hero-inner {
+    position: relative; z-index: 2;
+    display: flex; flex-direction: column; align-items: center;
+}
+
+.hero-eyebrow {
+    display: inline-flex; align-items: center; gap: .6rem;
+    padding: .45rem 1.15rem; border-radius: 50px;
+    border: 1px solid rgba(0,194,224,0.35);
+    background: rgba(0,194,224,0.08);
+    color: var(--cyan);
+    font-size: .68rem; font-weight: 700;
+    letter-spacing: .09em; text-transform: uppercase;
+    margin-bottom: 1.8rem;
+}
+.hero-eyebrow span {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--cyan);
+    box-shadow: 0 0 10px var(--cyan);
+    animation: blink 1.8s ease-in-out infinite;
+}
+
+.hero h1 {
+    font-size: clamp(2.4rem, 5.5vw, 4rem);
+    font-weight: 800; letter-spacing: -0.03em;
+    color: #FFFFFF; max-width: 18ch;
+}
+.hero h1 em {
+    font-style: normal;
+    background: var(--grad-acento);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; color: transparent;
+}
+
+.hero-lema {
+    margin-top: 1.1rem;
+    font-style: italic; font-size: 1.05rem;
+    color: rgba(255,255,255,0.78);
+    letter-spacing: .01em;
+}
+
+.hero-sub {
+    margin-top: 1.1rem; max-width: 760px;
+    font-size: .97rem; color: rgba(255,255,255,0.65);
+}
+
+.hero-actions {
+    margin-top: 2.3rem;
+    display: flex; flex-wrap: wrap; gap: 14px; justify-content: center;
+}
+
+/* ==========================================================================
+   BOTONES
+   ========================================================================== */
+.btn-primary {
+    display: inline-flex; align-items: center; gap: .6rem;
+    background: var(--cyan); color: var(--navy);
+    border-radius: 50px; padding: .85rem 2rem;
+    font-size: .88rem; font-weight: 700;
+    box-shadow: 0 0 32px rgba(0,194,224,0.35);
+    transition: all .25s cubic-bezier(0.4,0,0.2,1);
+}
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 44px rgba(0,194,224,0.50);
+    background: #25D2ED;
+}
+
+.btn-outline {
+    display: inline-flex; align-items: center; gap: .6rem;
+    background: transparent; color: rgba(255,255,255,0.85);
+    border: 1px solid rgba(255,255,255,0.22);
+    border-radius: 50px; padding: .85rem 2rem;
+    font-size: .88rem; font-weight: 600;
+    transition: all .25s cubic-bezier(0.4,0,0.2,1);
+}
+.btn-outline:hover {
+    border-color: var(--cyan); color: var(--cyan);
+    transform: translateY(-3px);
+    box-shadow: 0 0 28px rgba(0,194,224,0.22);
+}
+
+.btn-sm {
+    display: inline-flex; align-items: center; gap: .45rem;
+    padding: .5rem 1.1rem; border-radius: 50px;
+    font-size: .78rem; font-weight: 700;
+    transition: all .2s ease;
+}
+.btn-sm-primary {
+    background: rgba(0,194,224,0.12); color: var(--cyan-dim);
+    border: 1px solid rgba(0,194,224,0.28);
+}
+.btn-sm-primary:hover {
+    background: var(--cyan); color: var(--navy);
+    transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   STATS RIBBON
+   ========================================================================== */
+.stats-ribbon {
+    background: var(--navy-mid);
+    border-top: 1px solid rgba(0,194,224,0.12);
+    border-bottom: 1px solid rgba(0,194,224,0.12);
+}
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); }
+
+.stat {
+    padding: 2rem 1.5rem; text-align: center;
+    border-right: 1px solid rgba(0,194,224,0.12);
+    transition: background .2s ease;
+}
+.stat:last-child { border-right: none; }
+.stat:hover { background: rgba(0,194,224,0.06); }
+.stat i { color: var(--cyan); font-size: 1.3rem; margin-bottom: .7rem; }
+.stat .num {
+    display: block;
+    font-family: 'Sora', sans-serif;
+    font-size: 1.8rem; font-weight: 800;
+    color: #FFFFFF; letter-spacing: -0.02em; line-height: 1;
+}
+.stat .lbl {
+    display: block; margin-top: .55rem;
+    font-size: .72rem; font-weight: 700;
+    letter-spacing: .08em; text-transform: uppercase;
+    color: rgba(255,255,255,0.60);
+}
+
+/* ==========================================================================
+   MAPA VISUAL CONCEPTUAL (BENTO ARQUITECTURA)
+   ========================================================================== */
+.arch-overview {
+    background: var(--surface-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-2xl);
+    padding: 2.5rem;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 3.5rem;
+}
+
+.arch-layer {
+    padding: 1.4rem 1.6rem;
+    border-radius: 18px;
+    margin-bottom: 1rem;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 1.5rem;
+    transition: all .2s ease;
+}
+.arch-layer:hover { transform: translateY(-2px); }
+
+.arch-layer--strat {
+    background: rgba(139,92,246,0.08);
+    border: 1.5px solid rgba(139,92,246,0.22);
+}
+.arch-layer--mision {
+    background: rgba(0,194,224,0.08);
+    border: 1.5px solid rgba(0,194,224,0.25);
+}
+.arch-layer--apoyo {
+    background: rgba(245,166,35,0.08);
+    border: 1.5px solid rgba(245,166,35,0.25);
+}
+
+.arch-tag {
+    display: inline-flex; align-items: center; gap: .5rem;
+    font-size: .75rem; font-weight: 800;
+    letter-spacing: .08em; text-transform: uppercase;
+    flex-shrink: 0; min-width: 200px;
+}
+.arch-tag.strat { color: #7C3AED; }
+.arch-tag.mision { color: var(--cyan-dim); }
+.arch-tag.apoyo { color: #D97706; }
+
+.arch-items {
+    display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end;
+}
+.arch-pill {
+    padding: .4rem .9rem; border-radius: 50px;
+    background: #FFFFFF; border: 1px solid var(--border);
+    font-size: .76rem; font-weight: 600; color: var(--text-main);
+    box-shadow: 0 1px 3px rgba(5,17,31,0.04);
+}
+
+/* ==========================================================================
+   FILTROS DE NAVEGACIÓN
+   ========================================================================== */
+.controls-bar {
+    background: var(--surface-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-2xl);
+    padding: 1.5rem 2rem;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 2.5rem;
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+    gap: 1.2rem;
+}
+
+.filter-chips {
+    display: flex; flex-wrap: wrap; gap: 8px;
+}
+
+.f-chip {
+    border-radius: 50px;
+    padding: .55rem 1.25rem;
+    font-size: .76rem; font-weight: 700;
+    letter-spacing: .04em; text-transform: uppercase;
+    border: 1.5px solid var(--border);
+    background: var(--surface);
+    color: var(--text-muted);
+    transition: all .2s ease;
+    display: inline-flex; align-items: center; gap: .5rem;
+}
+.f-chip:hover {
+    color: var(--text-main); border-color: rgba(43,130,201,0.35);
+    transform: translateY(-2px);
+}
+.f-chip.active {
+    background: var(--navy); color: #FFFFFF;
+    border-color: var(--navy);
+    box-shadow: 0 6px 20px rgba(5,17,31,0.18);
+}
+.f-chip.active i { color: var(--cyan); }
+
+.search-box {
+    position: relative; min-width: 280px; flex: 1; max-width: 380px;
+}
+.search-box i {
+    position: absolute; left: 1.15rem; top: 50%; transform: translateY(-50%);
+    color: var(--text-muted); font-size: .85rem; pointer-events: none;
+}
+.search-box input {
+    width: 100%; border-radius: 50px;
+    border: 1.5px solid var(--border);
+    background: var(--surface);
+    padding: .7rem 1.15rem .7rem 2.6rem;
+    font-size: .84rem; font-weight: 500;
+    outline: none; transition: all .2s ease;
+}
+.search-box input:focus {
+    border-color: var(--blue-bright); background: #FFFFFF;
+    box-shadow: 0 0 0 3px rgba(43,130,201,0.12);
+}
+
+/* ==========================================================================
+   TARJETAS Y SECCIONES DE MACROPROCESO
+   ========================================================================== */
+.macro-group {
+    margin-bottom: 3.5rem;
+}
+.macro-group-head {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    gap: 1.5rem; margin-bottom: 1.8rem;
+    padding-bottom: 1.2rem;
+    border-bottom: 2px solid var(--border);
+    flex-wrap: wrap;
+}
+
+.macro-group-badge {
+    display: inline-flex; align-items: center; gap: .55rem;
+    padding: .35rem .95rem; border-radius: 50px;
+    font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+    margin-bottom: .6rem;
+}
+.macro-group-badge.misional {
+    background: rgba(0,194,224,0.12); color: var(--cyan-dim);
+    border: 1px solid rgba(0,194,224,0.25);
+}
+.macro-group-badge.estrategico {
+    background: rgba(139,92,246,0.12); color: #7C3AED;
+    border: 1px solid rgba(139,92,246,0.25);
+}
+.macro-group-badge.apoyo {
+    background: rgba(245,166,35,0.12); color: #B8791A;
+    border: 1px solid rgba(245,166,35,0.25);
+}
+
+.macro-group-title {
+    font-size: clamp(1.4rem, 2.4vw, 1.9rem); font-weight: 800;
+    letter-spacing: -0.02em;
+}
+.macro-group-desc {
+    color: var(--text-muted); font-size: .92rem; max-width: 680px; margin-top: .4rem;
+}
+
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+
+.macro-card {
+    background: var(--surface-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding: 2.2rem;
+    box-shadow: var(--shadow-sm);
+    transition: all .28s cubic-bezier(0.4,0,0.2,1);
+    position: relative;
+    display: flex; flex-direction: column;
+}
+.macro-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+    border-color: rgba(43,130,201,0.32);
+}
+
+.card-top {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    gap: 1rem; margin-bottom: 1.2rem;
+}
+
+.macro-icon-box {
+    width: 52px; height: 52px; border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.25rem; flex-shrink: 0;
+    transition: transform .25s ease;
+}
+.macro-card:hover .macro-icon-box { transform: scale(1.08); }
+
+.icon-misional {
+    background: linear-gradient(135deg, #E0F7FA, #B2EBF2);
+    color: var(--cyan-dim);
+}
+.icon-estrategico {
+    background: linear-gradient(135deg, #EDE9FE, #DDD6FE);
+    color: #7C3AED;
+}
+.icon-apoyo {
+    background: linear-gradient(135deg, #FEF3C7, #FDE68A);
+    color: #D97706;
+}
+
+.macro-order {
+    font-family: 'Sora', sans-serif;
+    font-size: .82rem; font-weight: 800;
+    color: var(--text-muted);
+    background: var(--surface);
+    padding: .3rem .75rem; border-radius: 50px;
+    border: 1px solid var(--border);
+}
+
+.macro-card h3 {
+    font-size: 1.2rem; font-weight: 800;
+    letter-spacing: -0.015em; margin-bottom: .65rem;
+}
+.macro-card p.card-summary {
+    font-size: .88rem; color: var(--text-muted); line-height: 1.6;
+    margin-bottom: 1.4rem;
+}
+
+.card-section-label {
+    font-size: .68rem; font-weight: 800;
+    letter-spacing: .08em; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: .6rem;
+    display: flex; align-items: center; gap: .45rem;
+}
+
+.feature-list {
+    display: grid; gap: .55rem; margin-bottom: 1.4rem;
+}
+.feature-list li {
+    display: flex; align-items: flex-start; gap: .65rem;
+    font-size: .82rem; color: var(--text-main); font-weight: 500;
+}
+.feature-list li i {
+    color: var(--cyan); font-size: .65rem; margin-top: .45rem; flex-shrink: 0;
+}
+.feature-list.apoyo-list li i { color: var(--amber); }
+.feature-list.strat-list li i { color: #8B5CF6; }
+
+/* FLUJO LINEAL */
+.flow-diagram {
+    display: flex; flex-wrap: wrap; align-items: center;
+    gap: 6px; padding: .85rem; border-radius: 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    margin-bottom: 1.5rem;
+}
+.flow-step-tag {
+    font-size: .7rem; font-weight: 600;
+    background: #FFFFFF; border: 1px solid var(--border);
+    border-radius: 50px; padding: .24rem .7rem;
+    color: var(--text-muted); white-space: nowrap;
+}
+.flow-arrow {
+    color: var(--cyan-dim); font-size: .55rem;
+}
+
+.card-foot {
+    margin-top: auto; padding-top: 1.2rem;
+    border-top: 1px dashed var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    gap: .8rem; flex-wrap: wrap;
+}
+
+.card-action-link {
+    display: inline-flex; align-items: center; gap: .45rem;
+    font-size: .78rem; font-weight: 700;
+    letter-spacing: .04em; text-transform: uppercase;
+    color: var(--blue-bright);
+    transition: all .2s ease;
+}
+.card-action-link:hover {
+    gap: .7rem; color: var(--cyan-dim);
+}
+
+/* ==========================================================================
+   MODAL DE DETALLE TÉCNICO
+   ========================================================================== */
+.modal-backdrop {
+    position: fixed; inset: 0; z-index: 999;
+    background: rgba(5,17,31,0.75);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+    opacity: 0; pointer-events: none;
+    transition: opacity .25s ease;
+}
+.modal-backdrop.open {
+    opacity: 1; pointer-events: auto;
+}
+
+.modal-dialog {
+    background: #FFFFFF;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-2xl);
+    width: 100%; max-width: 680px; max-height: 90vh;
+    overflow-y: auto;
+    padding: 2.5rem;
+    box-shadow: 0 24px 64px rgba(5,17,31,0.30);
+    transform: scale(0.95) translateY(12px);
+    transition: transform .25s cubic-bezier(0.4,0,0.2,1);
+    position: relative;
+}
+.modal-backdrop.open .modal-dialog {
+    transform: scale(1) translateY(0);
+}
+
+.modal-close {
+    position: absolute; right: 1.8rem; top: 1.8rem;
+    width: 38px; height: 38px; border-radius: 50%;
+    background: var(--surface); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-muted); font-size: 1rem;
+    transition: all .2s ease;
+}
+.modal-close:hover {
+    background: var(--navy); color: #FFFFFF;
+}
+
+.modal-badge {
+    display: inline-flex; align-items: center; gap: .45rem;
+    font-size: .7rem; font-weight: 800; letter-spacing: .08em;
+    text-transform: uppercase; margin-bottom: .7rem;
+}
+.modal-title {
+    font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em;
+    margin-bottom: 1rem; color: var(--navy);
+}
+.modal-body {
+    font-size: .88rem; color: var(--text-main); line-height: 1.65;
+}
+
+.modal-section {
+    margin-top: 1.4rem; padding-top: 1.2rem;
+    border-top: 1px solid var(--border);
+}
+.modal-section h4 {
+    font-size: .84rem; font-weight: 800; letter-spacing: .06em;
+    text-transform: uppercase; color: var(--text-muted); margin-bottom: .65rem;
+}
+
+/* ==========================================================================
+   MATRIZ / INTEGRACIÓN TRANSVERSAL
+   ========================================================================== */
+.transversal-card {
+    background: var(--grad-institucional);
+    border-radius: var(--radius-2xl);
+    padding: 3rem;
+    color: #FFFFFF;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 3.5rem;
+}
+.transversal-card::before {
+    content: ''; position: absolute;
+    width: 500px; height: 500px; border-radius: 50%;
+    top: -200px; right: -150px;
+    background: radial-gradient(circle, rgba(0,194,224,0.20), transparent 70%);
+    pointer-events: none;
+}
+.transversal-inner {
+    position: relative; z-index: 2;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 2.5rem; align-items: center;
+}
+.transversal-card h2 {
+    color: #FFFFFF; font-size: clamp(1.5rem, 2.5vw, 2.1rem);
+    font-weight: 800; letter-spacing: -0.02em;
+}
+.transversal-card p {
+    color: rgba(255,255,255,0.70); font-size: .95rem; margin-top: .9rem;
+}
+
+.transversal-points {
+    display: grid; gap: 1rem;
+}
+.trans-point {
+    display: flex; align-items: flex-start; gap: 1rem;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(0,194,224,0.18);
+    border-radius: 16px; padding: 1.1rem 1.3rem;
+}
+.trans-point i {
+    color: var(--cyan); font-size: 1.15rem; margin-top: .2rem;
+}
+.trans-point h4 {
+    color: #FFFFFF; font-size: .88rem; font-weight: 700; margin-bottom: .2rem;
+}
+.trans-point p {
+    color: rgba(255,255,255,0.60); font-size: .8rem; margin: 0;
+}
+
+/* ==========================================================================
+   CTA BAND
+   ========================================================================== */
+.cta-band {
+    background: var(--navy-mid);
+    padding: 4.5rem 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border-top: 1px solid rgba(0,194,224,0.12);
+}
+.cta-band .container { position: relative; z-index: 2; }
+.cta-band h2 {
+    color: #FFFFFF;
+    font-size: clamp(1.6rem, 3.2vw, 2.3rem);
+    font-weight: 800; letter-spacing: -0.025em;
+    max-width: 24ch; margin: 0 auto;
+}
+.cta-band p {
+    color: rgba(255,255,255,0.65);
+    font-size: .95rem; max-width: 640px;
+    margin: 1.1rem auto 0;
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+.footer {
+    background: var(--navy);
+    padding: 4rem 0 0;
+    color: rgba(255,255,255,0.60);
+}
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 3rem;
+    padding-bottom: 3rem;
+}
+.footer-brand .gov-logo { height: 52px; margin-bottom: 1.2rem; }
+.footer-brand p { font-size: .84rem; line-height: 1.7; max-width: 420px; color: rgba(255,255,255,0.55); }
+
+.footer h5 {
+    font-family: 'Sora', sans-serif;
+    font-size: .78rem; font-weight: 700;
+    letter-spacing: .09em; text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 1.2rem;
+}
+.footer-links { display: grid; gap: .65rem; }
+.footer-links a {
+    font-size: .84rem;
+    color: rgba(255,255,255,0.60);
+    transition: color .2s ease, transform .2s ease;
+    display: inline-block;
+}
+.footer-links a:hover { color: var(--cyan); transform: translateX(3px); }
+
+.footer-bottom {
+    border-top: 1px solid rgba(0,194,224,0.12);
+    padding: 1.6rem 0;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 1.5rem; flex-wrap: wrap;
+}
+.footer-bottom p { font-size: .75rem; color: rgba(255,255,255,0.45); }
+.footer-logos { display: flex; align-items: center; gap: 1.2rem; }
+.footer-logos span {
+    font-size: .7rem; font-weight: 700;
+    letter-spacing: .08em; text-transform: uppercase;
+    color: rgba(255,255,255,0.40);
+}
+
+/* ==========================================================================
+   TOAST
+   ========================================================================== */
+.toast {
+    position: fixed;
+    left: 50%; bottom: 34px;
+    transform: translate(-50%, 24px);
+    background: var(--navy-light);
+    color: #FFFFFF;
+    border: 1px solid rgba(0,194,224,0.28);
+    border-radius: 50px;
+    padding: .85rem 1.7rem;
+    font-size: .84rem; font-weight: 600;
+    box-shadow: 0 16px 48px rgba(5,17,31,0.35);
+    display: flex; align-items: center; gap: .65rem;
+    opacity: 0; pointer-events: none;
+    z-index: 1000;
+    max-width: calc(100vw - 40px);
+    transition: opacity .3s ease, transform .3s cubic-bezier(0.4,0,0.2,1);
+}
+.toast i { color: var(--cyan); }
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+/* ==========================================================================
+   ANIMACIONES & RESPONSIVE
+   ========================================================================== */
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.3; }
+}
+
+@media (max-width: 1080px) {
+    .grid-3 { grid-template-columns: repeat(2, 1fr); }
+    .transversal-inner { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 800px) {
+    .grid-3, .grid-2 { grid-template-columns: 1fr; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .stat:nth-child(2) { border-right: none; }
+    .stat:nth-child(1), .stat:nth-child(2) { border-bottom: 1px solid rgba(0,194,224,0.12); }
+    .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .arch-layer { flex-direction: column; align-items: flex-start; }
+    .arch-items { justify-content: flex-start; }
+}
+
+@media (max-width: 680px) {
+    .container { padding: 0 18px; }
+    .navbar { height: 68px; }
+    .gov-logo, .gov-logo-img { height: 44px; }
+    .menu-toggle { display: flex; }
+
+    .nav-menu {
+        position: absolute;
+        top: 76px; left: 0; right: 0;
+        flex-direction: column;
+        align-items: stretch;
+        gap: .25rem;
+        background: rgba(5,17,31,0.97);
+        -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(0,194,224,0.15);
+        border-radius: 12px;
+        padding: 1rem;
+        display: none;
+        box-shadow: var(--shadow-lg);
+    }
+    .nav-menu.open { display: flex; }
+    .nav-menu a { padding: .8rem 1rem; }
+    .nav-menu a.nav-cta { margin-left: 0; text-align: center; justify-content: center; display: flex; }
+
+    .hero { padding: 4rem 0 3.2rem; }
+    .controls-bar { flex-direction: column; align-items: stretch; padding: 1.2rem; }
+    .search-box { max-width: 100%; min-width: 100%; }
+    .macro-card { padding: 1.6rem; }
+    .transversal-card { padding: 1.8rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ==========================================================================
+     HEADER
+     ========================================================================== -->
+<header class="site-header" id="headerSection">
+    <div class="container">
+        <nav class="navbar">
+            <div class="logo-area">
+                <a href="index.html" title="Superintendencia de Competencia · Portal de Competencia" style="display:flex; align-items:center; gap:14px; text-decoration:none;">
+                    <img src="img/logo-gobierno-gt-web.png" alt="Gobierno de Guatemala" class="gov-logo-img" style="height:46px; width:auto; max-height:48px; object-fit:contain;">
+                    <div style="width:1px; height:34px; background:rgba(0,39,101,0.18);"></div>
+                    <img src="img/logo-sc.png" alt="Superintendencia de Competencia" class="gov-logo-img" style="height:48px; width:auto; max-height:50px; object-fit:contain;">
+                </a>
+            </div>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú de navegación">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html#servicios">Servicios</a></li>
+                <li><a href="macroprocesos.html" class="active">Macroprocesos</a></li>
+                <li><a href="talento.html">Trabaja con nosotros</a></li>
+                <li><a href="index.html#motor">Motor de análisis</a></li>
+                <li><a href="index.html#expediente">Expediente</a></li>
+                <li><a href="index.html#observatorio">Observatorio</a></li>
+                <li><a href="index.html#servicios" class="nav-cta">Iniciar trámite</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- ==========================================================================
+     HERO
+     ========================================================================== -->
+<section class="hero" id="heroSection">
+    <div class="hero-bg"></div>
+    <div class="container hero-inner">
+        <div class="hero-logo-banner" style="margin-bottom:1.4rem;">
+            <img src="img/logo-sc-blanco.png" alt="Superintendencia de Competencia" style="height:68px; width:auto; max-height:72px; object-fit:contain; filter:drop-shadow(0 6px 20px rgba(0,0,0,0.45));">
+        </div>
+
+        <div class="hero-eyebrow">
+            <span></span>
+            Arquitectura Institucional · SIC
+        </div>
+
+        <h1>Mapa de<br><em>Macroprocesos</em></h1>
+
+        <p class="hero-lema">+ competencia, mejores mercados, + oportunidades.</p>
+
+        <p class="hero-sub">
+            Conozca la estructura técnica, legal y operativa que hace posible la labor de la Superintendencia de Competencia.
+            Un modelo articulado en procesos misionales que ejecutan la ley, estratégicos que garantizan el rumbo e integridad,
+            y de apoyo que suministran los recursos indispensables.
+        </p>
+
+        <div class="hero-actions">
+            <a href="#misionales" class="btn-primary" id="btnExploreMisionales">
+                <i class="fas fa-bullseye"></i> Ver Procesos Misionales
+            </a>
+            <a href="index.html" class="btn-outline" id="btnBackHome">
+                <i class="fas fa-house"></i> Volver al Portal Principal
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ==========================================================================
+     STATS RIBBON
+     ========================================================================== -->
+<div class="stats-ribbon" id="statsSection">
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat">
+                <i class="fas fa-sitemap"></i>
+                <span class="num">3</span>
+                <span class="lbl">Familias de macroprocesos</span>
+            </div>
+            <div class="stat">
+                <i class="fas fa-gears"></i>
+                <span class="num">7</span>
+                <span class="lbl">Macroprocesos integrados</span>
+            </div>
+            <div class="stat">
+                <i class="fas fa-folder-tree"></i>
+                <span class="num">1</span>
+                <span class="lbl">Expediente electrónico único</span>
+            </div>
+            <div class="stat">
+                <i class="fas fa-scale-balanced"></i>
+                <span class="num">100%</span>
+                <span class="lbl">Sujeción al marco legal</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<main>
+    <section class="section" id="macroprocesosContent">
+        <div class="container">
+
+            <!-- ARQUITECTURA VISUAL INTEGRADA -->
+            <div class="arch-overview" id="archOverviewBox">
+                <div class="section-head center" style="margin-bottom:1.8rem;">
+                    <div class="sec-label">Visión Sintética del Modelo</div>
+                    <h2 class="sec-title" style="font-size:1.6rem;">Arquitectura por Familias de Procesos</h2>
+                    <p class="sec-sub" style="font-size:.88rem;">
+                        La Superintendencia de Competencia organiza sus capacidades institucionales para responder con agilidad,
+                        sustento técnico riguroso y plena transparencia ante la ciudadanía y los agentes económicos.
+                    </p>
+                </div>
+
+                <div class="arch-layer arch-layer--strat">
+                    <div class="arch-tag strat">
+                        <i class="fas fa-compass"></i> 1. Procesos Estratégicos
+                    </div>
+                    <div class="arch-items">
+                        <span class="arch-pill">Dirección y Planeación Institucional</span>
+                        <span class="arch-pill">Gestión de Calidad y Cumplimiento</span>
+                        <span class="arch-pill">Transparencia y Antisoborno</span>
+                    </div>
+                </div>
+
+                <div class="arch-layer arch-layer--mision">
+                    <div class="arch-tag mision">
+                        <i class="fas fa-bullseye"></i> 2. Procesos Misionales
+                    </div>
+                    <div class="arch-items">
+                        <span class="arch-pill">Investigación de Prácticas Anticompetitivas</span>
+                        <span class="arch-pill">Evaluación de Concentraciones Económicas</span>
+                        <span class="arch-pill">Abogacía y Promoción de la Competencia</span>
+                    </div>
+                </div>
+
+                <div class="arch-layer arch-layer--apoyo">
+                    <div class="arch-tag apoyo">
+                        <i class="fas fa-hand-holding-hand"></i> 3. Procesos de Apoyo
+                    </div>
+                    <div class="arch-items">
+                        <span class="arch-pill">Gestión Jurídica y Litigio</span>
+                        <span class="arch-pill">Gestión Administrativa y Financiera</span>
+                        <span class="arch-pill">Tecnología y Expediente Digital</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BARRA DE FILTRO Y BÚSQUEDA -->
+            <div class="controls-bar" id="controlsBar">
+                <div class="filter-chips" id="filterChips">
+                    <button class="f-chip active" data-filter="all">
+                        <i class="fas fa-border-all"></i> Todos (7)
+                    </button>
+                    <button class="f-chip" data-filter="misionales">
+                        <i class="fas fa-bullseye"></i> Misionales (3)
+                    </button>
+                    <button class="f-chip" data-filter="estrategicos">
+                        <i class="fas fa-compass"></i> Estratégicos (2)
+                    </button>
+                    <button class="f-chip" data-filter="apoyo">
+                        <i class="fas fa-hand-holding-hand"></i> De Apoyo (2)
+                    </button>
+                </div>
+
+                <div class="search-box">
+                    <i class="fas fa-magnifying-glass"></i>
+                    <input type="search" id="filterSearch" placeholder="Buscar proceso, intendencia o función…" aria-label="Buscar macroproceso">
+                </div>
+            </div>
+
+            <!-- ==========================================================
+                 1. MACROPROCESOS MISIONALES (SUSTANTIVOS)
+                 ========================================================== -->
+            <div class="macro-group" id="misionales" data-group="misionales">
+                <div class="macro-group-head">
+                    <div>
+                        <span class="macro-group-badge misional">
+                            <i class="fas fa-bullseye"></i> Categoría 1 · Sustantivos
+                        </span>
+                        <h2 class="macro-group-title">Macroprocesos Misionales</h2>
+                        <p class="macro-group-desc">
+                            Son la razón de ser de la institución y ejecutan directamente el mandato de la ley para defender la eficiencia económica,
+                            prevenir conductas predatorias y vigilar las estructuras de mercado en beneficio de los consumidores y la inversión.
+                        </p>
+                    </div>
+                    <span class="badge-cyan" style="align-self:center;">3 Macroprocesos Clave</span>
+                </div>
+
+                <div class="grid-3" id="misionalesGrid">
+
+                    <!-- MISIONAL 1 -->
+                    <article class="macro-card" data-category="misionales" data-keywords="investigacion practicas anticompetitivas carteles colusion precios abuso posicion dominante fiscalizacion">
+                        <div class="card-top">
+                            <div class="macro-icon-box icon-misional">
+                                <i class="fas fa-magnifying-glass-chart"></i>
+                            </div>
+                            <span class="macro-order">M-01</span>
+                        </div>
+
+                        <h3>Investigación de Prácticas Anticompetitivas</h3>
+                        <p class="card-summary">
+                            Consiste en la detección, análisis, investigación y persecución de oficio o por denuncia de conductas como carteles (acuerdos entre competidores) o el abuso de posición dominante.
+                        </p>
+
+                        <div class="card-section-label">
+                            <i class="fas fa-list-check"></i> Actuaciones y Facultades
+                        </div>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-circle-check"></i> Detección y desarticulación de carteles y acuerdos de fijación de precios o cuotas</li>
+                            <li><i class="fas fa-circle-check"></i> Investigación de prácticas de abuso de posición dominante y exclusión</li>
+                            <li><i class="fas fa-circle-check"></i> Tramitación de denuncias ciudadanas e investigaciones de oficio</li>
+                            <li><i class="fas fa-circle-check"></i> Requerimientos de información, inspecciones y recolección de indicios</li>
+                        </ul>
+
+                        <div class="card-section-label">
+                            <i class="fas fa-diagram-project"></i> Cadena Procesal
+                        </div>
+                        <div class="flow-diagram">
+                            <span class="flow-step-tag">Detección/Denuncia</span>
+                            <i class="fas fa-chevron-right flow-arrow"></i>
+                            <span class="flow-step-tag">Indagación Preliminar</span>
+                            <i class="fas fa-chevron-right flow-arrow"></i>
+                            <span class="flow-step-tag">Pliego de Cargos</span>
+                            <i class="fas fa-chevron-right flow-arrow"></i>
+                            <span class="flow-step-tag">Resolución</span>
+                        </div>
+
+                        <div class="card-foot">
+                            <button class="btn-sm btn-sm-primary btn-detail" data-target="detail-m1">
+                                <i class="fas fa-circle-info"></i> Ficha técnica
+                            </button>
+                            <a href="index.html#servicios" class="card-action-link">
+                                Iniciar denuncia <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- MISIONAL 2 -->
+                    <article class="macro-card" data-category="misionales" data-keywords="evaluacion concentraciones economicas fusiones adquisiciones umbrales mercado relevante autorizacion condicionamiento">
+                        <div class="card-top">
+                            <div class="macro-icon-box icon-misional">
+                                <i class="fas fa-handshake"></i>
+                            </div>
+                            <span class="macro-order">M-02</span>
+                        </div>
+
+                        <h3>Evaluación de Concentraciones Económicas</h3>
+                        <p class="card-summary">
+                            Proceso de análisis técnico y legal para autorizar, condicionar o denegar fusiones, adquisiciones o uniones de empresas que puedan reducir sustancialmente la libre competencia.
+                        </p>
+
+                        <div class="card-section-label">
+                            <i class="fas fa-list-check"></i> Actuaciones y Facultades
+                        </div>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-circle-check"></i> Verificación previa de umbrales cuantitativos y cambios de control efectivo</li>
+                            <li><i class="fas fa-circle-check"></i> Delimitación de mercados relevantes geográficos y de producto</li>
+                            <li><i class="fas fa-circle-check"></i> Medición de índices de concentración y análisis de barreras de entrada</li>
+                            <li><i class="fas fa-circle-check"></i> Valoración de eficiencias y diseño de compromisos o condiciones</li>
+                        </ul>
+
+                        <div class="card-section-label">
+                            <i class="fas fa-diagram-project"></i> Cadena Procesal
+                        </div>
+                        <div class="flow-diagram">
+                            <span class="flow-step-tag">Notificación</span>
+                            <i class="fas fa-chevron-right flow-arrow"></i>
+                            <span class="flow-step-tag">Análisis de Mercado</span>
+                            <i class="fas fa-chevron-right flow-arrow"></i>
+                            <span class="flow-step-tag">Condicionamientos</span>
+                            <i class="fas fa-chevron-right flow-arrow"></i>
+                            <span class="flow-step-tag">Dictamen</span>
+                        </div>
+
+                        <div class="card-foot">
+                            <button class="btn-sm btn-sm-primary btn-detail" data-target="detail-m2">
+                                <i class="fas fa-circle-info"></i> Ficha técnica
+                            </button>
+                            <a href="index.html#servicios" class="card-action-link">
+                                Solicitar autorización <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- MISIONAL 3 -->
+                    <article class="macro-card" data-category="misionales" data-keywords="abogacia promocion competencia barreras normativas estatales opiniones tecnicas capacitaciones estudios de mercado">
+                        <div class="card-top">
+                            <div class="macro-icon-box icon-misional">
+                                <i class="fas fa-bullhorn"></i>
+                            </div>
+                            <span class="macro-order">M-03</span>
+                        </div>
+
+                        <h3>Abogacía y Promoción de la Competencia</h3>
+                        <p class="card-summary">
+                            Acciones destinadas a fomentar una cultura de competencia en la sociedad mediante la revisión de barreras normativas estatales, emisión de opiniones técnicas sobre leyes y capacitaciones a agentes económicos.
+                        </p>
+
+                        <div class="card-section-label">
+                            <i class="fas fa-list-check"></i> Actuaciones y Facultades
+                        </div>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-circle-check"></i> Identificación y propuesta de remoción de barreras burocráticas y regulatorias</li>
+                            <li><i class="fas fa-circle-check"></i> Emisión de opiniones técnicas sobre proyectos de ley, decretos y reglamentos</li>
+                            <li><i class="fas fa-circle-check"></i> Realización de estudios sectoriales e investigaciones de mercado</li>
+                            <li><i class="fas fa-circle-check"></i> Programas de capacitación y divulgación a empresas, academia y ciudadanía</li>
+                        </ul>
+
+                        <div class="card-section-label">
+                            <i class="fas fa-diagram-project"></i> Cadena Procesal
+                        </div>
+                        <div class="flow-diagram">
+                            <span class="flow-step-tag">Identificación</span>
+                            <i class="fas fa-chevron-right flow-arrow"></i>
+                            <span class="flow-step-tag">Estudio Económico</span>
+                            <i class="fas fa-chevron-right flow-arrow"></i>
+                            <span class="flow-step-tag">Opinión Técnica</span>
+                            <i class="fas fa-chevron-right flow-arrow"></i>
+                            <span class="flow-step-tag">Socialización</span>
+                        </div>
+
+                        <div class="card-foot">
+                            <button class="btn-sm btn-sm-primary btn-detail" data-target="detail-m3">
+                                <i class="fas fa-circle-info"></i> Ficha técnica
+                            </button>
+                            <a href="index.html#servicios" class="card-action-link">
+                                Reportar barrera <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+
+            <!-- ==========================================================
+                 2. MACROPROCESOS ESTRATÉGICOS
+                 ========================================================== -->
+            <div class="macro-group" id="estrategicos" data-group="estrategicos">
+                <div class="macro-group-head">
+                    <div>
+                        <span class="macro-group-badge estrategico">
+                            <i class="fas fa-compass"></i> Categoría 2 · Gobernanza y Rumbo
+                        </span>
+                        <h2 class="macro-group-title">Macroprocesos Estratégicos</h2>
+                        <p class="macro-group-desc">
+                            Definen el rumbo a largo plazo, fijan las prioridades operativas y velan por la legitimidad,
+                            integridad, rendición de cuentas y transparencia institucional de la agencia económica.
+                        </p>
+                    </div>
+                    <span class="badge-amber" style="align-self:center;">2 Macroprocesos Rectores</span>
+                </div>
+
+                <div class="grid-2" id="estrategicosGrid">
+
+                    <!-- ESTRATEGICO 1 -->
+                    <article class="macro-card" data-category="estrategicos" data-keywords="direccion planeacion institucional plan estrategico metas operativas consejo directivo superintendente poa">
+                        <div class="card-top">
+                            <div class="macro-icon-box icon-estrategico">
+                                <i class="fas fa-chess"></i>
+                            </div>
+                            <span class="macro-order">E-01</span>
+                        </div>
+
+                        <h3>Dirección y Planeación Institucional</h3>
+                        <p class="card-summary">
+                            Formulación del plan estratégico, metas operativas y directrices dictadas por el Consejo Directivo o el Superintendente para la conducción estratégica de la autoridad.
+                        </p>
+
+                        <div class="card-section-label">
+                            <i class="fas fa-list-check"></i> Actuaciones y Facultades
+                        </div>
+                        <ul class="feature-list strat-list">
+                            <li><i class="fas fa-circle-check"></i> Formulación y seguimiento del Plan Estratégico Institucional (PEI) y POA</li>
+                            <li><i class="fas fa-circle-check"></i> Implementación de políticas y directrices del Consejo Directivo y la Superintendencia</li>
+                            <li><i class="fas fa-circle-check"></i> Coordinación interinstitucional con ministerios y reguladores sectoriales</li>
+                            <li><i class="fas fa-circle-check"></i> Cooperación técnica internacional con redes globales (ICN, OCDE, agencias pares)</li>
+                        </ul>
+
+                        <div class="card-section-label">
+                            <i class="fas fa-diagram-project"></i> Cadena Procesal
+                        </div>
+                        <div class="flow-diagram">
+                            <span class="flow-step-tag">Diagnóstico</span>
+                            <i class="fas fa-chevron-right flow-arrow"></i>
+                            <span class="flow-step-tag">Plan Operativo</span>
+                            <i class="fas fa-chevron-right flow-arrow"></i>
+                            <span class="flow-step-tag">Directrices</span>
+                            <i class="fas fa-chevron-right flow-arrow"></i>
+                            <span class="flow-step-tag">Evaluación y Cuentas</span>
+                        </div>
+
+                        <div class="card-foot">
+                            <button class="btn-sm btn-sm-primary btn-detail" data-target="detail-e1">
+                                <i class="fas fa-circle-info"></i> Ficha técnica
+                            </button>
+                            <span class="badge-yes">Órgano Colegiado & Despacho</span>
+                        </div>
+                    </article>
+
+                    <!-- ESTRATEGICO 2 -->
+                    <article class="macro-card" data-category="estrategicos" data-keywords="gestion calidad cumplimiento estandares transparencia antisoborno fiscalizacion marco legal interno">
+                        <div class="card-top">
+                            <div class="macro-icon-box icon-estrategico">
+                                <i class="fas fa-shield-halved"></i>
+                            </div>
+                            <span class="macro-order">E-02</span>
+                        </div>
+
+                        <h3>Gestión de Calidad y Cumplimiento</h3>
+                        <p class="card-summary">
+                            Procesos orientados a mantener estándares de transparencia (como la gestión antisoborno) y la fiscalización del marco legal interno y los tiempos de respuesta.
+                        </p>
+
+                        <div class="card-section-label">
+                            <i class="fas fa-list-check"></i> Actuaciones y Facultades
+                        </div>
+                        <ul class="feature-list strat-list">
+                            <li><i class="fas fa-circle-check"></i> Mantenimiento del Sistema de Gestión Antisoborno y ética pública institucional</li>
+                            <li><i class="fas fa-circle-check"></i> Fiscalización de plazos legales y garantías de debido proceso en cada expediente</li>
+                            <li><i class="fas fa-circle-check"></i> Gestión de transparencia activa, acceso a la información y datos abiertos</li>
+                            <li><i class="fas fa-circle-check"></i> Auditorías internas continuas para asegurar estandarización y trazabilidad</li>
+                        </ul>
+
+                        <div class="card-section-label">
+                            <i class="fas fa-diagram-project"></i> Cadena Procesal
+                        </div>
+                        <div class="flow-diagram">
+                            <span class="flow-step-tag">Norma y Políticas</span>
+                            <i class="fas fa-chevron-right flow-arrow"></i>
+                            <span class="flow-step-tag">Control Preventivo</span>
+                            <i class="fas fa-chevron-right flow-arrow"></i>
+                            <span class="flow-step-tag">Auditoría Interna</span>
+                            <i class="fas fa-chevron-right flow-arrow"></i>
+                            <span class="flow-step-tag">Mejora Continua</span>
+                        </div>
+
+                        <div class="card-foot">
+                            <button class="btn-sm btn-sm-primary btn-detail" data-target="detail-e2">
+                                <i class="fas fa-circle-info"></i> Ficha técnica
+                            </button>
+                            <span class="badge-yes">ISO Antisoborno & Auditoría</span>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+
+            <!-- ==========================================================
+                 3. MACROPROCESOS DE APOYO (SOPORTE)
+                 ========================================================== -->
+            <div class="macro-group" id="apoyo" data-group="apoyo">
+                <div class="macro-group-head">
+                    <div>
+                        <span class="macro-group-badge apoyo">
+                            <i class="fas fa-hand-holding-hand"></i> Categoría 3 · Respaldo y Soporte
+                        </span>
+                        <h2 class="macro-group-title">Macroprocesos de Apoyo</h2>
+                        <p class="macro-group-desc">
+                            Brindan los recursos humanos, presupuestarios, jurídicos y tecnológicos necesarios para que las intendencias operativas realicen su trabajo técnico con los más altos estándares.
+                        </p>
+                    </div>
+                    <span class="badge-amber" style="align-self:center;">2 Macroprocesos Habilitadores</span>
+                </div>
+
+                <div class="grid-2" id="apoyoGrid">
+
+                    <!-- APOYO 1 -->
+                    <article class="macro-card" data-category="apoyo" data-keywords="gestion juridica litigio defensa legal resoluciones juzgados tribunales asesoria normativa">
+                        <div class="card-top">
+                            <div class="macro-icon-box icon-apoyo">
+                                <i class="fas fa-scale-unbalanced"></i>
+                            </div>
+                            <span class="macro-order">A-01</span>
+                        </div>
+
+                        <h3>Gestión Jurídica y Litigio</h3>
+                        <p class="card-summary">
+                            Defensa legal de las resoluciones de la Superintendencia ante los juzgados o tribunales superiores y asesoría normativa transversal a todas las áreas técnicas.
+                        </p>
+
+                        <div class="card-section-label">
+                            <i class="fas fa-list-check"></i> Actuaciones y Facultades
+                        </div>
+                        <ul class="feature-list apoyo-list">
+                            <li><i class="fas fa-circle-check"></i> Defensa procesal ante tribunales contencioso-administrativos y cortes de justicia</li>
+                            <li><i class="fas fa-circle-check"></i> Emisión de criterios técnico-jurídicos y control de legalidad de los actos del SIC</li>
+                            <li><i class="fas fa-circle-check"></i> Substanciación y respuesta a recursos y medios de impugnación legal</li>
+                            <li><i class="fas fa-circle-check"></i> Sistematización de jurisprudencia y precedentes judiciales vinculantes</li>
+                        </ul>
+
+                        <div class="card-section-label">
+                            <i class="fas fa-diagram-project"></i> Cadena Procesal
+                        </div>
+                        <div class="flow-diagram">
+                            <span class="flow-step-tag">Criterio Legal</span>
+                            <i class="fas fa-chevron-right flow-arrow"></i>
+                            <span class="flow-step-tag">Control de Actos</span>
+                            <i class="fas fa-chevron-right flow-arrow"></i>
+                            <span class="flow-step-tag">Defensa en Juicio</span>
+                            <i class="fas fa-chevron-right flow-arrow"></i>
+                            <span class="flow-step-tag">Jurisprudencia</span>
+                        </div>
+
+                        <div class="card-foot">
+                            <button class="btn-sm btn-sm-primary btn-detail" data-target="detail-a1">
+                                <i class="fas fa-circle-info"></i> Ficha técnica
+                            </button>
+                            <span class="badge-cyan">Dirección Jurídica</span>
+                        </div>
+                    </article>
+
+                    <!-- APOYO 2 -->
+                    <article class="macro-card" data-category="apoyo" data-keywords="gestion administrativa financiera presupuesto recursos humanos compras tecnologias de la informacion ti sic">
+                        <div class="card-top">
+                            <div class="macro-icon-box icon-apoyo">
+                                <i class="fas fa-coins"></i>
+                            </div>
+                            <span class="macro-order">A-02</span>
+                        </div>
+
+                        <h3>Gestión Administrativa y Financiera</h3>
+                        <p class="card-summary">
+                            Manejo del presupuesto institucional, recursos humanos, compras y tecnologías de la información que sostienen la infraestructura digital del expediente único.
+                        </p>
+
+                        <div class="card-section-label">
+                            <i class="fas fa-list-check"></i> Actuaciones y Facultades
+                        </div>
+                        <ul class="feature-list apoyo-list">
+                            <li><i class="fas fa-circle-check"></i> Programación, ejecución y rendición presupuestaria institucional con eficiencia</li>
+                            <li><i class="fas fa-circle-check"></i> Gestión y desarrollo de talento humano especializado (economistas, juristas, peritos)</li>
+                            <li><i class="fas fa-circle-check"></i> Procesos de adquisiciones y contrataciones públicas con total transparencia</li>
+                            <li><i class="fas fa-circle-check"></i> Administración del expediente electrónico, seguridad de la información y TIC</li>
+                        </ul>
+
+                        <div class="card-section-label">
+                            <i class="fas fa-diagram-project"></i> Cadena Procesal
+                        </div>
+                        <div class="flow-diagram">
+                            <span class="flow-step-tag">Presupuestación</span>
+                            <i class="fas fa-chevron-right flow-arrow"></i>
+                            <span class="flow-step-tag">Gestión Humana</span>
+                            <i class="fas fa-chevron-right flow-arrow"></i>
+                            <span class="flow-step-tag">Adquisiciones</span>
+                            <i class="fas fa-chevron-right flow-arrow"></i>
+                            <span class="flow-step-tag">Plataforma Digital</span>
+                        </div>
+
+                        <div class="card-foot">
+                            <button class="btn-sm btn-sm-primary btn-detail" data-target="detail-a2">
+                                <i class="fas fa-circle-info"></i> Ficha técnica
+                            </button>
+                            <span class="badge-cyan">Administración & TICs</span>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+
+            <!-- MENSAJE VACÍO BÚSQUEDA -->
+            <div id="noResults" style="display:none; text-align:center; padding:3rem 1rem; background:white; border-radius:24px; border:1px solid var(--border);">
+                <i class="fas fa-filter-circle-xmark" style="font-size:2rem; color:var(--text-muted); margin-bottom:.8rem;"></i>
+                <h3 style="font-size:1.1rem; margin-bottom:.4rem;">No se encontraron macroprocesos</h3>
+                <p style="color:var(--text-muted); font-size:.88rem;">Intente con otros términos de búsqueda o seleccione "Todos".</p>
+            </div>
+
+            <!-- TARJETA TRANSVERSAL DEL EXPEDIENTE ÚNICO -->
+            <div class="transversal-card" id="expedienteTransversal">
+                <div class="transversal-inner">
+                    <div>
+                        <div class="sec-label" style="color:var(--cyan);">El Eje Articulador</div>
+                        <h2>Expediente Electrónico Único</h2>
+                        <p>
+                            Los macroprocesos no son silos aislados. Toda la interacción del ciudadano, de las empresas investigadas y de los funcionarios públicos se consolida en una sola plataforma con trazabilidad verificable, acuses digitales con firma electrónica y estricto control de plazos procesales.
+                        </p>
+                        <div style="margin-top:1.8rem;">
+                            <a href="index.html#expediente" class="btn-primary">
+                                <i class="fas fa-folder-open"></i> Consultar un expediente
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="transversal-points">
+                        <div class="trans-point">
+                            <i class="fas fa-fingerprint"></i>
+                            <div>
+                                <h4>Firma Electrónica y Acuse de Recibo</h4>
+                                <p>Toda actuación genera un registro inmutable con fecha, hora y sello de seguridad.</p>
+                            </div>
+                        </div>
+                        <div class="trans-point">
+                            <i class="fas fa-clock-rotate-left"></i>
+                            <div>
+                                <h4>Control Automático de Plazos</h4>
+                                <p>Alertas tempranas para el cómputo de días hábiles conforme a la Ley de Competencia.</p>
+                            </div>
+                        </div>
+                        <div class="trans-point">
+                            <i class="fas fa-lock"></i>
+                            <div>
+                                <h4>Reserva y Confidencialidad</h4>
+                                <p>Protección rigurosa de secretos comerciales e información sensible de los agentes.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ======================================================================
+         CTA FINAL
+         ====================================================================== -->
+    <section class="cta-band">
+        <div class="container">
+            <h2>Tecnología al servicio de mercados más transparentes y libres</h2>
+            <p>
+                Inicie sus solicitudes de autorización de concentración, reporte barreras regulatorias o presente denuncias con plena trazabilidad institucional.
+            </p>
+            <div class="hero-actions">
+                <a href="index.html#servicios" class="btn-primary">
+                    <i class="fas fa-file-circle-plus"></i> Iniciar trámite en línea
+                </a>
+                <a href="index.html#expediente" class="btn-outline">
+                    <i class="fas fa-magnifying-glass"></i> Consultar estado de trámite
+                </a>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- ==========================================================================
+     MODAL DE FICHA TÉCNICA
+     ========================================================================== -->
+<div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-dialog">
+        <button class="modal-close" id="modalClose" aria-label="Cerrar modal">
+            <i class="fas fa-xmark"></i>
+        </button>
+
+        <div id="modalContent">
+            <!-- RENDERIZADO DINÁMICO -->
+        </div>
+    </div>
+</div>
+
+<!-- ==========================================================================
+     FOOTER
+     ========================================================================== -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+
+            <div class="footer-brand">
+                <a href="index.html" style="display:inline-block; margin-bottom:1.1rem;" title="Superintendencia de Competencia">
+                    <img src="img/logo-sc-blanco.png" alt="Superintendencia de Competencia" class="footer-logo-sc" style="height:54px; width:auto; max-height:58px; object-fit:contain;">
+                </a>
+                <p>
+                    Sistema Integral de Competencia (SIC): modelo institucional basado en macroprocesos misionales, estratégicos y de apoyo. Garantizando la tutela efectiva de las condiciones de competencia en beneficio del desarrollo económico nacional.
+                </p>
+            </div>
+
+            <div>
+                <h5>Macroprocesos</h5>
+                <div class="footer-links">
+                    <a href="#misionales">Misionales (Sustantivos)</a>
+                    <a href="#estrategicos">Estratégicos</a>
+                    <a href="#apoyo">De Apoyo (Soporte)</a>
+                    <a href="#expedienteTransversal">Expediente Electrónico</a>
+                    <a href="index.html#servicios">Catálogo de Actuaciones</a>
+                </div>
+            </div>
+
+            <div>
+                <h5>Portal SIC</h5>
+                <div class="footer-links">
+                    <a href="index.html">Página Principal</a>
+                    <a href="talento.html">Trabaja con nosotros</a>
+                    <a href="index.html#motor">Motor de Análisis</a>
+                    <a href="index.html#expediente">Consulta de Expediente</a>
+                    <a href="index.html#observatorio">Observatorio</a>
+                    <a href="index.html#servicios">Iniciar Trámite</a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 Superintendencia de Competencia. Todos los derechos reservados.</p>
+            <div class="footer-logos" style="display:flex; align-items:center; gap:1.4rem; flex-wrap:wrap;">
+                <div style="display:inline-flex; align-items:center; gap:9px;">
+                    <img src="img/logo-gobierno-gt-web.png" alt="Gobierno de Guatemala" style="height:36px; width:auto; object-fit:contain; filter:drop-shadow(0 2px 6px rgba(0,0,0,0.3));">
+                    <span style="font-size:.82rem; font-weight:600; color:var(--text-muted);">Gobierno de Guatemala</span>
+                </div>
+                <span style="color:rgba(255,255,255,0.25);">·</span>
+                <div style="display:inline-flex; align-items:center; gap:9px;">
+                    <img src="img/logo-sc-blanco.png" alt="Superintendencia de Competencia" style="height:32px; width:auto; object-fit:contain;">
+                    <span style="font-size:.82rem; font-weight:600; color:var(--text-muted);">Superintendencia de Competencia</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!-- JAVASCRIPT INTERACTIVO -->
+<script>
+/* ==========================================================================
+   DATOS DE FICHAS TÉCNICAS (DETALLE INSTITUCIONAL)
+   ========================================================================== */
+const DETALLES_MACROPROCESOS = {
+    'detail-m1': {
+        codigo: 'M-01 · Misional Sustantivo',
+        titulo: 'Investigación de Prácticas Anticompetitivas',
+        resumen: 'Consiste en la detección, análisis, investigación y persecución de oficio o por denuncia de conductas como carteles (acuerdos entre competidores) o el abuso de posición dominante.',
+        objetivo: 'Tutelar el orden económico de mercado sancionando acuerdos colusorios, fijación concertada de precios, repartos de mercado y conductas exclusionarias que perjudican a los consumidores.',
+        responsable: 'Dirección o Intendencia de Investigaciones de Prácticas Anticompetitivas',
+        entradas: ['Denuncia ciudadana o de agente económico', 'Indicios de mercado detectados de oficio', 'Información remitida por otros reguladores', 'Solicitud de investigación de parte'],
+        salidas: ['Acuerdo de inicio de investigación preliminar', 'Requerimientos de información e inspecciones', 'Dictamen técnico preliminar o pliego de cargos', 'Propuesta de archivo o elevación al Consejo Directivo'],
+        tramiteVinculado: 'index.html#servicios'
+    },
+    'detail-m2': {
+        codigo: 'M-02 · Misional Sustantivo',
+        titulo: 'Evaluación de Concentraciones Económicas',
+        resumen: 'Proceso de análisis técnico y legal para autorizar, condicionar o denegar fusiones, adquisiciones o uniones de empresas que puedan reducir sustancialmente la libre competencia.',
+        objetivo: 'Prevenir estructuras oligopólicas o monopolios que puedan surgir por consolidación corporativa indebida, garantizando que el mercado preserve opciones competitivas para los compradores.',
+        responsable: 'Dirección o Intendencia de Concentraciones Económicas',
+        entradas: ['Solicitud de autorización previa de concentración', 'Notificación formal conforme a umbrales legales', 'Estudios económicos y estados financieros de las partes', 'Alegaciones de competidores o terceros interesados'],
+        salidas: ['Constancia de cumplimiento de requisitos de admisibilidad', 'Estudio técnico de mercado relevante y poder de mercado', 'Resolución de autorización pura y simple', 'Resolución con condicionamientos y compromisos estructurales/conductuales', 'Resolución denegatoria motivada'],
+        tramiteVinculado: 'index.html#servicios'
+    },
+    'detail-m3': {
+        codigo: 'M-03 · Misional Sustantivo',
+        titulo: 'Abogacía y Promoción de la Competencia',
+        resumen: 'Acciones destinadas a fomentar una cultura de competencia en la sociedad mediante la revisión de barreras normativas estatales, emisión de opiniones técnicas sobre leyes y capacitaciones a agentes económicos.',
+        objetivo: 'Incidir proactivamente en el marco regulatorio público para evitar que leyes, reglamentos o normas municipales generen trabas innecesarias o privilegios anticompetitivos, difundiendo los beneficios de la libre competencia.',
+        responsable: 'Dirección de Estudios de Mercado y Promoción de la Competencia',
+        entradas: ['Reporte ciudadano de barrera regulatoria', 'Consultas de instituciones públicas sobre proyectos de ley o reglamentos', 'Monitoreo de mercados con concentración o rigidez de precios', 'Convenios de capacitación académica o gremial'],
+        salidas: ['Opiniones técnicas económico-jurídicas no vinculantes', 'Estudios y diagnósticos sectoriales de mercado', 'Recomendaciones públicas de desregulación o simplificación', 'Talleres y guías de cumplimiento normativo empresarial'],
+        tramiteVinculado: 'index.html#servicios'
+    },
+    'detail-e1': {
+        codigo: 'E-01 · Estratégico',
+        titulo: 'Dirección y Planeación Institucional',
+        resumen: 'Formulación del plan estratégico, metas operativas y directrices dictadas por el Consejo Directivo o el Superintendente.',
+        objetivo: 'Alinear los recursos institucionales con los mandatos de la Ley de Competencia, definiendo prioridades sectoriales, metas operativas y mecanismos de evaluación de impacto para la agencia.',
+        responsable: 'Consejo Directivo, Superintendente de Competencia y Unidad de Planeación',
+        entradas: ['Mandato legal y Plan Nacional de Desarrollo', 'Diagnósticos de desempeño institucional', 'Presupuesto estatal asignado y proyecciones multianuales', 'Prioridades económicas del país'],
+        salidas: ['Plan Estratégico Institucional (PEI)', 'Plan Operativo Anual (POA) con metas e indicadores', 'Resoluciones y directrices de política de competencia', 'Memorias de labores e informes anuales al Congreso'],
+        tramiteVinculado: 'index.html#macroprocesos'
+    },
+    'detail-e2': {
+        codigo: 'E-02 · Estratégico',
+        titulo: 'Gestión de Calidad y Cumplimiento',
+        resumen: 'Procesos orientados a mantener estándares de transparencia (como la gestión antisoborno) y la fiscalización del marco legal interno.',
+        objetivo: 'Blindar la actuación de los funcionarios con protocolos estrictos de integridad, anticorrupción, confidencialidad y apego riguroso a los plazos legales procesales.',
+        responsable: 'Unidad de Cumplimiento, Oficialía de Integridad y Auditoría Interna',
+        entradas: ['Directrices de la Ley de Acceso a la Información y Antisoborno', 'Reportes de tiempos procesales de la plataforma SIC', 'Denuncias internas o quejas éticas', 'Planes de auditoría operativa'],
+        salidas: ['Certificaciones de calidad y estándares antisoborno', 'Informes periódicos de cumplimiento y celeridad procesal', 'Matriz de riesgos de corrupción y mitigación', 'Planes de mejora continua institucional'],
+        tramiteVinculado: 'index.html#macroprocesos'
+    },
+    'detail-a1': {
+        codigo: 'A-01 · De Apoyo (Soporte)',
+        titulo: 'Gestión Jurídica y Litigio',
+        resumen: 'Defensa legal de las resoluciones de la Superintendencia ante los juzgados o tribunales superiores y asesoría normativa.',
+        objetivo: 'Sostener la solidez jurídica de los actos administrativos de la institución, defendiendo las decisiones sancionatorias o de concentración ante las salas judiciales y cortes correspondientes.',
+        responsable: 'Dirección de Asuntos Jurídicos y Procuración',
+        entradas: ['Recursos administrativos interpuestos por partes procesales', 'Demandas contencioso-administrativas o amparos constitucionales', 'Consultas jurídicas internas de las intendencias sustantivas', 'Nuevas iniciativas de ley en el ámbito nacional'],
+        salidas: ['Contestación de demandas y memoriales de defensa procesal', 'Dictámenes de legalidad previos a las resoluciones del Consejo', 'Resolución de recursos de reposición o alzada', 'Compendio de precedentes judiciales en materia de competencia'],
+        tramiteVinculado: 'index.html#servicios'
+    },
+    'detail-a2': {
+        codigo: 'A-02 · De Apoyo (Soporte)',
+        titulo: 'Gestión Administrativa y Financiera',
+        resumen: 'Manejo del presupuesto institucional, recursos humanos, compras y tecnologías de la información.',
+        objetivo: 'Garantizar el soporte logístico, financiero, tecnológico y humano para que la autoridad cuente con peritos calificados, sistemas seguros y recursos materiales de vanguardia.',
+        responsable: 'Dirección Administrativa Financiera y Dirección de Informática (TIC)',
+        entradas: ['Asignaciones presupuestarias del Ministerio de Finanzas', 'Requerimientos de personal especializado de las intendencias', 'Planes de compras y contrataciones institucionales', 'Necesidades de infraestructura de servidores y ciberseguridad'],
+        salidas: ['Ejecución presupuestaria auditada y transparente', 'Contratación y capacitación continua de personal técnico', 'Soporte y disponibilidad 24/7 del expediente electrónico SIC', 'Políticas de ciberseguridad y respaldo de expedientes'],
+        tramiteVinculado: 'index.html#expediente'
+    }
+};
+
+/* ==========================================================================
+   INTERACCIÓN Y MENÚ MÓVIL
+   ========================================================================== */
+const menuToggle = document.getElementById('menuToggle');
+const navMenu    = document.getElementById('navMenu');
+
+menuToggle.addEventListener('click', () => {
+    navMenu.classList.toggle('open');
+    const icon = menuToggle.querySelector('i');
+    icon.className = navMenu.classList.contains('open') ? 'fas fa-xmark' : 'fas fa-bars';
+});
+
+navMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+        navMenu.classList.remove('open');
+        menuToggle.querySelector('i').className = 'fas fa-bars';
+    });
+});
+
+/* ==========================================================================
+   TOAST
+   ========================================================================== */
+const toastEl = document.getElementById('toast');
+let toastTimer;
+function showToast(message, icon = 'fa-circle-check') {
+    toastEl.innerHTML = `<i class="fas ${icon}"></i> ${message}`;
+    toastEl.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2400);
+}
+
+/* ==========================================================================
+   FILTROS Y BÚSQUEDA DINÁMICA
+   ========================================================================== */
+const filterChips = Array.from(document.querySelectorAll('.f-chip'));
+const filterSearch = document.getElementById('filterSearch');
+const macroCards = Array.from(document.querySelectorAll('.macro-card'));
+const macroGroups = Array.from(document.querySelectorAll('.macro-group'));
+const noResults = document.getElementById('noResults');
+
+let currentFilter = 'all';
+
+function normalize(str) {
+    return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
+function applyMacroFilters() {
+    const term = normalize(filterSearch.value.trim());
+    let totalVisible = 0;
+
+    macroGroups.forEach(group => {
+        const groupType = group.dataset.group;
+        const cardsInGroup = group.querySelectorAll('.macro-card');
+        let groupVisibleCount = 0;
+
+        cardsInGroup.forEach(card => {
+            const cardCat = card.dataset.category;
+            const keywords = normalize(card.dataset.keywords + ' ' + card.textContent);
+
+            const matchCategory = (currentFilter === 'all') || (cardCat === currentFilter);
+            const matchSearch   = !term || keywords.includes(term);
+
+            const isVisible = matchCategory && matchSearch;
+            card.style.display = isVisible ? '' : 'none';
+            if (isVisible) {
+                groupVisibleCount++;
+                totalVisible++;
+            }
+        });
+
+        group.style.display = groupVisibleCount > 0 ? '' : 'none';
+    });
+
+    noResults.style.display = totalVisible === 0 ? 'block' : 'none';
+}
+
+filterChips.forEach(chip => {
+    chip.addEventListener('click', () => {
+        filterChips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        currentFilter = chip.dataset.filter;
+        applyMacroFilters();
+        showToast('Filtrando: ' + chip.textContent.trim(), 'fa-filter');
+    });
+});
+
+filterSearch.addEventListener('input', applyMacroFilters);
+
+/* ==========================================================================
+   MODAL DE FICHA TÉCNICA
+   ========================================================================== */
+const modalBackdrop = document.getElementById('modalBackdrop');
+const modalContent  = document.getElementById('modalContent');
+const modalClose    = document.getElementById('modalClose');
+
+function openModal(key) {
+    const data = DETALLES_MACROPROCESOS[key];
+    if (!data) return;
+
+    modalContent.innerHTML = `
+        <span class="modal-badge badge-cyan">${data.codigo}</span>
+        <h3 class="modal-title">${data.titulo}</h3>
+        <p class="modal-body">${data.resumen}</p>
+
+        <div class="modal-section">
+            <h4><i class="fas fa-bullseye" style="color:var(--cyan-dim); margin-right:.4rem;"></i> Propósito Institucional</h4>
+            <p>${data.objetivo}</p>
+        </div>
+
+        <div class="modal-section">
+            <h4><i class="fas fa-building" style="color:var(--cyan-dim); margin-right:.4rem;"></i> Órgano Técnico Responsable</h4>
+            <p style="font-weight:600; color:var(--navy);">${data.responsable}</p>
+        </div>
+
+        <div class="modal-section">
+            <h4><i class="fas fa-arrow-right-to-bracket" style="color:var(--cyan-dim); margin-right:.4rem;"></i> Entradas Principales</h4>
+            <ul style="list-style:disc; margin-left:1.2rem; font-size:.84rem; color:var(--text-muted); display:grid; gap:.35rem;">
+                ${data.entradas.map(e => `<li>${e}</li>`).join('')}
+            </ul>
+        </div>
+
+        <div class="modal-section">
+            <h4><i class="fas fa-arrow-up-from-bracket" style="color:var(--cyan-dim); margin-right:.4rem;"></i> Productos y Salidas Procesales</h4>
+            <ul style="list-style:disc; margin-left:1.2rem; font-size:.84rem; color:var(--text-muted); display:grid; gap:.35rem;">
+                ${data.salidas.map(s => `<li>${s}</li>`).join('')}
+            </ul>
+        </div>
+
+        <div style="margin-top:1.8rem; display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
+            <a href="${data.tramiteVinculado}" class="btn-primary" style="font-size:.82rem; padding:.7rem 1.6rem;">
+                <i class="fas fa-file-circle-plus"></i> Ir al trámite vinculado
+            </a>
+            <button class="btn-outline" style="color:var(--text-main); border-color:var(--border); font-size:.82rem; padding:.7rem 1.4rem;" onclick="closeModal()">
+                Cerrar ficha
+            </button>
+        </div>
+    `;
+
+    modalBackdrop.classList.add('open');
+    modalBackdrop.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+    modalBackdrop.classList.remove('open');
+    modalBackdrop.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+}
+
+document.querySelectorAll('.btn-detail').forEach(btn => {
+    btn.addEventListener('click', () => {
+        openModal(btn.dataset.target);
+    });
+});
+
+modalClose.addEventListener('click', closeModal);
+modalBackdrop.addEventListener('click', (e) => {
+    if (e.target === modalBackdrop) closeModal();
+});
+
+window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modalBackdrop.classList.contains('open')) {
+        closeModal();
+    }
+});
+</script>
+
+</body>
+</html>
