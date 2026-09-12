@@ -9,7 +9,7 @@
 <!-- TIPOGRAFÍA INSTITUCIONAL -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Outfit:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
 
 <!-- ICONOGRAFÍA -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -201,7 +201,7 @@ button { cursor: pointer; border: none; background: none; }
 }
 
 /* ==========================================================================
-   HERO CARRUSEL DE IMÁGENES
+   HERO CARRUSEL DE IMÁGENES / BANNER PRINCIPAL
    ========================================================================== */
 .hero-carousel-section {
     position: relative; overflow: hidden;
@@ -210,10 +210,35 @@ button { cursor: pointer; border: none; background: none; }
     padding: 0;
 }
 
+.hero-grid-pattern {
+    position: absolute; inset: 0; z-index: 1;
+    background-image: 
+        radial-gradient(rgba(0, 144, 230, 0.15) 1px, transparent 1px),
+        radial-gradient(rgba(2, 159, 156, 0.12) 1px, transparent 1px);
+    background-size: 32px 32px;
+    background-position: 0 0, 16px 16px;
+    opacity: 0.85;
+    pointer-events: none;
+}
+
+.hero-glow-orb-1 {
+    position: absolute; top: -100px; left: -100px;
+    width: 500px; height: 500px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(0, 144, 230, 0.28) 0%, rgba(0, 39, 101, 0) 70%);
+    pointer-events: none; z-index: 1;
+}
+
+.hero-glow-orb-2 {
+    position: absolute; bottom: -120px; right: -80px;
+    width: 550px; height: 550px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(2, 159, 156, 0.30) 0%, rgba(0, 39, 101, 0) 70%);
+    pointer-events: none; z-index: 1;
+}
+
 .carousel-container {
     position: relative;
     width: 100%;
-    min-height: 560px;
+    min-height: 580px;
 }
 
 .carousel-track {
@@ -228,9 +253,8 @@ button { cursor: pointer; border: none; background: none; }
     transition: opacity 0.75s cubic-bezier(0.4, 0, 0.2, 1), transform 0.75s ease, visibility 0.75s ease;
     transform: scale(0.98);
     display: flex; align-items: center; justify-content: center;
-    padding: 5rem 0 4.8rem;
+    padding: 3.8rem 0 5rem;
     z-index: 1;
-    text-align: center;
 }
 
 .carousel-slide.active {
@@ -245,97 +269,65 @@ button { cursor: pointer; border: none; background: none; }
 }
 
 .slide-bg-1 {
-    background: linear-gradient(135deg, #002765 0%, #022D60 50%, #016F89 100%);
+    background: linear-gradient(135deg, #001C48 0%, #002765 45%, #015E75 100%);
 }
 .slide-bg-2 {
-    background: linear-gradient(135deg, #022D60 0%, #016F89 60%, #029F9C 100%);
+    background: linear-gradient(135deg, #002765 0%, #016F89 55%, #029F9C 100%);
 }
 .slide-bg-3 {
-    background: linear-gradient(135deg, #002765 0%, #0090E6 65%, #016F89 100%);
+    background: linear-gradient(135deg, #001942 0%, #004D99 60%, #016F89 100%);
 }
 .slide-bg-4 {
-    background: linear-gradient(135deg, #016F89 0%, #022D60 55%, #029F9C 100%);
+    background: linear-gradient(135deg, #014E61 0%, #022D60 55%, #029F9C 100%);
 }
 
 .slide-bg::after {
     content: ''; position: absolute; inset: 0;
     background:
-        radial-gradient(circle at 75% 25%, rgba(2, 159, 156, 0.28), transparent 65%),
-        radial-gradient(circle at 20% 80%, rgba(0, 144, 230, 0.25), transparent 65%);
+        radial-gradient(circle at 80% 20%, rgba(2, 159, 156, 0.25), transparent 55%),
+        radial-gradient(circle at 15% 85%, rgba(0, 144, 230, 0.22), transparent 55%);
     pointer-events: none;
 }
 
+/* ESTRUCTURA LIMPIA CENTRADA EN SLIDES */
+.hero-inner {
+    position: relative; z-index: 2;
+    max-width: 840px;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem 1rem 3rem 1rem;
+}
+
+.hero-inner .hero-actions {
+    justify-content: center;
+}
+
 .hero-logo-sc {
-    height: 64px; width: auto; max-height: 70px; object-fit: contain;
-    filter: drop-shadow(0 4px 16px rgba(0,0,0,0.45));
+    height: 60px; width: auto; max-height: 68px; object-fit: contain;
+    filter: drop-shadow(0 4px 20px rgba(0,0,0,0.5));
 }
 
 .hero-badge-icon {
-    width: 64px; height: 64px; border-radius: 50%;
-    background: rgba(2, 159, 156, 0.2);
-    border: 1px solid rgba(2, 159, 156, 0.5);
+    width: 58px; height: 58px; border-radius: 18px;
+    background: linear-gradient(135deg, rgba(2, 159, 156, 0.28), rgba(0, 144, 230, 0.28));
+    border: 1px solid rgba(255, 255, 255, 0.25);
     display: inline-flex; align-items: center; justify-content: center;
-    font-size: 1.6rem; color: #FFFFFF;
+    font-size: 1.5rem; color: #FFFFFF;
     margin-bottom: 1.2rem;
-    box-shadow: 0 0 24px rgba(2, 159, 156, 0.45);
-}
-
-.carousel-btn {
-    position: absolute; top: 50%; transform: translateY(-50%);
-    width: 48px; height: 48px; border-radius: 50%;
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    color: #FFFFFF; font-size: 1.1rem;
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer; z-index: 10;
-    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
-    transition: all 0.25s ease;
-}
-.carousel-btn:hover {
-    background: #FFFFFF; color: #002765;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-    transform: translateY(-50%) scale(1.08);
-}
-.prev-btn { left: 24px; }
-.next-btn { right: 24px; }
-
-.carousel-dots {
-    position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%);
-    display: flex; align-items: center; gap: 10px; z-index: 10;
-}
-.carousel-dots .dot {
-    width: 36px; height: 6px; border-radius: 4px;
-    background: rgba(255, 255, 255, 0.3);
-    border: none; padding: 0; cursor: pointer;
-    overflow: hidden; position: relative;
-    transition: background 0.3s ease, width 0.3s ease;
-}
-.carousel-dots .dot.active {
-    width: 52px; background: rgba(255, 255, 255, 0.4);
-}
-.carousel-dots .dot .progress-bar {
-    position: absolute; top: 0; left: 0; bottom: 0;
-    width: 0%; background: #029F9C; border-radius: 4px;
-}
-.carousel-dots .dot.active .progress-bar {
-    animation: carouselProgress 5s linear forwards;
-}
-@keyframes carouselProgress {
-    0% { width: 0%; }
-    100% { width: 100%; }
-}
-
-.hero-inner {
-    position: relative; z-index: 2;
-    display: flex; flex-direction: column; align-items: center;
+    box-shadow: 0 8px 28px rgba(0, 144, 230, 0.35);
+    backdrop-filter: blur(8px);
 }
 
 .hero-eyebrow {
     display: inline-flex; align-items: center; gap: .6rem;
     padding: .45rem 1.15rem; border-radius: 50px;
-    border: 1px solid rgba(2,159,156,0.40);
-    background: rgba(2,159,156,0.12);
-    color: #FFFFFF;
+    border: 1px solid rgba(0,194,224,0.35);
+    background: rgba(0,194,224,0.08);
+    color: var(--cyan);
     font-size: .68rem; font-weight: 700;
     letter-spacing: .09em; text-transform: uppercase;
     margin-bottom: 1.5rem;
@@ -347,33 +339,266 @@ button { cursor: pointer; border: none; background: none; }
     animation: blink 1.8s ease-in-out infinite;
 }
 
+.hero-carousel-section h1,
+.carousel-slide h1,
+.hero-left h1,
 .hero h1 {
-    font-size: clamp(2.6rem, 6vw, 4.2rem);
-    font-weight: 800; letter-spacing: -0.03em;
-    color: #FFFFFF; max-width: 16ch;
+    font-family: 'Montserrat', 'Outfit', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif !important;
+    font-size: clamp(2.3rem, 5vw, 4rem) !important;
+    font-weight: 800 !important; letter-spacing: -0.03em !important;
+    color: #FFFFFF !important;
+    -webkit-text-fill-color: #FFFFFF !important;
+    line-height: 1.12 !important;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.70), 0 2px 6px rgba(0, 0, 0, 0.90) !important;
+    margin-bottom: 0.4rem !important;
 }
+
+.hero-carousel-section h1 em,
+.carousel-slide h1 em,
+.hero-left h1 em,
 .hero h1 em {
-    font-style: normal;
-    background: var(--grad-acento);
-    -webkit-background-clip: text; background-clip: text;
-    -webkit-text-fill-color: transparent; color: transparent;
+    font-style: normal !important;
+    font-family: inherit !important;
+    color: #FFFFFF !important;
+    background: none !important;
+    -webkit-background-clip: border-box !important; background-clip: border-box !important;
+    -webkit-text-fill-color: #FFFFFF !important;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.70), 0 2px 6px rgba(0, 0, 0, 0.90) !important;
+    display: inline !important;
 }
 
 .hero-lema {
     margin-top: 1.1rem;
     font-style: italic; font-size: 1.05rem;
-    color: rgba(255,255,255,0.72);
+    color: rgba(255,255,255,0.78);
     letter-spacing: .01em;
+    text-shadow: none;
 }
 
 .hero-sub {
-    margin-top: 1.1rem; max-width: 620px;
-    font-size: .97rem; color: rgba(255,255,255,0.60);
+    margin-top: 1.1rem; max-width: 760px;
+    font-size: .97rem; color: rgba(255,255,255,0.65);
+    line-height: 1.65;
+    text-shadow: none;
 }
 
 .hero-actions {
-    margin-top: 2.3rem;
-    display: flex; flex-wrap: wrap; gap: 14px; justify-content: center;
+    margin-top: 2rem;
+    display: flex; flex-wrap: wrap; gap: 14px; align-items: center;
+}
+
+/* DERECHA: TARJETA INTERACTIVA GLASSMORPHIC */
+.hero-right {
+    display: flex; justify-content: center;
+}
+
+.hero-glass-card {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.20);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: var(--radius-2xl);
+    padding: 1.8rem;
+    width: 100%; max-width: 440px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.hero-glass-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.glass-card-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 1.2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.glass-card-badge {
+    display: inline-flex; align-items: center; gap: .5rem;
+    font-size: .72rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .06em; color: var(--cyan);
+    background: rgba(2, 159, 156, 0.20);
+    padding: .35rem .85rem; border-radius: 50px;
+    border: 1px solid rgba(2, 159, 156, 0.35);
+}
+
+.glass-card-title {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.05rem; font-weight: 700; color: #FFFFFF;
+}
+
+.glass-card-list {
+    display: grid; gap: .75rem; margin-bottom: 1.4rem;
+}
+
+.glass-card-item {
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(0, 0, 0, 0.20);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: .75rem 1rem;
+    font-size: .83rem; color: rgba(255, 255, 255, 0.9);
+}
+.glass-card-item-left {
+    display: flex; align-items: center; gap: .7rem;
+}
+.glass-card-item-left i {
+    color: var(--cyan); font-size: .95rem;
+}
+.glass-card-item-val {
+    font-family: 'Sora', sans-serif;
+    font-weight: 700; font-size: .82rem;
+    color: #38E0F0;
+}
+
+.glass-card-cta {
+    width: 100%;
+    display: inline-flex; align-items: center; justify-content: center; gap: .6rem;
+    background: linear-gradient(135deg, #029F9C 0%, #0090E6 100%);
+    color: #FFFFFF; font-weight: 700; font-size: .85rem;
+    padding: .8rem 1.2rem; border-radius: 50px;
+    box-shadow: 0 6px 20px rgba(2, 159, 156, 0.35);
+    transition: all 0.25s ease;
+}
+.glass-card-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(0, 144, 230, 0.5);
+    background: linear-gradient(135deg, #00C2E0 0%, #0090E6 100%);
+}
+
+/* INDICADORES MINIMALISTAS (DOTS) DEL CARRUSEL */
+.carousel-dots-container {
+    position: absolute; bottom: 14px; left: 0; right: 0;
+    z-index: 10;
+    display: flex; justify-content: center; align-items: center;
+}
+
+.carousel-dots {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: .45rem 1rem; border-radius: 50px;
+    background: rgba(0, 25, 66, 0.55);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+
+.dot-btn {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: rgba(255, 255, 255, 0.35);
+    border: none; cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 0;
+}
+
+.dot-btn:hover {
+    background: rgba(255, 255, 255, 0.80);
+    transform: scale(1.15);
+}
+
+.dot-btn.active {
+    width: 28px; border-radius: 10px;
+    background: var(--cyan);
+    box-shadow: 0 0 12px var(--cyan);
+}
+
+/* BOTONES DE NAVEGACIÓN LATERALES */
+.carousel-btn {
+    position: absolute; top: calc(50% - 20px); transform: translateY(-50%);
+    width: 52px; height: 52px; border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #FFFFFF; font-size: 1.15rem;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; z-index: 12;
+    -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.carousel-btn:hover {
+    background: #FFFFFF; color: #002765;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    transform: translateY(-50%) scale(1.10);
+}
+.prev-btn { left: 28px; }
+.next-btn { right: 28px; }
+
+@media (max-width: 1024px) {
+    .hero-inner {
+        max-width: 100%;
+        padding: 2rem 1rem 3rem 1rem;
+    }
+    .carousel-container { min-height: auto; }
+    .hero-nav-tabs-grid { grid-template-columns: repeat(2, 1fr); }
+    .hero-tab-btn { border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+}
+
+@media (max-width: 640px) {
+    .hero-carousel-section {
+        padding: 0;
+    }
+    .carousel-slide {
+        padding: 2.2rem 1rem 2.8rem 1rem;
+    }
+    .hero-inner {
+        padding: 0.8rem 0.5rem 1.8rem 0.5rem;
+    }
+    .hero-carousel-section h1,
+    .carousel-slide h1,
+    .hero-left h1,
+    .hero h1 {
+        font-size: clamp(1.65rem, 6.2vw, 2.2rem) !important;
+        line-height: 1.15 !important;
+        margin-bottom: 0.3rem !important;
+    }
+    .hero-logo-sc {
+        height: 38px !important;
+        max-height: 40px !important;
+        margin-bottom: 0.6rem !important;
+    }
+    .hero-badge-icon {
+        width: 46px; height: 46px;
+        font-size: 1.2rem;
+        margin-bottom: 0.8rem;
+    }
+    .hero-eyebrow {
+        font-size: 0.62rem;
+        padding: 0.35rem 0.85rem;
+        margin-bottom: 0.8rem;
+    }
+    .hero-lema {
+        font-size: 0.92rem;
+        margin-top: 0.5rem;
+    }
+    .hero-sub {
+        font-size: 0.88rem;
+        margin-top: 0.5rem;
+        line-height: 1.5;
+    }
+    .hero-actions {
+        width: 100%;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 1.3rem;
+    }
+    .btn-primary, .btn-outline {
+        width: 100%;
+        justify-content: center;
+        padding: 0.8rem 1.2rem;
+        font-size: 0.88rem;
+    }
+    .carousel-btn {
+        width: 36px; height: 36px;
+        font-size: .85rem;
+        z-index: 20;
+    }
+    .prev-btn { left: 4px; }
+    .next-btn { right: 4px; }
+
+    .carousel-dots-container {
+        bottom: 8px;
+    }
 }
 
 /* ==========================================================================
@@ -1096,6 +1321,13 @@ tbody td.muted { color: var(--text-muted); }
     50%      { opacity: 0.3; }
 }
 
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 1rem;
+}
+
 /* ==========================================================================
    RESPONSIVE
    ========================================================================== */
@@ -1195,6 +1427,10 @@ tbody td.muted { color: var(--text-muted); }
      HERO CARRUSEL BANNER
      ========================================================================== -->
 <section class="hero-carousel-section">
+    <div class="hero-grid-pattern"></div>
+    <div class="hero-glow-orb-1"></div>
+    <div class="hero-glow-orb-2"></div>
+
     <div class="carousel-container" id="heroCarousel">
         <div class="carousel-track">
 
@@ -1202,7 +1438,7 @@ tbody td.muted { color: var(--text-muted); }
             <div class="carousel-slide active" data-slide="0">
                 <div class="slide-bg slide-bg-1"></div>
                 <div class="container hero-inner">
-                    <div class="hero-logo-banner" style="margin-bottom:1.2rem;">
+                    <div class="hero-logo-banner" style="margin-bottom:1rem;">
                         <img src="img/logo-sc-blanco.png" alt="Superintendencia de Competencia" class="hero-logo-sc">
                     </div>
                     <div class="hero-eyebrow">
@@ -1321,11 +1557,14 @@ tbody td.muted { color: var(--text-muted); }
             <i class="fas fa-chevron-right"></i>
         </button>
 
-        <div class="carousel-dots" id="carouselDots">
-            <button class="dot active" data-index="0" aria-label="Diapositiva 1"><span class="progress-bar"></span></button>
-            <button class="dot" data-index="1" aria-label="Diapositiva 2"><span class="progress-bar"></span></button>
-            <button class="dot" data-index="2" aria-label="Diapositiva 3"><span class="progress-bar"></span></button>
-            <button class="dot" data-index="3" aria-label="Diapositiva 4"><span class="progress-bar"></span></button>
+        <!-- INDICADORES MINIMALISTAS (DOTS) -->
+        <div class="carousel-dots-container">
+            <div class="carousel-dots" id="carouselDots">
+                <button class="dot-btn active" data-index="0" aria-label="Ver Portal SIC"></button>
+                <button class="dot-btn" data-index="1" aria-label="Ver Defensa de Competencia"></button>
+                <button class="dot-btn" data-index="2" aria-label="Ver Concentraciones M&A"></button>
+                <button class="dot-btn" data-index="3" aria-label="Ver Observatorio"></button>
+            </div>
         </div>
     </div>
 </section>
@@ -2248,7 +2487,7 @@ tbody td.muted { color: var(--text-muted); }
 const heroCarousel = document.getElementById('heroCarousel');
 if (heroCarousel) {
     const slides = Array.from(heroCarousel.querySelectorAll('.carousel-slide'));
-    const dots = Array.from(heroCarousel.querySelectorAll('.carousel-dots .dot'));
+    const dotBtns = Array.from(heroCarousel.querySelectorAll('.dot-btn, .hero-tab-btn'));
     const prevBtn = document.getElementById('carouselPrev');
     const nextBtn = document.getElementById('carouselNext');
     let currentSlide = 0;
@@ -2256,10 +2495,14 @@ if (heroCarousel) {
 
     function goToSlide(index) {
         slides[currentSlide].classList.remove('active');
-        dots[currentSlide].classList.remove('active');
+        if (dotBtns[currentSlide]) dotBtns[currentSlide].classList.remove('active');
+
         currentSlide = (index + slides.length) % slides.length;
+
         slides[currentSlide].classList.add('active');
-        dots[currentSlide].classList.add('active');
+        if (dotBtns[currentSlide]) {
+            dotBtns[currentSlide].classList.add('active');
+        }
     }
 
     function startAutoSlide() {
@@ -2286,12 +2529,32 @@ if (heroCarousel) {
                 startAutoSlide();
             });
         }
-        dots.forEach((dot, idx) => {
+
+        dotBtns.forEach((dot, idx) => {
             dot.addEventListener('click', () => {
                 goToSlide(idx);
                 startAutoSlide();
             });
         });
+
+        // Soporte para gestos táctiles (Swipe)
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        heroCarousel.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        heroCarousel.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            if (touchStartX - touchEndX > 50) {
+                goToSlide(currentSlide + 1);
+                startAutoSlide();
+            } else if (touchEndX - touchStartX > 50) {
+                goToSlide(currentSlide - 1);
+                startAutoSlide();
+            }
+        }, { passive: true });
 
         heroCarousel.addEventListener('mouseenter', stopAutoSlide);
         heroCarousel.addEventListener('mouseleave', startAutoSlide);
