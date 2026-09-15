@@ -1,0 +1,1523 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Tablero Dinámico de Analítica e Indicadores Institucionales · Superintendencia de Competencia</title>
+<meta name="description" content="Tablero interactivo de analítica e indicadores de competencia de mercado, estadísticas de denuncias, datos abiertos e índice de concentración económica en Guatemala.">
+
+<!-- TIPOGRAFÍA INSTITUCIONAL -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Outfit:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+
+<!-- ICONOGRAFÍA -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<!-- CHART.JS PARA GRÁFICAS INTERACTIVAS -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+<style>
+/* ==========================================================================
+   DESIGN TOKENS & PALETA OFICIAL DE COMPETENCIA
+   ========================================================================== */
+:root {
+    --sc-azul-profundo:      #002765;
+    --sc-azul-institucional: #022D60;
+    --sc-azul-brillante:     #0090E6;
+    --sc-turquesa:           #029F9C;
+    --sc-turquesa-oscuro:    #016F89;
+    --sc-blanco:             #FFFFFF;
+
+    --navy:                  #002765;
+    --navy-mid:              #022D60;
+    --cyan:                  #029F9C;
+    --cyan-bright:           #0090E6;
+    --amber:                 #F5A623;
+    --red-alert:             #E11D48;
+    --green-success:         #10B981;
+
+    --surface:               #F4F8FC;
+    --surface-card:          #FFFFFF;
+    --text-main:             #022D60;
+    --text-muted:            #385473;
+    --text-light:            #7692AE;
+    --border:                rgba(2,45,96,0.14);
+
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --shadow-sm: 0 2px 8px rgba(0,39,101,0.06);
+    --shadow-md: 0 6px 24px rgba(0,39,101,0.10);
+    --shadow-lg: 0 12px 36px rgba(0,39,101,0.16);
+}
+
+html, body {
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden !important;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: #F8FAFC;
+    color: var(--text-main);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+a { text-decoration: none; color: inherit; }
+
+.container {
+    width: 100%;
+    max-width: 1380px;
+    margin: 0 auto;
+    padding: 0 24px;
+    box-sizing: border-box;
+}
+
+/* ==========================================================================
+   HEADER
+   ========================================================================== */
+.site-header {
+    position: sticky; top: 0; z-index: 200;
+    background: #FFFFFF;
+    box-shadow: 0 4px 24px rgba(0, 39, 101, 0.08);
+    border-bottom: 1px solid rgba(0, 39, 101, 0.10);
+    width: 100%;
+}
+
+.navbar {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; height: 80px; position: relative; width: 100%;
+}
+
+.logo-area { display: flex; align-items: center; gap: 12px; flex-shrink: 1; min-width: 0; }
+.gov-logo-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #001942 0%, #002765 100%);
+    border: 1px solid rgba(0, 194, 224, 0.28);
+    border-radius: 12px;
+    padding: 5px 10px;
+    box-shadow: 0 4px 14px rgba(0, 39, 101, 0.22);
+    flex-shrink: 0;
+}
+.gov-logo-badge img { height: 36px; width: auto; max-width: 100%; }
+.gov-logo-img { height: 44px; width: auto; flex-shrink: 0; max-width: 100%; }
+
+.nav-menu { display: flex; align-items: center; gap: .3rem; list-style: none; }
+.nav-menu a {
+    display: block;
+    font-size: .8rem; font-weight: 700; letter-spacing: .04em;
+    text-transform: uppercase;
+    color: var(--sc-azul-profundo);
+    padding: .55rem 1rem; border-radius: 50px;
+    transition: all .2s ease;
+    white-space: nowrap;
+}
+.nav-menu a:hover { color: var(--sc-azul-brillante); background: rgba(0, 144, 230, 0.08); }
+.nav-menu a.active {
+    color: var(--sc-azul-profundo);
+    background: rgba(0, 39, 101, 0.08);
+    border: 1px solid rgba(0, 39, 101, 0.18);
+    font-weight: 800;
+}
+.nav-menu a.nav-cta {
+    background: var(--sc-azul-profundo); color: #FFFFFF !important;
+    padding: .65rem 1.4rem; font-weight: 700; margin-left: .5rem;
+    box-shadow: 0 4px 16px rgba(0, 39, 101, 0.25);
+}
+
+.menu-toggle {
+    display: none; align-items: center; justify-content: center;
+    width: 42px; height: 42px; border-radius: 12px;
+    background: #FFFFFF; border: 1px solid rgba(0, 39, 101, 0.18);
+    color: var(--sc-azul-profundo); font-size: 1.2rem; cursor: pointer;
+    flex-shrink: 0;
+}
+
+/* ==========================================================================
+   HERO BANNER TABLERO
+   ========================================================================== */
+.hero-analitica {
+    background: linear-gradient(135deg, #001942 0%, #002765 60%, #014B72 100%);
+    color: #FFFFFF;
+    padding: 3rem 0 3.5rem;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 3px solid var(--sc-turquesa);
+}
+
+.hero-analitica::before {
+    content: '';
+    position: absolute; top: 0; right: 0; bottom: 0; left: 0;
+    background: radial-gradient(circle at 80% 20%, rgba(0, 144, 230, 0.25) 0%, transparent 50%),
+                radial-gradient(circle at 20% 80%, rgba(2, 159, 156, 0.20) 0%, transparent 45%);
+    pointer-events: none;
+}
+
+.hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    padding: 6px 16px; border-radius: 50px;
+    font-family: 'Outfit', sans-serif; font-size: 0.78rem; font-weight: 800;
+    letter-spacing: 0.05em; text-transform: uppercase; color: #38BDF8;
+    margin-bottom: 1.2rem;
+}
+
+.hero-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 900;
+    line-height: 1.15;
+    margin-bottom: 0.8rem;
+    letter-spacing: -0.02em;
+}
+
+.hero-title em {
+    font-style: normal;
+    background: linear-gradient(135deg, #38BDF8 0%, #2DD4BF 100%);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-sub {
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 820px;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+/* QUICK METRICS GRID */
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-top: 1rem;
+}
+
+.kpi-card {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 18px;
+    padding: 1.2rem;
+    display: flex; flex-direction: column; justify-content: space-between;
+    transition: all 0.3s ease;
+}
+
+.kpi-card:hover {
+    background: rgba(255, 255, 255, 0.14);
+    border-color: rgba(56, 189, 248, 0.5);
+    transform: translateY(-3px);
+}
+
+.kpi-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.kpi-title {
+    font-size: 0.76rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.04em; color: rgba(255, 255, 255, 0.75);
+}
+
+.kpi-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: rgba(255, 255, 255, 0.15);
+    display: flex; align-items: center; justify-content: center;
+    color: #38BDF8; font-size: 1.05rem;
+}
+
+.kpi-value {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.85rem; font-weight: 900;
+    color: #FFFFFF; line-height: 1.1; margin-bottom: 0.3rem;
+}
+
+.kpi-sub {
+    font-size: 0.74rem; font-weight: 600; color: #2DD4BF;
+    display: flex; align-items: center; gap: 4px;
+}
+
+/* ==========================================================================
+   FILTER BAR
+   ========================================================================== */
+.filter-bar-section {
+    background: #FFFFFF;
+    border-bottom: 1px solid var(--border);
+    padding: 0.9rem 0;
+    box-shadow: 0 4px 16px rgba(0, 39, 101, 0.04);
+    position: sticky; top: 80px; z-index: 100;
+}
+
+.filter-grid {
+    display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px;
+    justify-content: space-between;
+}
+
+.filter-inputs {
+    display: flex; flex-wrap: wrap; align-items: flex-end; gap: 10px;
+    flex: 1; min-width: 0;
+}
+
+.filter-group {
+    display: flex; flex-direction: column; gap: 4px;
+    flex: 1; min-width: 160px; max-width: 260px;
+    margin: 0 !important; height: auto !important;
+}
+
+.filter-group label {
+    font-size: 0.70rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.04em; color: var(--sc-azul-profundo);
+    display: flex; align-items: center; gap: 4px; margin: 0;
+}
+
+.filter-group select, .filter-group input {
+    height: 38px; padding: 0 0.8rem;
+    border: 1px solid rgba(0, 39, 101, 0.20);
+    border-radius: 8px;
+    font-size: 0.83rem; font-weight: 600; color: var(--navy-mid);
+    background: #F8FAFC; outline: none; transition: all 0.2s ease;
+    width: 100%; box-sizing: border-box;
+}
+
+.filter-group select:focus, .filter-group input:focus {
+    border-color: var(--sc-azul-brillante);
+    background: #FFFFFF;
+    box-shadow: 0 0 0 3px rgba(0, 144, 230, 0.15);
+}
+
+.export-actions {
+    display: flex; align-items: center; gap: 8px; flex-shrink: 0;
+}
+
+.btn-export {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 0.55rem 1rem; border-radius: 8px;
+    font-family: 'Outfit', sans-serif; font-size: 0.80rem; font-weight: 800;
+    cursor: pointer; transition: all 0.2s ease; border: none; height: 38px;
+}
+
+.btn-export-csv {
+    background: rgba(2, 159, 156, 0.10); color: var(--sc-turquesa-oscuro);
+    border: 1px solid rgba(2, 159, 156, 0.30);
+}
+.btn-export-csv:hover {
+    background: var(--sc-turquesa); color: #FFFFFF;
+}
+
+.btn-export-json {
+    background: rgba(0, 39, 101, 0.08); color: var(--navy);
+    border: 1px solid rgba(0, 39, 101, 0.22);
+}
+.btn-export-json:hover {
+    background: var(--navy); color: #FFFFFF;
+}
+
+.region-chip {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 5px 10px; border-radius: 50px;
+    font-size: 0.74rem; font-weight: 700;
+    background: #F1F5F9; color: var(--navy-mid);
+    border: 1px solid rgba(0, 39, 101, 0.12);
+    cursor: pointer; transition: all 0.2s ease;
+}
+.region-chip:hover {
+    background: rgba(0, 144, 230, 0.12); color: var(--sc-azul-brillante);
+}
+.region-chip.active {
+    background: var(--sc-azul-profundo); color: #FFFFFF;
+    border-color: var(--sc-azul-profundo);
+    box-shadow: 0 2px 8px rgba(0, 39, 101, 0.25);
+}
+
+/* ==========================================================================
+   MAIN DASHBOARD CONTENT
+   ========================================================================== */
+.dash-section {
+    padding: 2.5rem 0;
+}
+
+.grid-2-map {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+@media (max-width: 1080px) {
+    .grid-2-map { grid-template-columns: 1fr; }
+}
+
+.card-dash {
+    background: #FFFFFF;
+    border-radius: 20px;
+    border: 1px solid rgba(0, 39, 101, 0.12);
+    box-shadow: 0 8px 28px rgba(0, 39, 101, 0.06);
+    padding: 1.5rem;
+    display: flex; flex-direction: column;
+    position: relative;
+}
+
+.card-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.15rem; font-weight: 800;
+    color: var(--navy);
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 1.2rem; padding-bottom: 0.8rem;
+    border-bottom: 2px solid rgba(0, 39, 101, 0.06);
+}
+
+.card-title i {
+    color: var(--sc-turquesa-oscuro);
+    margin-right: 8px;
+}
+
+.badge-tag {
+    font-size: 0.70rem; font-weight: 800; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 6px;
+    background: rgba(0, 144, 230, 0.10); color: var(--sc-azul-brillante);
+}
+
+/* ==========================================================================
+   MAPA INTERACTIVO DE GUATEMALA
+   ========================================================================== */
+.map-container-wrap {
+    position: relative;
+    width: 100%;
+    min-height: 480px;
+    display: flex; align-items: center; justify-content: center;
+    background: radial-gradient(circle at 50% 50%, #F1F5F9 0%, #E2E8F0 100%);
+    border-radius: 16px;
+    padding: 1rem;
+    border: 1px solid rgba(0, 39, 101, 0.10);
+}
+
+.guatemala-svg {
+    width: 100%;
+    height: 100%;
+    max-height: 520px;
+    filter: drop-shadow(0 8px 16px rgba(0, 39, 101, 0.15));
+}
+
+.dept-path {
+    fill: #002765;
+    stroke: #FFFFFF;
+    stroke-width: 1.5;
+    stroke-linejoin: round;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.dept-path:hover {
+    fill: #0090E6 !important;
+    stroke: #FFFFFF;
+    stroke-width: 2.5;
+    filter: drop-shadow(0 0 12px rgba(0, 144, 230, 0.6));
+}
+
+.dept-path.active {
+    fill: #029F9C !important;
+    stroke: #001942;
+    stroke-width: 3;
+}
+
+/* Heatmap level colors */
+.dept-path.level-high { fill: #991B1B; } /* Alto número denuncias */
+.dept-path.level-med-high { fill: #C2410C; }
+.dept-path.level-med { fill: #0284C7; }
+.dept-path.level-low { fill: #0284C7; opacity: 0.75; }
+
+/* MAP TOOLTIP */
+#mapTooltip {
+    position: absolute;
+    display: none;
+    pointer-events: none;
+    background: rgba(0, 25, 66, 0.94);
+    backdrop-filter: blur(8px);
+    color: #FFFFFF;
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: 0.80rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(56, 189, 248, 0.4);
+    z-index: 50;
+    max-width: 220px;
+}
+
+#mapTooltip h5 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.95rem; font-weight: 800; color: #38BDF8;
+    margin-bottom: 4px;
+}
+
+/* DEPARTMENT DETAIL PANEL */
+.dept-detail-box {
+    background: #F8FAFC;
+    border-radius: 16px;
+    padding: 1.2rem;
+    border: 1px solid rgba(0, 39, 101, 0.12);
+}
+
+.dept-header-title {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 1rem; padding-bottom: 0.6rem;
+    border-bottom: 1px dashed rgba(0, 39, 101, 0.15);
+}
+
+.dept-header-title h4 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.3rem; font-weight: 800; color: var(--navy);
+}
+
+.stat-row-mini {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 8px 12px;
+    background: #FFFFFF;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    font-size: 0.84rem;
+    border: 1px solid rgba(0, 39, 101, 0.08);
+}
+
+.stat-row-mini span.val {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800; color: var(--sc-turquesa-oscuro);
+}
+
+/* ==========================================================================
+   CHARTS GRID
+   ========================================================================== */
+.charts-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+@media (max-width: 900px) {
+    .charts-grid-2 { grid-template-columns: 1fr; }
+}
+
+.chart-container-box {
+    position: relative;
+    width: 100%;
+    height: 320px;
+}
+
+/* ==========================================================================
+   TABLA MATRIZ DE CONCENTRACIÓN Y DATOS ABIERTOS
+   ========================================================================== */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    border-radius: 14px;
+    border: 1px solid rgba(0, 39, 101, 0.12);
+}
+
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.86rem;
+}
+
+.custom-table th {
+    background: var(--navy);
+    color: #FFFFFF;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.78rem; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.04em;
+    padding: 12px 16px;
+}
+
+.custom-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(0, 39, 101, 0.08);
+    color: var(--navy-mid);
+}
+
+.custom-table tbody tr:hover {
+    background: rgba(0, 144, 230, 0.04);
+}
+
+.hhi-badge {
+    display: inline-block;
+    padding: 4px 10px; border-radius: 50px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.76rem; font-weight: 800;
+}
+
+.hhi-high { background: rgba(225, 29, 72, 0.12); color: #E11D48; }
+.hhi-mod { background: rgba(245, 166, 35, 0.15); color: #D97706; }
+.hhi-low { background: rgba(16, 185, 129, 0.12); color: #059669; }
+
+/* API SIMULATOR CODE BOX */
+.code-simulator {
+    background: #001942;
+    color: #38BDF8;
+    border-radius: 14px;
+    padding: 1.2rem;
+    font-family: 'Monaco', 'Courier New', monospace;
+    font-size: 0.82rem;
+    line-height: 1.6;
+    overflow-x: auto;
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    margin-top: 1rem;
+}
+
+/* ==========================================================================
+   FOOTER INSTITUCIONAL
+   ========================================================================== */
+.footer {
+    background: linear-gradient(135deg, #001942 0%, #002765 100%);
+    color: #FFFFFF;
+    padding: 3.5rem 0 1.5rem;
+    margin-top: 4rem;
+    border-top: 3px solid var(--sc-turquesa);
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 2.5rem;
+}
+
+@media (max-width: 900px) {
+    .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    padding-top: 1.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.80rem; color: rgba(255, 255, 255, 0.7);
+}
+
+@media (max-width: 1150px) {
+    .menu-toggle { display: flex !important; }
+    .nav-menu {
+        position: fixed; top: 72px; left: 12px; right: 12px;
+        background: #FFFFFF !important; padding: 1rem;
+        flex-direction: column; align-items: stretch; gap: .5rem;
+        border-radius: 16px; border: 1px solid rgba(0, 39, 101, 0.20);
+        box-shadow: 0 20px 50px rgba(0, 25, 66, 0.35);
+        display: none; z-index: 9999; max-height: calc(100vh - 90px); overflow-y: auto;
+    }
+    .nav-menu.open { display: flex !important; }
+    .nav-menu li { width: 100%; margin: 0; list-style: none; }
+    .nav-menu a {
+        width: 100% !important; text-align: left;
+        color: var(--sc-azul-profundo) !important;
+        padding: 0.8rem 1rem !important; border-radius: 12px !important;
+        background: #F4F8FC !important; border: 1px solid rgba(0, 39, 101, 0.08) !important;
+        display: flex !important; align-items: center !important; justify-content: space-between !important;
+        font-size: 0.88rem !important; font-weight: 700 !important;
+    }
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN BREAKPOINTS & ADJUSTMENTS
+   ========================================================================== */
+@media (max-width: 1080px) {
+    .container { padding: 0 16px; }
+    .grid-2-map { grid-template-columns: 1fr; }
+    .filter-bar-section { top: 72px; }
+}
+
+@media (max-width: 900px) {
+    .navbar { height: 68px; }
+    .gov-logo-badge img { height: 28px; }
+    .gov-logo-img { height: 36px; }
+    .portal-title-text { font-size: 0.80rem; }
+    .portal-subtitle-text { font-size: 0.62rem; }
+    
+    .hero-analitica { padding: 2rem 0 2.2rem; }
+    .hero-sub { font-size: 0.92rem; margin-bottom: 1.2rem; }
+    
+    .kpi-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .kpi-card { padding: 0.9rem; }
+    .kpi-value { font-size: 1.45rem; }
+
+    .filter-grid { flex-direction: column; align-items: stretch; gap: 10px; height: auto !important; }
+    .filter-inputs { flex-direction: row; width: 100%; flex-wrap: wrap; gap: 8px; flex: none; height: auto !important; }
+    .filter-group { flex: 1 1 160px; max-width: 100%; width: auto; margin: 0 !important; height: auto !important; }
+    .export-actions { width: 100%; justify-content: flex-start; }
+    
+    .charts-grid-2 { grid-template-columns: 1fr; }
+    .chart-container-box { height: 260px; }
+    
+    .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .footer-bottom { flex-direction: column; align-items: flex-start; gap: 10px; }
+}
+
+@media (max-width: 640px) {
+    .header-portal-title, .gov-logo-divider { display: none !important; }
+    .logo-area { gap: 8px; }
+    .gov-logo-badge { padding: 4px 8px; }
+    .gov-logo-badge img { height: 24px; }
+    .gov-logo-img { height: 32px; }
+    
+    .hero-title { font-size: 1.55rem; }
+    .hero-tag { font-size: 0.68rem; padding: 4px 10px; margin-bottom: 0.8rem; }
+    .hero-sub { font-size: 0.85rem; line-height: 1.4; margin-bottom: 1rem; }
+    
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .kpi-card { padding: 0.75rem; border-radius: 12px; }
+    .kpi-title { font-size: 0.65rem; }
+    .kpi-value { font-size: 1.25rem; margin-bottom: 0.1rem; }
+    .kpi-icon { width: 28px; height: 28px; font-size: 0.82rem; }
+    .kpi-sub { font-size: 0.68rem; }
+    
+    .filter-bar-section { position: relative; top: 0; padding: 0.75rem 0; margin: 0; }
+    .filter-inputs { display: flex; flex-direction: column; gap: 8px; width: 100%; flex: none; height: auto !important; }
+    .filter-group { width: 100%; margin: 0 !important; flex: none !important; height: auto !important; max-width: 100% !important; }
+    .filter-group label { font-size: 0.70rem; margin-bottom: 2px; height: auto !important; }
+    .filter-group select, .filter-group input { width: 100%; font-size: 0.82rem; height: 38px; box-sizing: border-box; }
+    .export-actions { width: 100%; justify-content: flex-start; gap: 6px; margin-top: 4px; flex-wrap: wrap; }
+    .btn-export { flex: 1; justify-content: center; padding: 0.5rem 0.65rem; font-size: 0.76rem; height: 36px; }
+    
+    .map-container-wrap { min-height: 280px; padding: 0.25rem; }
+    .card-dash { padding: 1rem; border-radius: 14px; }
+    .card-title { font-size: 0.95rem; flex-direction: column; align-items: flex-start; gap: 4px; margin-bottom: 0.8rem; padding-bottom: 0.5rem; }
+    .badge-tag { font-size: 0.62rem; }
+    
+    .chart-container-box { height: 220px; }
+    
+    .custom-table th, .custom-table td { padding: 6px 8px; font-size: 0.74rem; }
+    .table-responsive { border-radius: 8px; }
+    
+    .code-simulator { font-size: 0.72rem; padding: 0.7rem; }
+}
+
+@media (max-width: 420px) {
+    .kpi-grid { grid-template-columns: 1fr; }
+    .export-actions { flex-direction: column; }
+    .btn-export { width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<!-- ==========================================================================
+     HEADER INSTITUCIONAL
+     ========================================================================== -->
+<header class="site-header">
+    <div class="container">
+        <nav class="navbar">
+            <div class="logo-area">
+                <a href="index.html" title="Superintendencia de Competencia · Portal de Competencia en Línea" style="display:flex; align-items:center; gap:12px; text-decoration:none;">
+                    <div class="gov-logo-badge">
+                        <img src="img/logo-gobierno-gt-web.png" alt="Gobierno de Guatemala">
+                    </div>
+                    <div class="gov-logo-divider" style="width:1px; height:34px; background:rgba(0,39,101,0.18);"></div>
+                    <img src="img/logo-sc.png" alt="Superintendencia de Competencia" class="gov-logo-img">
+                    <div class="header-portal-title" style="display:flex; flex-direction:column; justify-content:center; border-left:1px solid rgba(0,39,101,0.18); padding-left:12px;">
+                        <span class="portal-title-text" style="font-family:'Outfit', sans-serif; font-size:0.92rem; font-weight:800; color:#002765; line-height:1.1;">
+                            Portal de Competencia en Línea
+                        </span>
+                        <span class="portal-subtitle-text" style="font-size:0.70rem; font-weight:600; color:#016F89;">
+                            Superintendencia de Competencia
+                        </span>
+                    </div>
+                </a>
+            </div>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú de navegación">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="servicios.html"><i class="fas fa-list-check" style="color:#016F89;"></i> Servicios</a></li>
+                <li><a href="expedientes.html"><i class="fas fa-folder-open" style="color:#016F89;"></i> Expedientes</a></li>
+                <li><a href="analitica.html" class="active"><i class="fas fa-chart-pie" style="color:#0090E6;"></i> Analítica</a></li>
+                <li><a href="macroprocesos.html">Macroprocesos</a></li>
+                <li><a href="talento.html">Trabaja con nosotros</a></li>
+                <li><a href="servicios.html" class="nav-cta">Iniciar trámite</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- ==========================================================================
+     HERO BANNER TABLERO DINÁMICO
+     ========================================================================== -->
+<section class="hero-analitica">
+    <div class="container">
+        <div class="hero-tag">
+            <i class="fas fa-chart-line"></i> Datos Abiertos e Indicadores Abiertos SC
+        </div>
+        <h1 class="hero-title">
+            Tablero Dinámico de <em>Analítica Institucional</em>
+        </h1>
+        <p class="hero-sub">
+            Plataforma interactiva de monitoreo continuo del comportamiento de la competencia de mercado, índice de concentración económica (HHI), procesamiento de denuncias por prácticas anticompetitivas y estadísticas geográficas en Guatemala.
+        </p>
+
+        <!-- KPI CARDS GRID -->
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-header">
+                    <span class="kpi-title">Denuncias Recibidas</span>
+                    <div class="kpi-icon"><i class="fas fa-triangle-exclamation"></i></div>
+                </div>
+                <div class="kpi-value" id="kpiDenuncias">342</div>
+                <div class="kpi-sub"><i class="fas fa-arrow-up"></i> +14.2% vs. periodo previo</div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-header">
+                    <span class="kpi-title">Investigaciones Activas</span>
+                    <div class="kpi-icon"><i class="fas fa-magnifying-glass-chart"></i></div>
+                </div>
+                <div class="kpi-value" id="kpiInvestigaciones">128</div>
+                <div class="kpi-sub"><i class="fas fa-shield-halved"></i> 42 en etapa probatoria</div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-header">
+                    <span class="kpi-title">Concentraciones Evaluadas</span>
+                    <div class="kpi-icon"><i class="fas fa-diagram-project"></i></div>
+                </div>
+                <div class="kpi-value" id="kpiConcentraciones">48</div>
+                <div class="kpi-sub"><i class="fas fa-check"></i> 85% autorizadas con condición</div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-header">
+                    <span class="kpi-title">Índice HHI Promedio</span>
+                    <div class="kpi-icon"><i class="fas fa-scale-balanced"></i></div>
+                </div>
+                <div class="kpi-value" id="kpiHHI">1,820</div>
+                <div class="kpi-sub" style="color:#F5A623;"><i class="fas fa-triangle-exclamation"></i> Concentración Moderada</div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-header">
+                    <span class="kpi-title">Monto Sanciones</span>
+                    <div class="kpi-icon"><i class="fas fa-gavel"></i></div>
+                </div>
+                <div class="kpi-value" id="kpiSanciones">Q 18.5M</div>
+                <div class="kpi-sub"><i class="fas fa-file-invoice-dollar"></i> En procesos firmes</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==========================================================================
+     BARRA DE FILTROS DINÁMICOS
+     ========================================================================== -->
+<section class="filter-bar-section">
+    <div class="container">
+        <div class="filter-grid">
+            <div class="filter-inputs">
+                <div class="filter-group">
+                    <label for="filterAnio"><i class="fas fa-calendar-days" style="color:#0090E6;"></i> Año de Gestión</label>
+                    <select id="filterAnio" onchange="actualizarTablero()">
+                        <option value="todos">Todos los Años (2024-2026)</option>
+                        <option value="2026" selected>2026 (Año Actual)</option>
+                        <option value="2025">2025</option>
+                        <option value="2024">2024</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="filterSector"><i class="fas fa-industry" style="color:#029F9C;"></i> Sector Económico</label>
+                    <select id="filterSector" onchange="actualizarTablero()">
+                        <option value="todos">Todos los Sectores</option>
+                        <option value="telecom">Telecomunicaciones y Datos</option>
+                        <option value="alimentos">Alimentos y Bebidas</option>
+                        <option value="energia">Energía y Combustibles</option>
+                        <option value="financiero">Financiero y Banca</option>
+                        <option value="salud">Medicamentos y Salud</option>
+                        <option value="construccion">Construcción y Cemento</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="filterPractica"><i class="fas fa-scale-balanced" style="color:#F5A623;"></i> Tipo de Conducta / Práctica</label>
+                    <select id="filterPractica" onchange="actualizarTablero()">
+                        <option value="todas">Todas las Prácticas</option>
+                        <option value="carteles">Acuerdos Colusorios / Carteles</option>
+                        <option value="abuso">Abuso de Posición Dominante</option>
+                        <option value="concentracion">Concentración No Notificada</option>
+                        <option value="barreras">Barreras a la Entrada / Normativas</option>
+                    </select>
+                </div>
+
+                <div class="filter-group" style="max-width:120px; flex:0 0 auto;">
+                    <label style="opacity:0; pointer-events:none;">Reset</label>
+                    <button class="btn-export" onclick="resetFiltros()" style="background:rgba(0,39,101,0.06); color:var(--navy-mid); border:1px solid rgba(0,39,101,0.18); height:38px; padding:0 12px; font-size:0.80rem;" title="Restablecer todos los filtros">
+                        <i class="fas fa-rotate-left"></i> Limpiar
+                    </button>
+                </div>
+            </div>
+
+            <div class="export-actions">
+                <button class="btn-export btn-export-csv" onclick="exportarCSV()">
+                    <i class="fas fa-file-csv"></i> Exportar CSV
+                </button>
+                <button class="btn-export btn-export-json" onclick="exportarJSON()">
+                    <i class="fas fa-file-code"></i> Datos JSON API
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==========================================================================
+     DASHBOARD CONTENT GRID
+     ========================================================================== -->
+<section class="dash-section">
+    <div class="container">
+
+        <!-- FILA 1: GRÁFICA REGIONAL REEMPLAZANTE DE MAPA + PANEL DE DETALLE DE DEPARTAMENTO -->
+        <div class="grid-2-map">
+            <!-- GRÁFICA DE DISTRIBUCIÓN REGIONAL (NUEVA OPCIÓN DE GRÁFICA DISPONIBLE) -->
+            <div class="card-dash">
+                <div class="card-title">
+                    <span><i class="fas fa-chart-column"></i> Distribución Territorial y Concentración por Regiones</span>
+                    <span class="badge-tag">Gráfica Regional GT</span>
+                </div>
+                <p style="font-size:0.84rem; color:var(--text-muted); margin-bottom:0.8rem;">
+                    Comparativa de denuncias e inspecciones por zona geográfica. Haga clic en cualquiera de las regiones o barras para actualizar el detalle de investigación.
+                </p>
+
+                <!-- BOTONES SWITCH DE MÉTRICA REGIONAL -->
+                <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:1rem;">
+                    <button id="btnMetricDenuncias" class="region-chip active" onclick="switchRegionalMetric('denuncias')">
+                        <i class="fas fa-flag"></i> Denuncias por Región
+                    </button>
+                    <button id="btnMetricHHI" class="region-chip" onclick="switchRegionalMetric('hhi')">
+                        <i class="fas fa-chart-line"></i> Índice HHI Promedio
+                    </button>
+                    <button id="btnMetricInspecciones" class="region-chip" onclick="switchRegionalMetric('inspecciones')">
+                        <i class="fas fa-magnifying-glass"></i> Inspecciones SC
+                    </button>
+                </div>
+
+                <div class="chart-container-box" style="height: 250px; position:relative;">
+                    <canvas id="chartRegiones"></canvas>
+                </div>
+
+                <!-- CHIPS INTERACTIVOS DE REGIONES -->
+                <div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:0.8rem;" id="regionChipContainer">
+                    <button class="region-chip active" onclick="selectRegion('Guatemala', 118, 'Telecomunicaciones & Banca', 2280, 28, this)">
+                        <i class="fas fa-location-dot"></i> Central (118)
+                    </button>
+                    <button class="region-chip" onclick="selectRegion('Escuintla', 54, 'Agroindustria Cañera & Puertos', 2380, 14, this)">
+                        <i class="fas fa-location-dot"></i> Sur - Escuintla (54)
+                    </button>
+                    <button class="region-chip" onclick="selectRegion('Quetzaltenango', 45, 'Servicios, Salud & Bebidas', 2050, 11, this)">
+                        <i class="fas fa-location-dot"></i> Occidente - Xela (45)
+                    </button>
+                    <button class="region-chip" onclick="selectRegion('Izabal', 42, 'Puertos, Logística & Cemento', 2450, 10, this)">
+                        <i class="fas fa-location-dot"></i> Nororiente - Izabal (42)
+                    </button>
+                    <button class="region-chip" onclick="selectRegion('Alta Verapaz', 36, 'Energía Hidroeléctrica & Comercio', 2100, 9, this)">
+                        <i class="fas fa-location-dot"></i> Norte - Verapaces (36)
+                    </button>
+                    <button class="region-chip" onclick="selectRegion('Petén', 24, 'Agroindustria & Ganadería', 1650, 6, this)">
+                        <i class="fas fa-location-dot"></i> Petén (24)
+                    </button>
+                </div>
+            </div>
+
+            <!-- PANEL DETALLE DEL DEPARTAMENTO SELECCIONADO -->
+            <div class="card-dash">
+                <div class="card-title">
+                    <span><i class="fas fa-building-flag"></i> Análisis Regional Seleccionado</span>
+                    <span class="badge-tag" id="selectedDeptBadge">Guatemala (Sede Central)</span>
+                </div>
+
+                <div class="dept-detail-box">
+                    <div class="dept-header-title">
+                        <h4 id="detDeptName">Guatemala</h4>
+                        <span style="font-size:0.75rem; font-weight:800; color:#0090E6; background:rgba(0,144,230,0.12); padding:4px 10px; border-radius:50px;">
+                            <i class="fas fa-map-pin"></i> Región Central
+                        </span>
+                    </div>
+
+                    <div class="stat-row-mini">
+                        <span><i class="fas fa-triangle-exclamation" style="color:#E11D48;"></i> Total Denuncias en Departamento</span>
+                        <span class="val" id="detDenuncias">118 denuncias</span>
+                    </div>
+
+                    <div class="stat-row-mini">
+                        <span><i class="fas fa-industry" style="color:#016F89;"></i> Sector de Mayor Concentración</span>
+                        <span class="val" id="detSector">Telecomunicaciones & Banca</span>
+                    </div>
+
+                    <div class="stat-row-mini">
+                        <span><i class="fas fa-scale-unbalanced" style="color:#F5A623;"></i> Índice HHI Estimado</span>
+                        <span class="val" id="detHHI">2,280 (Alta Concentración)</span>
+                    </div>
+
+                    <div class="stat-row-mini">
+                        <span><i class="fas fa-magnifying-glass" style="color:#10B981;"></i> Investigaciones de Oficio</span>
+                        <span class="val" id="detOficio">18 expedientes</span>
+                    </div>
+
+                    <h5 style="font-family:'Outfit',sans-serif; font-size:0.92rem; font-weight:800; color:var(--navy); margin:1.2rem 0 0.6rem 0;">
+                        Top Prácticas Denunciadas en la Región:
+                    </h5>
+                    <ul style="font-size:0.83rem; color:var(--text-muted); padding-left:1.2rem; line-height:1.6;" id="detPracticasList">
+                        <li>Fijación concertada de precios en medicamentos y telefonía.</li>
+                        <li>Acuerdos de reparto de mercado entre distribuidores mayoristas.</li>
+                        <li>Negativa injustificada de trato a competidores emergentes.</li>
+                    </ul>
+
+                    <div style="margin-top:1.2rem; padding:10px; background:rgba(0,144,230,0.06); border-radius:10px; border:1px solid rgba(0,144,230,0.18); font-size:0.80rem; color:var(--navy-mid);">
+                        <i class="fas fa-circle-info" style="color:#0090E6;"></i> <strong>Sede Regional SC:</strong> Oficina Regional Central · Atiende denuncias presenciales y notificaciones electrónicas en el departamento.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FILA 2: GRÁFICAS ESTADÍSTICAS CHART.JS -->
+        <div class="charts-grid-2">
+            <!-- GRÁFICA 1: TENDENCIA HISTÓRICA DE DENUNCIAS Y RESOLUCIONES -->
+            <div class="card-dash">
+                <div class="card-title">
+                    <span><i class="fas fa-chart-line"></i> Tendencia Mensual de Expedientes e Investigaciones</span>
+                    <span class="badge-tag">Serie Temporal</span>
+                </div>
+                <div class="chart-container-box">
+                    <canvas id="chartTendencia"></canvas>
+                </div>
+            </div>
+
+            <!-- GRÁFICA 2: DISTRIBUCIÓN POR CONDUCTA ANTICOMPETITIVA -->
+            <div class="card-dash">
+                <div class="card-title">
+                    <span><i class="fas fa-chart-pie"></i> Comportamiento por Tipo de Práctica Anticompetitiva</span>
+                    <span class="badge-tag">Distribución %</span>
+                </div>
+                <div class="chart-container-box">
+                    <canvas id="chartPracticas"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- FILA 3: GRÁFICAS DE SECTORES E ÍNDICE HHI DE CONCENTRACIÓN -->
+        <div class="charts-grid-2">
+            <!-- GRÁFICA 3: ÍNDICE DE CONCENTRACIÓN DE MERCADO (HHI) POR SECTOR -->
+            <div class="card-dash">
+                <div class="card-title">
+                    <span><i class="fas fa-chart-simple"></i> Índice Herfindahl-Hirschman (HHI) por Sector</span>
+                    <span class="badge-tag">Concentración de Mercado</span>
+                </div>
+                <div class="chart-container-box">
+                    <canvas id="chartHHI"></canvas>
+                </div>
+            </div>
+
+            <!-- GRÁFICA 4: ESTADO PIPELINE DE RESOLUCIÓN DE EXPEDIENTES -->
+            <div class="card-dash">
+                <div class="card-title">
+                    <span><i class="fas fa-filter-circle-dollar"></i> Estado de Expedientes en Procesamiento</span>
+                    <span class="badge-tag">Etapas Procesales</span>
+                </div>
+                <div class="chart-container-box">
+                    <canvas id="chartPipeline"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- FILA 4: MATRIZ DE CONCENTRACIÓN DE MERCADOS RELEVANTES (TABLA DE DATOS ABIERTOS) -->
+        <div class="card-dash" style="margin-bottom:24px;">
+            <div class="card-title">
+                <span><i class="fas fa-table-list"></i> Matriz Abierta de Monitoreo de Mercados Relevantes</span>
+                <span class="badge-tag">Datos Abiertos SC</span>
+            </div>
+
+            <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;">
+                Monitoreo continuo de nivel de concentración por sector económico según metodología de cálculo del Índice Herfindahl-Hirschman (HHI). Un valor HHI superior a 2,500 denota un mercado altamente concentrado con riesgo de poder de mercado.
+            </p>
+
+            <div class="table-responsive">
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>Sector Económico</th>
+                            <th>Mercado Relevante</th>
+                            <th>Índice HHI</th>
+                            <th>Nivel de Riesgo</th>
+                            <th>Empresas Principales</th>
+                            <th>Denuncias 2026</th>
+                            <th>Acción SC</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Telecomunicaciones</strong></td>
+                            <td>Servicios Móviles y Datos Residenciales</td>
+                            <td><strong>2,850</strong></td>
+                            <td><span class="hhi-badge hhi-high">Altamente Concentrado</span></td>
+                            <td>Tigo, Claro, Movistar (Hist)</td>
+                            <td><strong>58</strong></td>
+                            <td>Investigación de Oficio en Proceso</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Alimentos y Bebidas</strong></td>
+                            <td>Harinas, Aceites y Bebidas Carbonatadas</td>
+                            <td><strong>2,420</strong></td>
+                            <td><span class="hhi-badge hhi-mod">Concentración Moderada</span></td>
+                            <td>Cervecería Nacional, Molinos de GT, PepsiCo</td>
+                            <td><strong>44</strong></td>
+                            <td>Monitoreo de Precios Mayoristas</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Energía y Combustibles</strong></td>
+                            <td>Importación y Distribución de Combustibles</td>
+                            <td><strong>2,680</strong></td>
+                            <td><span class="hhi-badge hhi-high">Altamente Concentrado</span></td>
+                            <td>Texaco/Chevron, Shell, Uno, Puma</td>
+                            <td><strong>38</strong></td>
+                            <td>Solicitud de Información a Distribuidores</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Financiero y Banca</strong></td>
+                            <td>Crédito Comercial y Medios de Pago</td>
+                            <td><strong>1,890</strong></td>
+                            <td><span class="hhi-badge hhi-mod">Concentración Moderada</span></td>
+                            <td>Industrial, G&T, BAM, Banrural</td>
+                            <td><strong>31</strong></td>
+                            <td>Revisión de Tasas e Intercambio</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Medicamentos y Salud</strong></td>
+                            <td>Distribución Mayorista de Fármacos Especiales</td>
+                            <td><strong>2,910</strong></td>
+                            <td><span class="hhi-badge hhi-high">Altamente Concentrado</span></td>
+                            <td>Drogerías Principales GT</td>
+                            <td><strong>49</strong></td>
+                            <td>Inspección Clandestina Directa</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Construcción y Cemento</strong></td>
+                            <td>Suministro de Cemento Clinker y Concreto</td>
+                            <td><strong>3,100</strong></td>
+                            <td><span class="hhi-badge hhi-high">Altamente Concentrado</span></td>
+                            <td>Cementos Progreso, Cemex</td>
+                            <td><strong>27</strong></td>
+                            <td>Opinión Consultiva de Competencia</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ==========================================================================
+     FOOTER INSTITUCIONAL
+     ========================================================================== -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <img src="img/logo-sc-blanco.png" alt="Superintendencia de Competencia" style="height:48px; margin-bottom:1.2rem;">
+                <p style="font-size:0.86rem; color:rgba(255,255,255,0.8); line-height:1.6; max-width:380px;">
+                    La Superintendencia de Competencia es el órgano autónomo encargado de promover la libre competencia, prevenir y sancionar las prácticas anticompetitivas en Guatemala.
+                </p>
+            </div>
+            <div>
+                <h4 style="font-family:'Outfit',sans-serif; font-size:1rem; font-weight:800; margin-bottom:1rem; color:#38BDF8;">Secciones del Portal</h4>
+                <ul style="list-style:none; font-size:0.85rem; line-height:2; color:rgba(255,255,255,0.8);">
+                    <li><a href="index.html"><i class="fas fa-chevron-right" style="font-size:0.7rem; color:#0090E6;"></i> Inicio</a></li>
+                    <li><a href="servicios.html"><i class="fas fa-chevron-right" style="font-size:0.7rem; color:#0090E6;"></i> Servicios y Trámites</a></li>
+                    <li><a href="expedientes.html"><i class="fas fa-chevron-right" style="font-size:0.7rem; color:#0090E6;"></i> Consulta de Expediente</a></li>
+                    <li><a href="analitica.html"><i class="fas fa-chevron-right" style="font-size:0.7rem; color:#0090E6;"></i> Tablero de Analítica</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="font-family:'Outfit',sans-serif; font-size:1rem; font-weight:800; margin-bottom:1rem; color:#38BDF8;">Contacto Institucional</h4>
+                <p style="font-size:0.85rem; color:rgba(255,255,255,0.8); line-height:1.8;">
+                    <i class="fas fa-location-dot" style="color:#38BDF8;"></i> Ciudad de Guatemala, Guatemala<br>
+                    <i class="fas fa-phone" style="color:#38BDF8;"></i> PBX: +(502) 2200-0000<br>
+                    <i class="fas fa-envelope" style="color:#38BDF8;"></i> analitica@competencia.gob.gt
+                </p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <span>&copy; 2026 Superintendencia de Competencia · Gobierno de Guatemala. Todos los derechos reservados.</span>
+            <span>Tablero de Analítica e Indicadores Institucionales</span>
+        </div>
+    </div>
+</footer>
+
+<!-- ==========================================================================
+     SCRIPTS DE INTERACTIVIDAD Y CHART.JS
+     ========================================================================== -->
+<script>
+// MENÚ MÓVIL TOGGLE
+const menuToggle = document.getElementById('menuToggle');
+const navMenu = document.getElementById('navMenu');
+
+if (menuToggle && navMenu) {
+    menuToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        navMenu.classList.toggle('open');
+        const icon = menuToggle.querySelector('i');
+        if (icon) {
+            if (navMenu.classList.contains('open')) {
+                icon.className = 'fas fa-xmark';
+            } else {
+                icon.className = 'fas fa-bars';
+            }
+        }
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+            navMenu.classList.remove('open');
+            const icon = menuToggle.querySelector('i');
+            if (icon) icon.className = 'fas fa-bars';
+        }
+    });
+
+    navMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            navMenu.classList.remove('open');
+            const icon = menuToggle.querySelector('i');
+            if (icon) icon.className = 'fas fa-bars';
+        });
+    });
+}
+
+// INSTANCIAS DE GRÁFICAS CHART.JS
+let chartRegionesInst = null;
+let chartTendenciaInst = null;
+let chartPracticasInst = null;
+let chartHHIInst = null;
+let chartPipelineInst = null;
+
+let currentMetricType = 'denuncias';
+
+const regionalDataset = {
+    labels: ['Central (Guatemala)', 'Sur (Escuintla)', 'Occidente (Xela)', 'Nororiente (Izabal)', 'Norte (Verapaces)', 'Petén'],
+    denuncias: [118, 54, 45, 42, 36, 24],
+    hhi: [2280, 2380, 2050, 2450, 2100, 1650],
+    inspecciones: [28, 14, 11, 10, 9, 6],
+    sectores: [
+        'Telecomunicaciones & Banca',
+        'Agroindustria Cañera & Puertos',
+        'Servicios, Salud & Bebidas',
+        'Puertos, Logística & Cemento',
+        'Energía Hidroeléctrica & Comercio',
+        'Agroindustria & Ganadería'
+    ]
+};
+
+function inicializarGraficas() {
+    // 0. GRÁFICA REGIONAL REEMPLAZANTE DEL MAPA (BAR CHART HORIZONTAL)
+    const ctxRegiones = document.getElementById('chartRegiones').getContext('2d');
+    chartRegionesInst = new Chart(ctxRegiones, {
+        type: 'bar',
+        data: {
+            labels: regionalDataset.labels,
+            datasets: [{
+                label: 'Denuncias Registradas',
+                data: [...regionalDataset.denuncias],
+                backgroundColor: ['#002765', '#0090E6', '#016F89', '#029F9C', '#F5A623', '#10B981'],
+                borderRadius: 6
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        afterLabel: function(context) {
+                            const idx = context.dataIndex;
+                            return 'Sector dominante: ' + regionalDataset.sectores[idx];
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: { beginAtZero: true, grid: { color: 'rgba(0,39,101,0.06)' } },
+                y: { grid: { display: false } }
+            },
+            onClick: (e, elements) => {
+                if (elements && elements.length > 0) {
+                    const idx = elements[0].index;
+                    const names = ['Guatemala', 'Escuintla', 'Quetzaltenango', 'Izabal', 'Alta Verapaz', 'Petén'];
+                    const chips = document.querySelectorAll('#regionChipContainer .region-chip');
+                    if (chips[idx]) {
+                        chips[idx].click();
+                    }
+                }
+            }
+        }
+    });
+
+    // 1. TENDENCIA MENSUAL (LÍNEA DUAL)
+    const ctxTendencia = document.getElementById('chartTendencia').getContext('2d');
+    chartTendenciaInst = new Chart(ctxTendencia, {
+        type: 'line',
+        data: {
+            labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep'],
+            datasets: [
+                {
+                    label: 'Denuncias Presentadas',
+                    data: [28, 34, 42, 38, 45, 52, 48, 55, 60],
+                    borderColor: '#0090E6',
+                    backgroundColor: 'rgba(0, 144, 230, 0.12)',
+                    fill: true,
+                    tension: 0.35,
+                    borderWidth: 3
+                },
+                {
+                    label: 'Investigaciones Iniciadas',
+                    data: [12, 15, 18, 22, 25, 28, 30, 32, 35],
+                    borderColor: '#029F9C',
+                    backgroundColor: 'transparent',
+                    borderWidth: 3,
+                    borderDash: [5, 5]
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'top' }
+            },
+            scales: {
+                y: { beginAtZero: true, grid: { color: 'rgba(0,39,101,0.06)' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    // 2. PRÁCTICAS ANTICOMPETITIVAS (DONUT CHART)
+    const ctxPracticas = document.getElementById('chartPracticas').getContext('2d');
+    chartPracticasInst = new Chart(ctxPracticas, {
+        type: 'doughnut',
+        data: {
+            labels: ['Acuerdos Colusorios (Carteles)', 'Abuso de Posición Dominante', 'Concentraciones No Notificadas', 'Barreras de Entrada'],
+            datasets: [{
+                data: [38, 28, 18, 16],
+                backgroundColor: ['#002765', '#0090E6', '#029F9C', '#F5A623'],
+                borderWidth: 2,
+                borderColor: '#FFFFFF'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' }
+            }
+        }
+    });
+
+    // 3. ÍNDICE HHI POR SECTOR (BAR CHART)
+    const ctxHHI = document.getElementById('chartHHI').getContext('2d');
+    chartHHIInst = new Chart(ctxHHI, {
+        type: 'bar',
+        data: {
+            labels: ['Telecom', 'Alimentos', 'Energía', 'Financiero', 'Salud', 'Construcción'],
+            datasets: [{
+                label: 'Índice Herfindahl-Hirschman (HHI)',
+                data: [2850, 2420, 2680, 1890, 2910, 3100],
+                backgroundColor: function(context) {
+                    const value = context.dataset.data[context.dataIndex];
+                    return value > 2500 ? '#E11D48' : '#F5A623';
+                },
+                borderRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { beginAtZero: true, max: 3500, grid: { color: 'rgba(0,39,101,0.06)' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    // 4. PIPELINE DE EXPEDIENTES (BAR HORIZONTAL)
+    const ctxPipeline = document.getElementById('chartPipeline').getContext('2d');
+    chartPipelineInst = new Chart(ctxPipeline, {
+        type: 'bar',
+        data: {
+            labels: ['Evaluación Previa', 'Admitidas a Trámite', 'Periodo Probatorio', 'Resolución / Sanción', 'Archivadas / Desestimadas'],
+            datasets: [{
+                label: 'Cantidad de Expedientes',
+                data: [85, 62, 42, 28, 35],
+                backgroundColor: '#016F89',
+                borderRadius: 6
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                x: { beginAtZero: true }
+            }
+        }
+    });
+}
+
+// SWITCH DE MÉTRICA REGIONAL
+function switchRegionalMetric(metric) {
+    currentMetricType = metric;
+    
+    document.querySelectorAll('#btnMetricDenuncias, #btnMetricHHI, #btnMetricInspecciones').forEach(btn => btn.classList.remove('active'));
+    
+    if (metric === 'denuncias') {
+        document.getElementById('btnMetricDenuncias').classList.add('active');
+        if (chartRegionesInst) {
+            chartRegionesInst.data.datasets[0].label = 'Denuncias Registradas';
+            chartRegionesInst.data.datasets[0].data = [...regionalDataset.denuncias];
+            chartRegionesInst.update();
+        }
+    } else if (metric === 'hhi') {
+        document.getElementById('btnMetricHHI').classList.add('active');
+        if (chartRegionesInst) {
+            chartRegionesInst.data.datasets[0].label = 'Índice HHI Promedio';
+            chartRegionesInst.data.datasets[0].data = [...regionalDataset.hhi];
+            chartRegionesInst.update();
+        }
+    } else if (metric === 'inspecciones') {
+        document.getElementById('btnMetricInspecciones').classList.add('active');
+        if (chartRegionesInst) {
+            chartRegionesInst.data.datasets[0].label = 'Inspecciones Realizadas';
+            chartRegionesInst.data.datasets[0].data = [...regionalDataset.inspecciones];
+            chartRegionesInst.update();
+        }
+    }
+}
+
+// SELECCIÓN DE REGIÓN INTERACTIVA
+function selectRegion(name, denuncias, sector, hhi, oficio, el) {
+    document.querySelectorAll('.region-chip').forEach(chip => chip.classList.remove('active'));
+    if (el) el.classList.add('active');
+
+    document.getElementById('selectedDeptBadge').textContent = name;
+    document.getElementById('detDeptName').textContent = name;
+    document.getElementById('detDenuncias').textContent = denuncias + ' denuncias registradas';
+    document.getElementById('detSector').textContent = sector;
+    document.getElementById('detHHI').textContent = hhi.toLocaleString() + (parseInt(hhi) > 2000 ? ' (Alta Concentración)' : ' (Moderado)');
+    document.getElementById('detOficio').textContent = oficio + ' expedientes de oficio';
+
+    const list = document.getElementById('detPracticasList');
+    if (parseInt(hhi) > 2200) {
+        list.innerHTML = `
+            <li>Investigaciones activas por fijación concertada de precios.</li>
+            <li>Monitoreo de posible abuso de posición dominante en distribución.</li>
+            <li>Verificación de barreras normativas de acceso al mercado local.</li>
+        `;
+    } else {
+        list.innerHTML = `
+            <li>Consultas de concentraciones económicas regionales.</li>
+            <li>Atención de denuncias por competencia desleal y acuerdos.</li>
+            <li>Estudios de mercado preventivos en el sector agroindustrial.</li>
+        `;
+    }
+}
+
+// RESTABLECER FILTROS
+function resetFiltros() {
+    document.getElementById('filterAnio').value = 'todos';
+    document.getElementById('filterSector').value = 'todos';
+    document.getElementById('filterPractica').value = 'todas';
+    actualizarTablero();
+}
+
+// ACTUALIZACIÓN DINÁMICA SEGÚN FILTROS
+function actualizarTablero() {
+    const anio = document.getElementById('filterAnio').value;
+    const sector = document.getElementById('filterSector').value;
+
+    let mult = 1;
+    if (anio === '2025') mult = 0.85;
+    if (anio === '2024') mult = 0.70;
+
+    if (sector !== 'todos') mult *= 0.35;
+
+    document.getElementById('kpiDenuncias').textContent = Math.round(342 * mult);
+    document.getElementById('kpiInvestigaciones').textContent = Math.round(128 * mult);
+    document.getElementById('kpiConcentraciones').textContent = Math.round(48 * mult);
+
+    if (chartTendenciaInst) {
+        chartTendenciaInst.data.datasets[0].data = [28, 34, 42, 38, 45, 52, 48, 55, 60].map(v => Math.round(v * mult));
+        chartTendenciaInst.update();
+    }
+    if (chartRegionesInst) {
+        chartRegionesInst.data.datasets[0].data = regionalDataset[currentMetricType].map(v => Math.round(v * mult));
+        chartRegionesInst.update();
+    }
+}
+
+// ACCIONES DE EXPORTACIÓN DATOS ABIERTOS
+function exportarCSV() {
+    const csvContent = "data:text/csv;charset=utf-8," 
+        + "Departamento,Denuncias,Sector_Dominante,HHI_Estimado\n"
+        + "Guatemala,118,Telecomunicaciones & Banca,2280\n"
+        + "Escuintla,54,Agroindustria & Puertos,2380\n"
+        + "Quetzaltenango,45,Servicios & Salud,2050\n"
+        + "Izabal,42,Puertos & Cemento,2450\n"
+        + "Alta Verapaz,36,Energia & Comercio,2100";
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "datos_abiertos_competencia_gt_2026.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+function exportarJSON() {
+    const data = {
+        institucion: "Superintendencia de Competencia de Guatemala",
+        fecha_exportacion: "2026-09-14",
+        indicadores: {
+            denuncias_totales: 342,
+            investigaciones: 128,
+            hhi_promedio: 1820
+        }
+    };
+    const jsonStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data, null, 2));
+    const link = document.createElement("a");
+    link.setAttribute("href", jsonStr);
+    link.setAttribute("download", "datos_abiertos_sc_2026.json");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+// INICIALIZAR GRÁFICAS AL CARGAR LA PÁGINA
+document.addEventListener('DOMContentLoaded', () => {
+    inicializarGraficas();
+});
+</script>
+</body>
+</html>

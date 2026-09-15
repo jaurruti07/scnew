@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Consulta de Expedientes · Superintendencia de Competencia — SIC</title>
+<meta name="description" content="Consulta pública y privada de expedientes electrónicos únicos de la Superintendencia de Competencia. Trazabilidad 100% digital y seguimiento procesal en tiempo real.">
+
+<!-- TIPOGRAFÍA INSTITUCIONAL -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- ICONOGRAFÍA -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+/* ==========================================================================
+   DESIGN TOKENS INSTITUCIONALES (GUATEMALA COMPETENCIA)
+   ========================================================================== */
+:root {
+    --sc-azul-profundo:      #002765;
+    --sc-azul-institucional: #022D60;
+    --sc-azul-brillante:     #0090E6;
+    --sc-turquesa:           #029F9C;
+    --sc-turquesa-oscuro:    #016F89;
+    --sc-blanco:             #FFFFFF;
+
+    --navy:                  #002765;
+    --navy-mid:              #022D60;
+    --navy-light:            #016F89;
+    --cyan:                  #029F9C;
+    --cyan-dim:              #016F89;
+    --cyan-light:            #00C2E0;
+
+    --bg-page:               #F4F8FC;
+    --surface-card:          #FFFFFF;
+    --text-main:             #002765;
+    --text-muted:            #385473;
+    --border-subtle:         rgba(0, 39, 101, 0.12);
+
+    --radius-lg:             16px;
+    --radius-xl:             24px;
+
+    --shadow-soft:           0 6px 24px rgba(0, 39, 101, 0.08);
+    --shadow-elevated:       0 12px 36px rgba(0, 39, 101, 0.14);
+
+    --grad-institucional:    linear-gradient(135deg, #002765 0%, #016F89 100%);
+    --grad-hero:             linear-gradient(135deg, #001A44 0%, #002765 45%, #016F89 100%);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: var(--bg-page);
+    color: var(--text-main);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+a { text-decoration: none; color: inherit; }
+
+.container {
+    width: 100%;
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* ==========================================================================
+   HEADER
+   ========================================================================== */
+.site-header {
+    background: #FFFFFF;
+    border-bottom: 1px solid var(--border-subtle);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 39, 101, 0.04);
+}
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 78px;
+}
+.logo-area { display: flex; align-items: center; gap: 12px; }
+.gov-logo-badge {
+    background: #FFFFFF;
+    padding: 4px 10px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+}
+.gov-logo-badge img { height: 38px; width: auto; object-fit: contain; }
+.gov-logo-img { height: 48px; width: auto; object-fit: contain; }
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    list-style: none;
+}
+.nav-menu a {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    transition: color 0.2s ease;
+    padding: 6px 12px;
+    border-radius: 8px;
+}
+.nav-menu a:hover, .nav-menu a.active {
+    color: var(--sc-azul-profundo);
+    background: rgba(1, 111, 137, 0.08);
+}
+.nav-menu a.nav-cta {
+    background: var(--sc-azul-profundo);
+    color: #FFFFFF !important;
+    padding: 8px 18px;
+    border-radius: 50px;
+}
+.nav-menu a.nav-cta:hover {
+    background: var(--cyan-dim);
+}
+
+.menu-toggle {
+    display: none;
+    background: none;
+    border: 1px solid var(--border-subtle);
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    color: var(--sc-azul-profundo);
+    cursor: pointer;
+}
+
+/* ==========================================================================
+   HERO
+   ========================================================================== */
+.hero-exp {
+    background: var(--grad-hero);
+    color: #FFFFFF;
+    padding: 4.5rem 0 3.8rem;
+    position: relative;
+    overflow: hidden;
+}
+.hero-exp::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(0, 194, 224, 0.18) 0%, transparent 70%);
+    pointer-events: none;
+}
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+}
+.hero-exp h1 {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(2.1rem, 4.5vw, 3.2rem);
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 1rem;
+}
+.hero-exp h1 em {
+    font-style: normal;
+    color: var(--cyan-light);
+}
+.hero-exp p {
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.88);
+    max-width: 780px;
+    line-height: 1.55;
+}
+
+/* ==========================================================================
+   FORMULARIO DE BÚSQUEDA Y SEGUIMIENTO
+   ========================================================================== */
+.search-card-container {
+    margin-top: -2.5rem;
+    position: relative;
+    z-index: 10;
+    margin-bottom: 3rem;
+}
+.search-box-card {
+    background: #FFFFFF;
+    border-radius: var(--radius-xl);
+    padding: 2.2rem;
+    box-shadow: var(--shadow-elevated);
+    border: 1px solid var(--border-subtle);
+}
+.search-form-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1.2fr;
+    gap: 16px;
+    align-items: end;
+}
+.input-group-exp {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.input-group-exp label {
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: var(--sc-azul-profundo);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.input-group-exp input {
+    padding: 0.85rem 1.1rem;
+    border: 1.5px solid rgba(0, 39, 101, 0.18);
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--sc-azul-profundo);
+    outline: none;
+    transition: all 0.2s ease;
+}
+.input-group-exp input:focus {
+    border-color: var(--sc-azul-brillante);
+    box-shadow: 0 0 0 4px rgba(0, 144, 230, 0.12);
+}
+
+.btn-search-exp {
+    background: linear-gradient(135deg, #002765 0%, #016F89 100%);
+    color: #FFFFFF;
+    border: none;
+    padding: 0.88rem 1.6rem;
+    border-radius: 12px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 6px 20px rgba(0, 39, 101, 0.25);
+    transition: all 0.25s ease;
+}
+.btn-search-exp:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 26px rgba(0, 39, 101, 0.35);
+}
+
+.quick-demo-chips {
+    margin-top: 1.4rem;
+    padding-top: 1.2rem;
+    border-top: 1px dashed var(--border-subtle);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.quick-chip-label {
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+.exp-demo-pill {
+    background: #F0F4F8;
+    border: 1px solid rgba(0, 39, 101, 0.15);
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--sc-azul-profundo);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.exp-demo-pill:hover {
+    background: var(--sc-azul-profundo);
+    color: #FFFFFF;
+}
+
+/* ==========================================================================
+   RESULTADO DE DETALLE Y LÍNEA DE TIEMPO
+   ========================================================================== */
+.exp-detail-wrapper {
+    display: grid;
+    grid-template-columns: 1.8fr 1fr;
+    gap: 24px;
+    margin-bottom: 3.5rem;
+}
+.detail-main-card {
+    background: #FFFFFF;
+    border-radius: var(--radius-xl);
+    padding: 2.2rem;
+    border: 1px solid var(--border-subtle);
+    box-shadow: var(--shadow-soft);
+}
+.exp-header-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 1.4rem;
+    border-bottom: 1px solid var(--border-subtle);
+    margin-bottom: 1.4rem;
+}
+.exp-code-display {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--sc-azul-profundo);
+}
+.exp-type-tag {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--cyan-dim);
+    display: block;
+    margin-top: 2px;
+}
+
+.status-badge {
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+.badge-cyan { background: rgba(2, 159, 156, 0.12); color: #016F89; border: 1px solid rgba(2, 159, 156, 0.3); }
+.badge-amber { background: rgba(245, 166, 35, 0.14); color: #B45309; border: 1px solid rgba(245, 166, 35, 0.3); }
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    background: #F4F8FC;
+    padding: 1.2rem;
+    border-radius: 14px;
+    border: 1px solid rgba(0, 39, 101, 0.1);
+    margin-bottom: 1.8rem;
+}
+.summary-item label {
+    font-size: 0.70rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    display: block;
+}
+.summary-item strong {
+    font-size: 0.88rem;
+    color: var(--sc-azul-profundo);
+}
+
+/* TIMELINE PROCESAL */
+.timeline-title-head {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--sc-azul-profundo);
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.timeline {
+    position: relative;
+    padding-left: 28px;
+}
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 9px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: rgba(0, 39, 101, 0.15);
+}
+.timeline-item {
+    position: relative;
+    padding-bottom: 1.6rem;
+}
+.timeline-item:last-child { padding-bottom: 0; }
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -28px;
+    top: 4px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    border: 3px solid rgba(0, 39, 101, 0.25);
+}
+.timeline-item.done::before {
+    background: #029F9C;
+    border-color: #029F9C;
+    box-shadow: 0 0 0 3px rgba(2, 159, 156, 0.2);
+}
+.timeline-item.active::before {
+    background: #0090E6;
+    border-color: #002765;
+    box-shadow: 0 0 0 4px rgba(0, 144, 230, 0.25);
+}
+
+.timeline-item-title {
+    font-size: 0.92rem;
+    font-weight: 800;
+    color: var(--sc-azul-profundo);
+}
+.timeline-item-desc {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+/* SIDEBAR INFORMATIVA & GARANTÍAS */
+.sidebar-info-card {
+    background: #FFFFFF;
+    border-radius: var(--radius-xl);
+    padding: 1.8rem;
+    border: 1px solid var(--border-subtle);
+    box-shadow: var(--shadow-soft);
+}
+.sidebar-title {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--sc-azul-profundo);
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.guarantee-list {
+    display: grid;
+    gap: 14px;
+}
+.guarantee-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+.guarantee-item i {
+    color: var(--cyan-dim);
+    font-size: 1.1rem;
+    margin-top: 3px;
+}
+.guarantee-item h4 {
+    font-size: 0.86rem;
+    font-weight: 800;
+    color: var(--sc-azul-profundo);
+}
+.guarantee-item p {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+    margin-top: 2px;
+}
+
+/* ==========================================================================
+   SECCIÓN DE COADYUVANCIA Y APORTACIÓN DE DOCUMENTOS
+   ========================================================================== */
+.sec-aportacion {
+    background: #FFFFFF;
+    border-radius: var(--radius-xl);
+    padding: 2.2rem;
+    border: 1px solid var(--border-subtle);
+    box-shadow: var(--shadow-soft);
+    margin-bottom: 3.5rem;
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+.footer {
+    background: #001A44;
+    color: rgba(255, 255, 255, 0.7);
+    padding: 4rem 0 2rem;
+    font-size: 0.84rem;
+}
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+.footer h5 {
+    color: #FFFFFF;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+}
+.footer a { color: rgba(255, 255, 255, 0.7); transition: color 0.2s ease; }
+.footer a:hover { color: var(--cyan-light); }
+
+/* ==========================================================================
+   OPTIMIZACIÓN RESPONSIVA MÓVIL
+   ========================================================================== */
+@media (max-width: 1280px) {
+    .nav-menu a {
+        font-size: 0.75rem;
+        padding: 0.45rem 0.75rem;
+    }
+}
+
+@media (max-width: 1150px) {
+    .navbar {
+        height: auto;
+        min-height: 70px;
+        padding: 8px 0;
+        gap: 10px;
+    }
+    .logo-area {
+        gap: 8px;
+        flex-shrink: 1;
+        min-width: 0;
+        max-width: calc(100% - 50px);
+    }
+    .logo-area a {
+        gap: 8px !important;
+        flex-shrink: 1;
+        min-width: 0;
+    }
+    .gov-logo-badge {
+        padding: 4px 8px;
+        border-radius: 8px;
+        flex-shrink: 0;
+    }
+    .gov-logo-badge img {
+        height: 32px !important;
+    }
+    .gov-logo-img {
+        height: 38px !important;
+        flex-shrink: 0;
+    }
+    .header-portal-title {
+        padding-left: 8px !important;
+        flex-shrink: 1;
+        min-width: 0;
+    }
+    .portal-title-text {
+        font-size: 0.82rem !important;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        display: block;
+    }
+    .portal-subtitle-text {
+        font-size: 0.62rem !important;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        display: block;
+    }
+
+    .menu-toggle {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 42px;
+        height: 42px;
+        min-width: 42px;
+        border-radius: 12px;
+        color: var(--sc-azul-profundo);
+        font-size: 1.25rem;
+        border: 1px solid rgba(0, 39, 101, 0.22);
+        background: #FFFFFF;
+        box-shadow: 0 2px 10px rgba(0, 39, 101, 0.12);
+        transition: all 0.2s ease;
+        flex-shrink: 0;
+        z-index: 1000;
+        cursor: pointer;
+    }
+    .menu-toggle:hover {
+        background: rgba(0, 39, 101, 0.06);
+        color: var(--sc-azul-brillante);
+    }
+
+    .nav-menu {
+        position: absolute;
+        top: calc(100% + 6px);
+        left: 0;
+        right: 0;
+        background: #FFFFFF !important;
+        padding: 1rem;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+        border-radius: 18px;
+        border: 1px solid rgba(0, 39, 101, 0.16);
+        box-shadow: 0 16px 44px rgba(0, 39, 101, 0.25);
+        display: none;
+        z-index: 1000;
+        max-height: 82vh;
+        overflow-y: auto;
+    }
+    .nav-menu.open { display: flex !important; }
+
+    .nav-menu a {
+        text-align: left;
+        color: var(--sc-azul-profundo) !important;
+        font-size: 0.88rem;
+        font-weight: 700;
+        padding: 0.85rem 1.2rem;
+        border-radius: 12px;
+        background: #F4F8FC;
+        border: 1px solid rgba(0, 39, 101, 0.08);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        transition: all 0.2s ease;
+    }
+    .nav-menu a:hover {
+        background: rgba(0, 144, 230, 0.10) !important;
+        color: var(--sc-azul-brillante) !important;
+        border-color: rgba(0, 144, 230, 0.25) !important;
+    }
+    .nav-menu a.active {
+        background: var(--sc-azul-profundo) !important;
+        color: #FFFFFF !important;
+        border-color: var(--sc-azul-profundo) !important;
+    }
+    .nav-menu a.active i {
+        color: #00C2E0 !important;
+    }
+    .nav-menu a.nav-cta {
+        background: linear-gradient(135deg, #002765 0%, #016F89 100%) !important;
+        color: #FFFFFF !important;
+        justify-content: center;
+        text-align: center;
+        margin-top: 4px;
+    }
+
+    .search-form-grid { grid-template-columns: 1fr; gap: 14px; }
+    .exp-detail-wrapper { grid-template-columns: 1fr; gap: 20px; }
+    .summary-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+}
+
+@media (max-width: 576px) {
+    .container { padding: 0 14px; }
+    
+    .logo-area .divider-line { display: none; }
+    .gov-logo-badge { display: none; }
+    .header-portal-title { padding-left: 6px !important; border-left: none !important; }
+    .portal-subtitle-text { display: none; }
+    .portal-title-text { font-size: 0.80rem !important; }
+
+    .hero-exp { padding: 2.2rem 0 1.8rem; }
+    .hero-badge { font-size: 0.70rem; padding: 4px 10px; }
+    .hero-exp h1 { font-size: 1.65rem; margin-bottom: 0.8rem; }
+    .hero-exp p { font-size: 0.88rem; line-height: 1.5; }
+
+    .search-card-container { margin-top: -1.2rem; margin-bottom: 2rem; }
+    .search-box-card { padding: 1.25rem 1rem; border-radius: 16px; }
+    .input-group-exp label { font-size: 0.80rem; }
+    .input-group-exp input { font-size: 0.95rem; padding: 0.75rem 0.9rem; }
+    .btn-search-exp { width: 100%; padding: 0.85rem; font-size: 0.95rem; min-height: 48px; border-radius: 12px; }
+
+    .quick-demo-chips {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 6px;
+    }
+    .exp-demo-pill {
+        width: 100%;
+        text-align: left;
+        padding: 10px 14px;
+        font-size: 0.80rem;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .exp-demo-pill::after {
+        content: '\f061';
+        font-family: 'Font Awesome 6 Free';
+        font-weight: 900;
+        font-size: 0.75rem;
+        opacity: 0.6;
+    }
+
+    .detail-main-card { padding: 1.25rem 1rem; border-radius: 16px; }
+    .exp-header-info { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .exp-code-display { font-size: 1.4rem; word-break: break-all; }
+
+    .summary-grid { grid-template-columns: 1fr; gap: 8px; padding: 0.85rem; border-radius: 12px; }
+    .summary-item { background: #FFFFFF; padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(0,39,101,0.08); }
+    .summary-item strong { word-break: break-word; }
+
+    .timeline { padding-left: 20px; }
+    .timeline::before { left: 6px; }
+    .timeline-item::before { left: -20px; width: 14px; height: 14px; top: 4px; }
+    .timeline-item-title { font-size: 0.86rem; }
+    .timeline-item-desc { font-size: 0.78rem; }
+
+    .sidebar-info-card { padding: 1.25rem 1rem; border-radius: 16px; }
+    .sec-aportacion { padding: 1.25rem 1rem; border-radius: 16px; margin-bottom: 2rem; }
+    .sec-aportacion-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .sec-aportacion-footer { flex-direction: column; align-items: stretch; gap: 10px; }
+    .form-aportar-grid { grid-template-columns: 1fr !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+    <div class="container">
+        <nav class="navbar">
+            <div class="logo-area">
+                <a href="index.html" title="Superintendencia de Competencia · Portal de Competencia en Línea" style="display:flex; align-items:center; gap:12px; text-decoration:none;">
+                    <div class="gov-logo-badge">
+                        <img src="img/logo-gobierno-gt-web.png" alt="Gobierno de Guatemala" style="height:38px; width:auto;">
+                    </div>
+                    <div class="divider-line" style="width:1px; height:34px; background:rgba(0,39,101,0.18);"></div>
+                    <img src="img/logo-sc.png" alt="Superintendencia de Competencia" class="gov-logo-img" style="height:48px; width:auto;">
+                    <div class="header-portal-title" style="display:flex; flex-direction:column; justify-content:center; border-left:1px solid rgba(0,39,101,0.18); padding-left:12px;">
+                        <span class="portal-title-text" style="font-family:'Outfit', sans-serif; font-size:0.92rem; font-weight:800; color:#002765; line-height:1.1;">
+                            Portal de Competencia en Línea
+                        </span>
+                        <span class="portal-subtitle-text" style="font-size:0.70rem; font-weight:600; color:#016F89;">
+                            Superintendencia de Competencia
+                        </span>
+                    </div>
+                </a>
+            </div>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html#servicios">Servicios</a></li>
+                <li><a href="servicios.html"><i class="fas fa-list-check" style="color:#016F89;"></i> Catálogo en Línea</a></li>
+                <li><a href="expedientes.html" class="active nav-exp-link"><i class="fas fa-folder-open" style="color:#00C2E0;"></i> Consulta de Expediente</a></li>
+                <li><a href="analitica.html"><i class="fas fa-chart-pie" style="color:#016F89;"></i> Tablero Analítica</a></li>
+                <li><a href="macroprocesos.html">Macroprocesos</a></li>
+                <li><a href="talento.html">Trabaja con nosotros</a></li>
+                <li><a href="index.html#motor">Motor de análisis</a></li>
+                <li><a href="index.html#observatorio">Observatorio</a></li>
+                <li><a href="servicios.html" class="nav-cta">Iniciar trámite</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- HERO CARRUSEL / BANNER -->
+<section class="hero-exp">
+    <div class="container">
+        <div class="hero-badge">
+            <i class="fas fa-shield-halved"></i> Expediente Electrónico Único · Sistema SIC
+        </div>
+        <h1>Consulta de Expedientes &<br><em>Trazabilidad Procesal Digital</em></h1>
+        <p>
+            Plataforma oficial para la verificación, seguimiento en tiempo real y consulta del estado procesal
+            de las denuncias, solicitudes de autorización de concentraciones económicas y procedimientos administrativos
+            tramitados ante la Superintendencia de Competencia.
+        </p>
+    </div>
+</section>
+
+<!-- FORMULARIO BÚSQUEDA -->
+<div class="container search-card-container">
+    <div class="search-box-card">
+        <form id="formConsultaPagina">
+            <div class="search-form-grid">
+                <div class="input-group-exp">
+                    <label for="inputNumExp"><i class="fas fa-folder-open"></i> Número de Expediente Único</label>
+                    <input type="text" id="inputNumExp" placeholder="Ej. SC-2026-DEN-000482" required>
+                </div>
+                <div class="input-group-exp">
+                    <label for="inputClavePin"><i class="fas fa-key"></i> Clave / PIN</label>
+                    <input type="password" id="inputClavePin" placeholder="Ej. SC-8492" required>
+                </div>
+                <button type="submit" class="btn-search-exp">
+                    <i class="fas fa-magnifying-glass"></i> Consultar Expediente
+                </button>
+            </div>
+        </form>
+
+        <div class="quick-demo-chips">
+            <span class="quick-chip-label"><i class="fas fa-lightbulb"></i> Expedientes de demostración:</span>
+            <button class="exp-demo-pill" data-code="SC-2026-DEN-000482" data-pin="SC-8492">
+                SC-2026-DEN-000482 (Denuncia - Admisibilidad)
+            </button>
+            <button class="exp-demo-pill" data-code="SC-2026-CON-000088" data-pin="SC-1000">
+                SC-2026-CON-000088 (Concentración M&A)
+            </button>
+            <button class="exp-demo-pill" data-code="SC-2026-PRO-000042" data-pin="SC-1000">
+                SC-2026-PRO-000042 (Procedimiento de Sanción)
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- DETALLE Y LÍNEA DE TIEMPO -->
+<main class="container">
+    <div class="exp-detail-wrapper">
+        
+        <!-- CARD PRINCIPAL -->
+        <div class="detail-main-card" id="cardResultadoExpediente">
+            <div class="exp-header-info">
+                <div>
+                    <span class="exp-code-display" id="expDisplayCodigo">SC-2026-DEN-000482</span>
+                    <span class="exp-type-tag" id="expDisplayTipo">Denuncia (Confidencial) · Defensa de la Competencia</span>
+                </div>
+                <span class="status-badge badge-cyan" id="expDisplayEstado">Recibida · Admisibilidad</span>
+            </div>
+
+            <div class="summary-grid">
+                <div class="summary-item">
+                    <label>Asunto / Hechos</label>
+                    <strong id="expDisplayAsunto">Investigación por posible fijación de precios en canal de distribución</strong>
+                </div>
+                <div class="summary-item">
+                    <label>Modalidad</label>
+                    <strong id="expDisplayModalidad">Confidencial (Reserva de Ley)</strong>
+                </div>
+                <div class="summary-item">
+                    <label>Fecha de Ingreso</label>
+                    <strong id="expDisplayFecha">13/09/2026 - 16:30</strong>
+                </div>
+                <div class="summary-item">
+                    <label>Agente / Sector</label>
+                    <strong id="expDisplaySector">Alimentos y Bebidas (Guatemala)</strong>
+                </div>
+                <div class="summary-item">
+                    <label>Canal Preferente</label>
+                    <strong id="expDisplayCanal">Correo Electrónico</strong>
+                </div>
+                <div class="summary-item">
+                    <label>Archivos Adjuntos</label>
+                    <strong id="expDisplayArchivos">2 Documentos Probatorios</strong>
+                </div>
+            </div>
+
+            <div class="timeline-title-head">
+                <i class="fas fa-clock-rotate-left" style="color:#016F89;"></i> Trazabilidad y Progreso Procesal en Tiempo Real
+            </div>
+
+            <div class="timeline" id="expDisplayTimeline">
+                <div class="timeline-item done">
+                    <div class="timeline-item-title">1. Solicitud recepcionada e ingresada al SIC</div>
+                    <div class="timeline-item-desc">Se generó el código timbrado e ingreso en el Expediente Electrónico Único.</div>
+                </div>
+                <div class="timeline-item active">
+                    <div class="timeline-item-title">2. Verificación de requisitos y admisibilidad</div>
+                    <div class="timeline-item-desc">La Intendencia de Investigación analiza el cumplimiento de los formalismos legales.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-item-title">3. Diligencias de investigación preliminar</div>
+                    <div class="timeline-item-desc">Recopilación de indicios, pruebas documentales y requerimientos de información.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-item-title">4. Emitir informe / dictamen de instrucción</div>
+                    <div class="timeline-item-desc">Ponderación de evidencias y emisión de resolución motivada.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-item-title">5. Notificación oficial en canal preferente</div>
+                    <div class="timeline-item-desc">Se notificará por el canal seleccionado por el usuario.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SIDEBAR GARANTÍAS LEGALES -->
+        <aside class="sidebar-info-card">
+            <div class="sidebar-title">
+                <i class="fas fa-gavel" style="color:#016F89;"></i> Garantías Procesales
+            </div>
+            
+            <div class="guarantee-list">
+                <div class="guarantee-item">
+                    <i class="fas fa-lock"></i>
+                    <div>
+                        <h4>Reserva de Ley y Secreto (Art. 38)</h4>
+                        <p>Los datos del denunciante confidencial e información comercial sensible se mantienen bajo estricto resguardo.</p>
+                    </div>
+                </div>
+
+                <div class="guarantee-item">
+                    <i class="fas fa-fingerprint"></i>
+                    <div>
+                        <h4>Timbrado e Inalterabilidad</h4>
+                        <p>Cada actuación administrativa cuenta con firma electrónica e identificador único auditable.</p>
+                    </div>
+                </div>
+
+                <div class="guarantee-item">
+                    <i class="fas fa-bell"></i>
+                    <div>
+                        <h4>Alertas Automáticas</h4>
+                        <p>Reciba notificaciones inmediatas en su correo o WhatsApp cada vez que varíe el estado del expediente.</p>
+                    </div>
+                </div>
+
+                <div class="guarantee-item">
+                    <i class="fas fa-file-arrow-up"></i>
+                    <div>
+                        <h4>Aportación de Información</h4>
+                        <p>Permite a las partes acreditadas adjuntar pruebas complementarias en cualquier etapa del proceso.</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+    </div>
+
+    <!-- SECCIÓN COADYUVANCIA Y NUEVA EVIDENCIA -->
+    <section class="sec-aportacion">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:1.2rem;">
+            <div style="width:44px; height:44px; border-radius:12px; background:rgba(0,144,230,0.12); color:#0090E6; display:flex; align-items:center; justify-content:center; font-size:1.3rem;">
+                <i class="fas fa-file-circle-plus"></i>
+            </div>
+            <div>
+                <h3 style="font-size:1.2rem; font-weight:800; color:var(--sc-azul-profundo);">Aportar información adicional a este expediente</h3>
+                <p style="font-size:0.84rem; color:var(--text-muted);">¿Tiene nuevos documentos o pruebas que complementar? Ingrese su actualización de forma digital.</p>
+            </div>
+        </div>
+
+        <form id="formAportarEvidencia">
+            <div class="form-aportar-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:1rem;">
+                <div class="input-group-exp">
+                    <label>Nombre o Razón Social del Aportante</label>
+                    <input type="text" placeholder="Ej. Abogado / Representante Legal / Ciudadano" required>
+                </div>
+                <div class="input-group-exp">
+                    <label>Correo Electrónico para Acuse</label>
+                    <input type="email" placeholder="Ej. correo@ejemplo.gt" required>
+                </div>
+            </div>
+
+            <div class="input-group-exp" style="margin-bottom:1rem;">
+                <label>Descripción del documento o elemento probatorio</label>
+                <textarea rows="3" style="width:100%; padding:0.8rem; border-radius:12px; border:1.5px solid rgba(0,39,101,0.18); font-family:inherit; font-size:0.88rem;" placeholder="Escriba los detalles de los nuevos documentos aportados..."></textarea>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+                <span style="font-size:0.80rem; color:var(--text-muted);"><i class="fas fa-paperclip"></i> Formatos aceptados: PDF, DOCX, XLSX, JPG, MP4 (Máx 25MB)</span>
+                <button type="submit" class="btn-search-exp" style="padding:0.75rem 1.6rem; font-size:0.88rem;">
+                    <i class="fas fa-upload"></i> Subir y Adjuntar al Expediente
+                </button>
+            </div>
+        </form>
+    </section>
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:1rem;">
+                    <img src="img/logo-sc-blanco.png" alt="Superintendencia de Competencia" style="height:44px; width:auto;">
+                </div>
+                <p>
+                    Superintendencia de Competencia · Órgano técnico independiente de la República de Guatemala.
+                    Garantizamos la libre competencia, la prevención de prácticas restrictivas y la eficiencia en los mercados.
+                </p>
+            </div>
+            <div>
+                <h5>Servicios Directos</h5>
+                <p><a href="index.html#denuncia"><i class="fas fa-chevron-right"></i> Reportar práctica anticompetitiva</a></p>
+                <p><a href="expedientes.html"><i class="fas fa-chevron-right"></i> Consulta de Expedientes</a></p>
+                <p><a href="index.html#motor"><i class="fas fa-chevron-right"></i> Notificación de Concentración</a></p>
+            </div>
+            <div>
+                <h5>Contacto Oficial</h5>
+                <p><i class="fas fa-location-dot"></i> Ciudad de Guatemala, Guatemala C.A.</p>
+                <p><i class="fas fa-phone"></i> PBX: +502 2200-0000</p>
+                <p><i class="fas fa-envelope"></i> info@competencia.gob.gt</p>
+            </div>
+        </div>
+        <div style="text-align:center; padding-top:1.5rem; font-size:0.78rem; opacity:0.7;">
+            © 2026 Superintendencia de Competencia — Gobierno de Guatemala. Todos los derechos reservados.
+        </div>
+    </div>
+</footer>
+
+<script>
+// Manejo de LocalStorage
+const STORAGE_KEY = 'EXPEDIENTES_STORE_V1';
+let EXPEDIENTES_STORE = {
+    'SC-2026-DEN-000482': {
+        codigo: 'SC-2026-DEN-000482',
+        clave: 'SC-8492',
+        tipo: 'Denuncia (Confidencial) · Defensa de la Competencia',
+        modalidad: 'Confidencial',
+        asunto: 'Investigación por posible fijación de precios en canal de distribución',
+        estado: 'Recibida · Admisibilidad',
+        badgeClass: 'badge-cyan',
+        fecha: '13/09/2026',
+        sector: 'Alimentos y Bebidas (Guatemala)',
+        contactoPref: 'Correo Electrónico',
+        archivos: 2,
+        timeline: [
+            { done: true, title: '1. Solicitud recepcionada e ingresada al SIC', desc: 'Se generó el código timbrado e ingreso en el Expediente Electrónico Único.' },
+            { done: false, active: true, title: '2. Verificación de requisitos y admisibilidad', desc: 'La Intendencia de Investigación analiza el cumplimiento de los formalismos legales.' },
+            { done: false, pending: true, title: '3. Diligencias de investigación preliminar', desc: 'Recopilación de indicios, pruebas documentales y requerimientos de información.' },
+            { done: false, pending: true, title: '4. Emitir informe / dictamen de instrucción', desc: 'Ponderación de evidencias y emisión de resolución motivada.' },
+            { done: false, pending: true, title: '5. Notificación oficial en canal preferente', desc: 'Se notificará por el canal seleccionado por el usuario.' }
+        ]
+    },
+    'SC-2026-CON-000088': {
+        codigo: 'SC-2026-CON-000088',
+        clave: 'SC-1000',
+        tipo: 'Concentración Económica · Control Preventivo M&A',
+        modalidad: 'Pública Ordinaria',
+        asunto: 'Notificación de fusión corporativa en sector telecomunicaciones',
+        estado: 'Evaluación Técnica',
+        badgeClass: 'badge-amber',
+        fecha: '02/09/2026',
+        sector: 'Telecomunicaciones y Tecnología',
+        contactoPref: 'WhatsApp y Notificación Física',
+        archivos: 6,
+        timeline: [
+            { done: true, title: '1. Notificación previa recibida', desc: 'Expediente aperturado con arancel timbrado.' },
+            { done: true, title: '2. Verificación de umbrales cuantitativos', desc: 'Confirmación de superación de umbrales de ventas y activos.' },
+            { done: false, active: true, title: '3. Evaluación de impacto en el mercado relevante', desc: 'Análisis de concentración HHI y posibles barreras a la entrada.' },
+            { done: false, pending: true, title: '4. Emisión de resolución (Autorización / Condicionamiento)', desc: 'Pronunciamiento del Directorio Técnico.' }
+        ]
+    },
+    'SC-2026-PRO-000042': {
+        codigo: 'SC-2026-PRO-000042',
+        clave: 'SC-1000',
+        tipo: 'Procedimiento Administrativo Sancionador',
+        modalidad: 'Pública Ordinaria',
+        asunto: 'Procedimiento por presunto abuso de posición dominante',
+        estado: 'Audiencia Oral de Descargos',
+        badgeClass: 'badge-cyan',
+        fecha: '18/08/2026',
+        sector: 'Construcción e Infraestructura',
+        contactoPref: 'Dirección Física / Notificación Postal',
+        archivos: 12,
+        timeline: [
+            { done: true, title: '1. Resolución de apertura notificada', desc: 'Se concedió plazo legal para presentación de descargos.' },
+            { done: true, title: '2. Recepción de escritos de defensa y pruebas', desc: 'Análisis del caudal probatorio y peritajes técnicos.' },
+            { done: false, active: true, title: '3. Celebración de Audiencia Oral', desc: 'Exposición de alegatos finales ante la Intendencia.' },
+            { done: false, pending: true, title: '4. Resolución sancionatoria o de archivo', desc: 'Determinación final del procedimiento.' }
+        ]
+    }
+};
+
+function loadStore() {
+    try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+            const parsed = JSON.parse(raw);
+            Object.assign(EXPEDIENTES_STORE, parsed);
+        }
+    } catch(e) { console.error(e); }
+}
+
+function renderExpediente(code) {
+    loadStore();
+    const cleanCode = code.trim().toUpperCase();
+    const data = EXPEDIENTES_STORE[cleanCode] || {
+        codigo: cleanCode,
+        tipo: 'Solicitud Registrada en SIC',
+        modalidad: 'Confidencial',
+        asunto: 'Actuación en proceso de trámite y verificación procesal',
+        estado: 'En Proceso',
+        badgeClass: 'badge-cyan',
+        fecha: new Date().toLocaleDateString('es-GT'),
+        sector: 'Sector Comercial / Servicios',
+        contactoPref: 'Correo Electrónico',
+        archivos: 1,
+        timeline: [
+            { done: true, title: '1. Registro en el Portal SIC', desc: 'Documento ingresado con éxito al sistema central.' },
+            { done: false, active: true, title: '2. Asignación a Intendencia Misional', desc: 'En análisis técnico preliminar.' },
+            { done: false, pending: true, title: '3. Resolución procesal', desc: 'Notificación oficial correspondiente.' }
+        ]
+    };
+
+    document.getElementById('expDisplayCodigo').textContent = data.codigo;
+    document.getElementById('expDisplayTipo').textContent = data.tipo;
+    document.getElementById('expDisplayEstado').textContent = data.estado;
+    document.getElementById('expDisplayEstado').className = 'status-badge ' + (data.badgeClass || 'badge-cyan');
+    document.getElementById('expDisplayAsunto').textContent = data.asunto;
+    document.getElementById('expDisplayModalidad').textContent = data.modalidad;
+    document.getElementById('expDisplayFecha').textContent = data.fecha;
+    document.getElementById('expDisplaySector').textContent = data.sector;
+    document.getElementById('expDisplayCanal').textContent = data.contactoPref;
+    document.getElementById('expDisplayArchivos').textContent = (data.archivos || 1) + ' Archivos Probatorios';
+
+    let timelineHtml = '';
+    data.timeline.forEach((item) => {
+        let stateCls = '';
+        if (item.done) stateCls = 'done';
+        else if (item.active) stateCls = 'active';
+
+        timelineHtml += `
+            <div class="timeline-item ${stateCls}">
+                <div class="timeline-item-title">${item.title}</div>
+                <div class="timeline-item-desc">${item.desc}</div>
+            </div>
+        `;
+    });
+    document.getElementById('expDisplayTimeline').innerHTML = timelineHtml;
+}
+
+// Búsqueda submit
+const formConsultaPagina = document.getElementById('formConsultaPagina');
+if (formConsultaPagina) {
+    formConsultaPagina.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const inputNumExp = document.getElementById('inputNumExp');
+        const code = inputNumExp ? inputNumExp.value : '';
+        renderExpediente(code);
+    });
+}
+
+// Chips demostración
+document.querySelectorAll('.exp-demo-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+        const code = pill.dataset.code;
+        const pin = pill.dataset.pin;
+        const inputNumExp = document.getElementById('inputNumExp');
+        const inputClavePin = document.getElementById('inputClavePin');
+        if (inputNumExp) inputNumExp.value = code;
+        if (inputClavePin) inputClavePin.value = pin;
+        renderExpediente(code);
+    });
+});
+
+// Menu Toggle con accesibilidad y cierre al hacer clic
+const menuToggleBtn = document.getElementById('menuToggle');
+const navMenuEl = document.getElementById('navMenu');
+
+if (menuToggleBtn && navMenuEl) {
+    menuToggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = navMenuEl.classList.toggle('open');
+        const icon = menuToggleBtn.querySelector('i');
+        if (icon) {
+            icon.className = isOpen ? 'fas fa-xmark' : 'fas fa-bars';
+        }
+    });
+
+    document.addEventListener('click', (e) => {
+        if (navMenuEl.classList.contains('open') && !navMenuEl.contains(e.target) && !menuToggleBtn.contains(e.target)) {
+            navMenuEl.classList.remove('open');
+            const icon = menuToggleBtn.querySelector('i');
+            if (icon) icon.className = 'fas fa-bars';
+        }
+    });
+
+    navMenuEl.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            navMenuEl.classList.remove('open');
+            const icon = menuToggleBtn.querySelector('i');
+            if (icon) icon.className = 'fas fa-bars';
+        });
+    });
+}
+
+// Form Aportar
+const formAportarEvidencia = document.getElementById('formAportarEvidencia');
+if (formAportarEvidencia) {
+    formAportarEvidencia.addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Información y documentos adicionales adjuntados exitosamente al expediente en curso.');
+        e.target.reset();
+    });
+}
+
+// Inicializar de URL o defecto
+window.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    const expParam = params.get('exp');
+    if (expParam) {
+        document.getElementById('inputNumExp').value = expParam;
+        renderExpediente(expParam);
+    } else {
+        renderExpediente('SC-2026-DEN-000482');
+    }
+});
+</script>
+</body>
+</html>

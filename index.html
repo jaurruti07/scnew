@@ -14,6 +14,12 @@
 <!-- ICONOGRAFÍA -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+<!-- REACT, RECHARTS & BABEL STANDALONE FOR DASHBOARD OBSERVATORIO -->
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/recharts@2.12.7/umd/Recharts.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
 <style>
 /* ==========================================================================
    DESIGN TOKENS
@@ -138,6 +144,26 @@ button { cursor: pointer; border: none; background: none; }
 .logo-area { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
 .gov-logo-img { height: 48px; width: auto; max-height: 52px; object-fit: contain; }
 
+/* MARCO CONTENEDOR E INSIGNIA CON SOMBRA PARA ALTA LEGIBILIDAD DEL LOGO DEL GOBIERNO */
+.gov-logo-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #001942 0%, #002765 100%);
+    border: 1px solid rgba(0, 194, 224, 0.28);
+    border-radius: 12px;
+    padding: 5px 12px;
+    box-shadow: 0 4px 14px rgba(0, 39, 101, 0.22), 0 2px 6px rgba(0, 0, 0, 0.12);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.gov-logo-badge:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(0, 39, 101, 0.32), 0 0 12px rgba(0, 194, 224, 0.40);
+    border-color: rgba(0, 194, 224, 0.50);
+}
+.gov-logo-badge img {
+    height: 38px; width: auto; max-height: 42px; object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
+}
+
 .nav-menu {
     display: flex; align-items: center; gap: .3rem; list-style: none;
 }
@@ -179,25 +205,207 @@ button { cursor: pointer; border: none; background: none; }
     border: 1px solid rgba(0, 39, 101, 0.2);
     background: rgba(0, 39, 101, 0.04);
     transition: all .2s ease;
+    cursor: pointer;
 }
 .menu-toggle:hover { background: rgba(0, 39, 101, 0.10); }
 
-@media (max-width: 992px) {
-    .menu-toggle { display: flex; }
-    .nav-menu {
-        position: absolute; top: 100%; left: 0; right: 0;
-        background: #FFFFFF;
-        padding: 1.2rem;
-        flex-direction: column; align-items: stretch;
-        gap: .6rem;
-        border-radius: 0 0 20px 20px;
-        border-bottom: 1px solid rgba(0, 39, 101, 0.15);
-        box-shadow: 0 16px 40px rgba(0, 39, 101, 0.18);
-        display: none;
+@media (max-width: 1280px) {
+    .nav-menu a {
+        font-size: 0.75rem;
+        padding: 0.45rem 0.75rem;
     }
-    .nav-menu.open { display: flex; }
-    .nav-menu a { text-align: center; }
-    .nav-menu a.nav-cta { margin-left: 0; margin-top: .4rem; }
+}
+
+@media (max-width: 1150px) {
+    .navbar {
+        gap: 10px;
+        height: auto;
+        min-height: 70px;
+        padding: 8px 0;
+    }
+    .logo-area {
+        gap: 8px;
+        flex-shrink: 1;
+        min-width: 0;
+        max-width: calc(100% - 50px);
+    }
+    .logo-area a {
+        gap: 8px !important;
+        flex-shrink: 1;
+        min-width: 0;
+    }
+    .gov-logo-badge {
+        padding: 4px 8px;
+        border-radius: 9px;
+        flex-shrink: 0;
+    }
+    .gov-logo-badge img {
+        height: 32px !important;
+        max-height: 34px !important;
+    }
+    .gov-logo-img {
+        height: 38px !important;
+        max-height: 42px !important;
+        flex-shrink: 0;
+    }
+    .header-portal-title {
+        flex-shrink: 1;
+        min-width: 0;
+        overflow: hidden;
+        padding-left: 8px !important;
+    }
+    .portal-title-text {
+        font-size: 0.82rem !important;
+        font-weight: 800;
+        line-height: 1.15;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        display: block;
+    }
+    .portal-subtitle-text {
+        font-size: 0.62rem !important;
+        font-weight: 600;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        display: block;
+    }
+    .menu-toggle {
+        display: flex !important;
+        align-items: center; justify-content: center;
+        width: 42px; height: 42px; min-width: 42px;
+        border-radius: 12px;
+        color: var(--sc-azul-profundo); font-size: 1.25rem;
+        border: 1px solid rgba(0, 39, 101, 0.22);
+        background: #FFFFFF;
+        box-shadow: 0 2px 10px rgba(0, 39, 101, 0.12);
+        transition: all .2s ease;
+        flex-shrink: 0;
+        z-index: 310;
+        cursor: pointer;
+    }
+    .menu-toggle:hover {
+        background: rgba(0, 39, 101, 0.06);
+        color: var(--sc-azul-brillante);
+    }
+
+    .nav-menu {
+        position: absolute; top: calc(100% + 6px); left: 0; right: 0;
+        background: #FFFFFF !important;
+        padding: 1.1rem;
+        flex-direction: column; align-items: stretch;
+        gap: .5rem;
+        border-radius: 18px;
+        border: 1px solid rgba(0, 39, 101, 0.16);
+        box-shadow: 0 16px 44px rgba(0, 39, 101, 0.25);
+        display: none;
+        z-index: 1000;
+        max-height: 82vh;
+        overflow-y: auto;
+    }
+    .nav-menu.open { display: flex !important; }
+
+    .nav-menu li {
+        width: 100%;
+        margin: 0;
+    }
+
+    .nav-menu a {
+        text-align: left;
+        color: var(--sc-azul-profundo) !important;
+        font-size: .88rem; font-weight: 700;
+        padding: .85rem 1.2rem;
+        border-radius: 12px;
+        background: #F4F8FC;
+        border: 1px solid rgba(0, 39, 101, 0.08);
+        display: flex; align-items: center; justify-content: space-between;
+        width: 100% !important;
+        box-sizing: border-border-box;
+        box-sizing: border-box;
+        transition: all .2s ease;
+    }
+    .nav-menu a:hover,
+    .nav-menu a:focus {
+        background: rgba(0, 144, 230, 0.10) !important;
+        color: var(--sc-azul-brillante) !important;
+        border-color: rgba(0, 144, 230, 0.25) !important;
+    }
+    .nav-menu a.active {
+        background: var(--sc-azul-profundo) !important;
+        color: #FFFFFF !important;
+        border-color: var(--sc-azul-profundo) !important;
+        font-weight: 800;
+        box-shadow: 0 4px 14px rgba(0, 39, 101, 0.20);
+    }
+    .nav-menu a.nav-cta {
+        background: linear-gradient(135deg, #0090E6 0%, #029F9C 100%) !important;
+        color: #FFFFFF !important;
+        margin-left: 0; margin-top: .4rem;
+        text-align: center; justify-content: center;
+        display: flex; align-items: center;
+        border: none !important;
+        box-shadow: 0 6px 20px rgba(0, 144, 230, 0.35) !important;
+    }
+    .nav-menu a.nav-cta:hover {
+        opacity: 0.95; transform: translateY(-1px);
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar {
+        gap: 6px;
+        padding: 6px 0;
+        min-height: 64px;
+    }
+    .logo-area a {
+        gap: 6px !important;
+    }
+    .gov-logo-badge {
+        padding: 3px 6px;
+        border-radius: 8px;
+    }
+    .gov-logo-badge img {
+        height: 28px !important;
+        max-height: 30px !important;
+    }
+    .gov-logo-img {
+        height: 32px !important;
+        max-height: 34px !important;
+    }
+    .header-portal-title {
+        padding-left: 6px !important;
+    }
+    .portal-title-text {
+        font-size: 0.74rem !important;
+    }
+    .portal-subtitle-text {
+        font-size: 0.58rem !important;
+    }
+    .menu-toggle {
+        width: 38px;
+        height: 38px;
+        min-width: 38px;
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .gov-logo-badge {
+        padding: 2px 5px;
+    }
+    .gov-logo-badge img {
+        height: 24px !important;
+    }
+    .gov-logo-img {
+        height: 28px !important;
+    }
+    .portal-title-text {
+        font-size: 0.68rem !important;
+    }
+    .portal-subtitle-text {
+        display: none !important;
+    }
 }
 
 /* ==========================================================================
@@ -1194,8 +1402,108 @@ tbody td.muted { color: var(--text-muted); }
 .table-note i { color: var(--cyan-dim); margin-top: .22rem; }
 
 /* ==========================================================================
-   OBSERVATORIO
+   OBSERVATORIO & RECHARTS DASHBOARD
    ========================================================================== */
+.obs-dashboard-controls {
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 1.2rem; flex-wrap: wrap; margin-bottom: 2rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(0, 194, 224, 0.18);
+    border-radius: 20px; padding: 1rem 1.4rem;
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+}
+.obs-filter-group { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.obs-filter-btn {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    color: rgba(255, 255, 255, 0.8);
+    padding: .48rem 1.1rem; border-radius: 50px;
+    font-size: .78rem; font-weight: 700; cursor: pointer;
+    transition: all .2s ease; display: inline-flex; align-items: center; gap: 6px;
+}
+.obs-filter-btn:hover {
+    background: rgba(0, 194, 224, 0.15); color: #FFFFFF;
+    border-color: rgba(0, 194, 224, 0.35);
+}
+.obs-filter-btn.active {
+    background: linear-gradient(135deg, #00C2E0 0%, #0090E6 100%);
+    color: #FFFFFF; border-color: transparent;
+    box-shadow: 0 4px 14px rgba(0, 194, 224, 0.35);
+}
+.obs-kpi-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 2.2rem;
+}
+.obs-kpi-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(0, 194, 224, 0.16);
+    border-radius: 20px; padding: 1.3rem 1.4rem;
+    transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+    position: relative; overflow: hidden;
+}
+.obs-kpi-card:hover {
+    background: rgba(0, 194, 224, 0.08);
+    border-color: rgba(0, 194, 224, 0.4);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 28px rgba(0, 39, 101, 0.4);
+}
+.obs-kpi-header { display: flex; align-items: center; justify-content: space-between; color: var(--cyan); }
+.obs-kpi-icon {
+    width: 38px; height: 38px; border-radius: 12px;
+    background: rgba(0, 194, 224, 0.12); color: #00C2E0;
+    display: flex; align-items: center; justify-content: center; font-size: 1.05rem;
+}
+.obs-kpi-val {
+    font-family: 'Sora', sans-serif; font-size: 1.8rem; font-weight: 800;
+    color: #FFFFFF; line-height: 1.15; margin: .55rem 0 .2rem; letter-spacing: -0.02em;
+}
+.obs-kpi-lbl {
+    font-size: .74rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .06em; color: rgba(255, 255, 255, 0.65);
+}
+.obs-kpi-sub {
+    font-size: .72rem; color: #38EF7D; margin-top: .4rem;
+    display: flex; align-items: center; gap: 4px; font-weight: 600;
+}
+.obs-charts-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-bottom: 2.2rem;
+}
+.obs-chart-card {
+    background: rgba(2, 28, 64, 0.7);
+    border: 1px solid rgba(0, 194, 224, 0.18);
+    border-radius: 24px; padding: 1.6rem;
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 12px 36px rgba(0, 15, 40, 0.45);
+}
+.obs-chart-title {
+    font-size: 1.05rem; font-weight: 800; color: #FFFFFF;
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 1.4rem; font-family: 'Sora', sans-serif;
+}
+.obs-chart-title span { display: flex; align-items: center; gap: 8px; }
+.obs-chart-badge {
+    font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
+    padding: .2rem .75rem; border-radius: 50px; background: rgba(0, 194, 224, 0.15);
+    color: #00C2E0; border: 1px solid rgba(0, 194, 224, 0.3);
+}
+
+.custom-recharts-tooltip {
+    background: rgba(0, 20, 50, 0.94);
+    border: 1px solid rgba(0, 194, 224, 0.35);
+    border-radius: 14px; padding: 1rem 1.2rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(12px); color: #FFFFFF; font-size: .82rem;
+}
+.custom-recharts-tooltip h5 { font-size: .9rem; font-weight: 800; color: #00C2E0; margin-bottom: .4rem; }
+.custom-recharts-tooltip p { margin: .2rem 0; color: rgba(255,255,255,0.85); display: flex; justify-content: space-between; gap: 1rem; }
+
+@media (max-width: 992px) {
+    .obs-kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .obs-charts-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 576px) {
+    .obs-kpi-grid { grid-template-columns: 1fr; }
+    .obs-dashboard-controls { flex-direction: column; align-items: stretch; }
+}
 .obs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
 .obs-item {
     background: rgba(255,255,255,0.04);
@@ -1329,6 +1637,307 @@ tbody td.muted { color: var(--text-muted); }
 }
 
 /* ==========================================================================
+   MODAL DE DENUNCIA DE PRÁCTICAS ANTICOMPETITIVAS
+   ========================================================================== */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 24, 60, 0.82);
+    backdrop-filter: blur(8px);
+    z-index: 2000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    overflow-y: auto;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.modal-overlay.open {
+    display: flex !important;
+    opacity: 1 !important;
+}
+.modal-container {
+    background: #FFFFFF;
+    border-radius: 24px;
+    max-width: 900px;
+    width: 100%;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 24px 64px rgba(0, 39, 101, 0.38);
+    border: 1px solid rgba(0, 39, 101, 0.15);
+    transform: translateY(20px);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    margin: auto;
+}
+.modal-overlay.open .modal-container {
+    transform: translateY(0);
+}
+.modal-header {
+    background: linear-gradient(135deg, #002765 0%, #001233 100%);
+    color: #FFFFFF;
+    padding: 1.5rem 1.8rem;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-shrink: 0;
+}
+.modal-header-badge {
+    background: rgba(0, 194, 224, 0.18);
+    color: var(--cyan);
+    border: 1px solid rgba(0, 194, 224, 0.3);
+    font-size: 0.70rem;
+    font-weight: 700;
+    padding: 0.2rem 0.7rem;
+    border-radius: 50px;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 0.4rem;
+}
+.modal-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    margin: 0 0 0.25rem 0;
+}
+.modal-subtitle {
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.80);
+    margin: 0;
+    line-height: 1.4;
+}
+.modal-close-btn {
+    background: rgba(255, 255, 255, 0.12);
+    border: none;
+    color: #FFFFFF;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+.modal-close-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+.modal-body {
+    padding: 1.8rem 2rem;
+    overflow-y: auto;
+    flex: 1;
+}
+.modal-footer {
+    padding: 1.1rem 1.8rem;
+    background: #F8FAFC;
+    border-top: 1px solid rgba(0, 39, 101, 0.10);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-shrink: 0;
+}
+
+.type-selector-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+.type-card {
+    border: 2px solid rgba(0, 39, 101, 0.12);
+    border-radius: 16px;
+    padding: 1.1rem;
+    background: #FFFFFF;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+.type-card:hover {
+    border-color: #0090E6;
+    background: #F4F8FC;
+}
+.type-card.selected {
+    border-color: #0090E6;
+    background: rgba(0, 144, 230, 0.05);
+    box-shadow: 0 4px 16px rgba(0, 144, 230, 0.15);
+}
+.type-card input[type="radio"] {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    accent-color: #0090E6;
+    width: 18px;
+    height: 18px;
+}
+.type-card-title {
+    font-size: 0.92rem;
+    font-weight: 800;
+    color: var(--sc-azul-profundo);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 0.35rem;
+}
+.type-card-desc {
+    font-size: 0.76rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+.form-sec-title {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--sc-azul-profundo);
+    margin: 1.4rem 0 0.9rem 0;
+    padding-bottom: 0.4rem;
+    border-bottom: 2px solid rgba(0, 39, 101, 0.08);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.form-sec-title i { color: #016F89; }
+
+.denuncia-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.1rem;
+    margin-bottom: 0.8rem;
+}
+.denuncia-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.9rem;
+    margin-bottom: 0.8rem;
+}
+.denuncia-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 0.9rem;
+}
+.denuncia-field label {
+    font-size: 0.80rem;
+    font-weight: 700;
+    color: var(--sc-azul-profundo);
+}
+.denuncia-field label span.req { color: #E63946; margin-left: 2px; }
+.denuncia-field input,
+.denuncia-field select,
+.denuncia-field textarea {
+    padding: 0.7rem 0.9rem;
+    border: 1px solid rgba(0, 39, 101, 0.20);
+    border-radius: 12px;
+    font-size: 0.86rem;
+    color: #002765;
+    background: #FFFFFF;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+.denuncia-field input:focus,
+.denuncia-field select:focus,
+.denuncia-field textarea:focus {
+    outline: none;
+    border-color: #0090E6;
+    box-shadow: 0 0 0 3px rgba(0, 144, 230, 0.15);
+}
+
+.dropzone-box {
+    border: 2px dashed rgba(0, 39, 101, 0.22);
+    background: #F8FAFC;
+    border-radius: 16px;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+.dropzone-box:hover {
+    border-color: #0090E6;
+    background: rgba(0, 144, 230, 0.04);
+}
+
+/* ==========================================================================
+   BOTÓN ENVIAR DENUNCIA (COMPACTO Y OPTIMIZADO MÓVIL)
+   ========================================================================== */
+.btn-submit-denuncia {
+    background: linear-gradient(135deg, #002765 0%, #016F89 100%);
+    color: #FFFFFF !important;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.90rem;
+    font-weight: 800;
+    padding: 0.70rem 1.5rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(0, 39, 101, 0.28);
+    transition: all 0.25s ease;
+    white-space: nowrap;
+}
+
+.btn-submit-denuncia:hover {
+    background: linear-gradient(135deg, #016F89 0%, #002765 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(0, 39, 101, 0.38);
+    border-color: rgba(255, 255, 255, 0.45);
+}
+
+.btn-submit-denuncia:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 8px rgba(0, 39, 101, 0.2);
+}
+
+.btn-submit-denuncia i {
+    font-size: 0.95rem;
+}
+
+.btn-submit-badge {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    background: rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #FFFFFF;
+    padding: 2px 7px;
+    border-radius: 6px;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+}
+
+@media (max-width: 680px) {
+    .btn-submit-denuncia {
+        width: 100%;
+        padding: 0.68rem 1rem;
+        font-size: 0.88rem;
+        gap: 6px;
+    }
+    .btn-submit-badge { display: none; }
+    .modal-footer {
+        padding: 0.8rem 1rem !important;
+        gap: 8px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .type-selector-grid, .denuncia-grid-2, .denuncia-grid-3 {
+        grid-template-columns: 1fr;
+    }
+    .modal-body { padding: 1.2rem; }
+    .modal-header { padding: 1.2rem; }
+}
+
+/* ==========================================================================
    RESPONSIVE
    ========================================================================== */
 @media (max-width: 1080px) {
@@ -1352,26 +1961,6 @@ tbody td.muted { color: var(--text-muted); }
     .container { padding: 0 18px; }
     .navbar { height: 68px; }
     .gov-logo, .gov-logo-img { height: 44px; }
-    .menu-toggle { display: flex; }
-
-    .nav-menu {
-        position: absolute;
-        top: 76px; left: 0; right: 0;
-        flex-direction: column;
-        align-items: stretch;
-        gap: .25rem;
-        background: rgba(5,17,31,0.97);
-        -webkit-backdrop-filter: blur(20px);
-        backdrop-filter: blur(20px);
-        border: 1px solid rgba(0,194,224,0.15);
-        border-radius: 12px;
-        padding: 1rem;
-        display: none;
-        box-shadow: var(--shadow-lg);
-    }
-    .nav-menu.open { display: flex; }
-    .nav-menu a { padding: .8rem 1rem; }
-    .nav-menu a.nav-cta { margin-left: 0; text-align: center; justify-content: center; display: flex; }
 
     .hero { padding: 4.2rem 0 3.6rem; }
     .hero-actions { width: 100%; flex-direction: column; }
@@ -1399,10 +1988,20 @@ tbody td.muted { color: var(--text-muted); }
     <div class="container">
         <nav class="navbar">
             <div class="logo-area">
-                <a href="index.html" title="Superintendencia de Competencia · Portal de Competencia" style="display:flex; align-items:center; gap:14px; text-decoration:none;">
-                    <img src="img/logo-gobierno-gt-web.png" alt="Gobierno de Guatemala" class="gov-logo-img" style="height:46px; width:auto; max-height:48px; object-fit:contain;">
+                <a href="index.html" title="Superintendencia de Competencia · Portal de Competencia en Línea" style="display:flex; align-items:center; gap:12px; text-decoration:none;">
+                    <div class="gov-logo-badge">
+                        <img src="img/logo-gobierno-gt-web.png" alt="Gobierno de Guatemala" style="height:38px; width:auto; max-height:42px; object-fit:contain;">
+                    </div>
                     <div style="width:1px; height:34px; background:rgba(0,39,101,0.18);"></div>
                     <img src="img/logo-sc.png" alt="Superintendencia de Competencia" class="gov-logo-img" style="height:48px; width:auto; max-height:50px; object-fit:contain;">
+                    <div class="header-portal-title" style="display:flex; flex-direction:column; justify-content:center; border-left:1px solid rgba(0,39,101,0.18); padding-left:12px;">
+                        <span class="portal-title-text" style="font-family:'Outfit', sans-serif; font-size:0.92rem; font-weight:800; color:#002765; line-height:1.1; letter-spacing:-0.01em; white-space:nowrap;">
+                            Portal de Competencia en Línea
+                        </span>
+                        <span class="portal-subtitle-text" style="font-size:0.70rem; font-weight:600; color:#016F89; white-space:nowrap;">
+                            Superintendencia de Competencia
+                        </span>
+                    </div>
                 </a>
             </div>
 
@@ -1412,12 +2011,14 @@ tbody td.muted { color: var(--text-muted); }
 
             <ul class="nav-menu" id="navMenu">
                 <li><a href="#servicios" class="active">Servicios</a></li>
+                <li><a href="servicios.html"><i class="fas fa-list-check" style="color:#016F89;"></i> Catálogo en Línea</a></li>
+                <li><a href="expedientes.html" class="nav-exp-link"><i class="fas fa-folder-open" style="color:#016F89;"></i> Consulta de Expediente</a></li>
+                <li><a href="analitica.html"><i class="fas fa-chart-pie" style="color:#0090E6;"></i> Tablero Analítica</a></li>
                 <li><a href="macroprocesos.html">Macroprocesos</a></li>
                 <li><a href="talento.html">Trabaja con nosotros</a></li>
                 <li><a href="#motor">Motor de análisis</a></li>
-                <li><a href="#expediente">Expediente</a></li>
                 <li><a href="#observatorio">Observatorio</a></li>
-                <li><a href="#servicios" class="nav-cta">Iniciar trámite</a></li>
+                <li><a href="servicios.html" class="nav-cta">Iniciar trámite</a></li>
             </ul>
         </nav>
     </div>
@@ -1481,7 +2082,7 @@ tbody td.muted { color: var(--text-muted); }
                         y barreras artificiales que afecten la libre competencia en Guatemala.
                     </p>
                     <div class="hero-actions">
-                        <a href="#servicios" class="btn-primary">
+                        <a href="#denuncia" class="btn-primary btn-iniciar-denuncia">
                             <i class="fas fa-bullhorn"></i> Denunciar una práctica
                         </a>
                         <a href="macroprocesos.html" class="btn-outline">
@@ -1509,7 +2110,7 @@ tbody td.muted { color: var(--text-muted); }
                         guiado por criterios técnicos transparentes y tiempos de respuesta garantizados.
                     </p>
                     <div class="hero-actions">
-                        <a href="#servicios" class="btn-primary">
+                        <a href="#motor" class="btn-primary btn-action-motor" data-flow="concentracion">
                             <i class="fas fa-building-circle-check"></i> Notificar Concentración
                         </a>
                         <a href="#motor" class="btn-outline">
@@ -1537,8 +2138,8 @@ tbody td.muted { color: var(--text-muted); }
                         la productividad, la inversión y el beneficio de los consumidores guatemaltecos.
                     </p>
                     <div class="hero-actions">
-                        <a href="#observatorio" class="btn-primary">
-                            <i class="fas fa-chart-pie"></i> Explorar Observatorio
+                        <a href="analitica.html" class="btn-primary">
+                            <i class="fas fa-chart-pie"></i> Explorar Tablero Analítica
                         </a>
                         <a href="talento.html" class="btn-outline">
                             <i class="fas fa-users"></i> Trabaja con Nosotros
@@ -1577,7 +2178,7 @@ tbody td.muted { color: var(--text-muted); }
         <div class="stats-grid">
             <div class="stat">
                 <i class="fas fa-diagram-project"></i>
-                <span class="num">4</span>
+                <span class="num">5</span>
                 <span class="lbl">Macroprocesos digitales</span>
             </div>
             <div class="stat">
@@ -1602,157 +2203,111 @@ tbody td.muted { color: var(--text-muted); }
 <main>
 
     <!-- ======================================================================
-         CATÁLOGO DE SERVICIOS + FILTROS
+         SERVICIOS INSTITUCIONALES (GUÍA EXPLICATIVA DE SERVICIOS)
          ====================================================================== -->
     <section class="section" id="servicios">
         <div class="container">
             <div class="section-head">
-                <div class="sec-label">¿Qué necesitas hacer?</div>
-                <h2 class="sec-title">Un catálogo de actuaciones, no un laberinto de trámites</h2>
+                <div class="sec-label">Portal Digital de Competencia</div>
+                <h2 class="sec-title">Servicios Digitales e Interacción Ciudadana</h2>
                 <p class="sec-sub">
-                    La interfaz se presenta desde la perspectiva del ciudadano y del agente económico.
-                    Detrás de cada opción opera la arquitectura de cuatro macroprocesos y un expediente
-                    electrónico único.
+                    La Superintendencia de Competencia pone a disposición de agentes económicos, profesionales del derecho y ciudadanos un ecosistema de trámites e interacciones 100% digitalizadas con Expediente Electrónico Único y trazabilidad garantizada.
                 </p>
             </div>
 
-            <!-- FILTROS -->
-            <div class="filters">
-                <div class="filter-row">
-                    <div class="input-wrap">
-                        <i class="fas fa-magnifying-glass"></i>
-                        <input type="search" id="searchInput" placeholder="Buscar un servicio o actuación…" aria-label="Buscar servicio">
+            <!-- EXPLICACIÓN DE LOS 5 PILARES DE SERVICIOS -->
+            <div class="grid-3" style="margin-bottom:2.5rem;">
+
+                <article class="card" style="border:1px solid rgba(0,39,101,0.12); padding:1.8rem; border-radius:20px; background:#FFFFFF;">
+                    <div style="width:48px; height:48px; border-radius:14px; background:rgba(0,144,230,0.1); color:var(--sc-azul-brillante); display:flex; align-items:center; justify-content:center; font-size:1.3rem; margin-bottom:1.2rem;">
+                        <i class="fas fa-triangle-exclamation"></i>
                     </div>
-                    <div class="select-wrap">
-                        <select id="catSelect" aria-label="Filtrar por macroproceso">
-                            <option value="all">Todos los macroprocesos</option>
-                            <option value="defensa">Defensa de la competencia</option>
-                            <option value="concentraciones">Concentraciones económicas</option>
-                            <option value="procedimiento">Procedimiento y cumplimiento</option>
-                            <option value="promocion">Promoción y desarrollo</option>
-                            <option value="transversal">Servicios transversales</option>
-                        </select>
+                    <span style="font-size:0.70rem; font-weight:800; color:var(--sc-turquesa-oscuro); text-transform:uppercase; letter-spacing:0.04em;">Pilar 1 · Defensa</span>
+                    <h3 style="font-size:1.2rem; font-weight:800; color:var(--sc-azul-profundo); margin:0.4rem 0 0.6rem;">Investigaciones y Denuncias</h3>
+                    <p style="font-size:0.88rem; color:var(--text-muted); line-height:1.6; margin-bottom:1rem;">
+                        Mecanismo para reportar acuerdos entre competidores (fijación de precios, reparto de mercado), abusos de posición dominante o conductas exclusionarias. Permite solicitar reserva de identidad del denunciante.
+                    </p>
+                    <a href="servicios.html" style="font-size:0.85rem; font-weight:800; color:var(--sc-azul-brillante); display:inline-flex; align-items:center; gap:6px;">Ver servicios de denuncia →</a>
+                </article>
+
+                <article class="card" style="border:1px solid rgba(0,39,101,0.12); padding:1.8rem; border-radius:20px; background:#FFFFFF;">
+                    <div style="width:48px; height:48px; border-radius:14px; background:rgba(1,111,137,0.1); color:var(--sc-turquesa-oscuro); display:flex; align-items:center; justify-content:center; font-size:1.3rem; margin-bottom:1.2rem;">
+                        <i class="fas fa-handshake"></i>
                     </div>
-                    <button class="btn-reset" id="resetFilters">
-                        <i class="fas fa-rotate-left"></i> Limpiar
-                    </button>
-                </div>
-
-                <div class="chips" id="chipRow">
-                    <button class="chip active" data-cat="all">Todos</button>
-                    <button class="chip" data-cat="defensa">Defensa</button>
-                    <button class="chip" data-cat="concentraciones">Concentraciones</button>
-                    <button class="chip" data-cat="procedimiento">Procedimiento</button>
-                    <button class="chip" data-cat="promocion">Promoción</button>
-                    <button class="chip" data-cat="transversal">Transversal</button>
-                </div>
-            </div>
-
-            <!-- GRID DE SERVICIOS -->
-            <div class="grid-3" id="serviceGrid">
-
-                <article class="card service-card" data-cat="defensa" data-name="reportar posible práctica anticompetitiva denuncia acuerdo fijación de precios reparto de mercado abuso de posición dominante">
-                    <div class="card-icon"><i class="fas fa-triangle-exclamation"></i></div>
-                    <span class="card-tag">Defensa de la competencia</span>
-                    <h3>Reportar una posible práctica anticompetitiva</h3>
-                    <p>Denuncie acuerdos entre competidores, fijación de precios, reparto de mercado, abuso de posición dominante o prácticas de exclusión.</p>
-                    <a href="#" class="card-link">Iniciar <i class="fas fa-arrow-right"></i></a>
+                    <span style="font-size:0.70rem; font-weight:800; color:var(--sc-turquesa-oscuro); text-transform:uppercase; letter-spacing:0.04em;">Pilar 2 · Control Previo</span>
+                    <h3 style="font-size:1.2rem; font-weight:800; color:var(--sc-azul-profundo); margin:0.4rem 0 0.6rem;">Concentraciones Económicas (M&A)</h3>
+                    <p style="font-size:0.88rem; color:var(--text-muted); line-height:1.6; margin-bottom:1rem;">
+                        Notificación y solicitud de autorización previa para fusiones, adquisiciones y alianzas entre agentes económicos que superen los umbrales legales, asegurando la preservación de la estructura competitiva.
+                    </p>
+                    <a href="servicios.html" style="font-size:0.85rem; font-weight:800; color:var(--sc-azul-brillante); display:inline-flex; align-items:center; gap:6px;">Ver servicios M&A →</a>
                 </article>
 
-                <article class="card service-card" data-cat="defensa" data-name="solicitar investigación de parte hechos competencia">
-                    <div class="card-icon"><i class="fas fa-magnifying-glass"></i></div>
-                    <span class="card-tag">Defensa de la competencia</span>
-                    <h3>Solicitar una investigación de parte</h3>
-                    <p>Solicite el inicio de una investigación sobre hechos que puedan constituir una infracción a la Ley de Competencia.</p>
-                    <a href="#" class="card-link">Iniciar <i class="fas fa-arrow-right"></i></a>
-                </article>
-
-                <article class="card service-card" data-cat="defensa" data-name="aportar información adicional documento evidencia expediente coadyuvante">
-                    <div class="card-icon"><i class="fas fa-file-circle-plus"></i></div>
-                    <span class="card-tag">Defensa de la competencia</span>
-                    <h3>Aportar información a un expediente</h3>
-                    <p>Complemente una denuncia con documentos, evidencia o nuevos elementos probatorios antes de que concluya la investigación preliminar.</p>
-                    <a href="#" class="card-link">Iniciar <i class="fas fa-arrow-right"></i></a>
-                </article>
-
-                <article class="card service-card" data-cat="concentraciones" data-name="saber si operación requiere autorización umbrales asistente previo orientación">
-                    <div class="card-icon"><i class="fas fa-circle-question"></i></div>
-                    <span class="card-tag">Concentraciones económicas</span>
-                    <h3>¿Mi operación requiere autorización?</h3>
-                    <p>Asistente previo que orienta sobre umbrales, tipo de operación, procedimiento aplicable y documentación requerida.</p>
-                    <a href="#" class="card-link">Consultar <i class="fas fa-arrow-right"></i></a>
-                </article>
-
-                <article class="card service-card" data-cat="concentraciones" data-name="solicitar autorización previa concentración económica">
-                    <div class="card-icon"><i class="fas fa-file-signature"></i></div>
-                    <span class="card-tag">Concentraciones económicas</span>
-                    <h3>Solicitar autorización de concentración</h3>
-                    <p>Presente su solicitud de autorización previa con la información económica y de mercado que exige la normativa.</p>
-                    <a href="#" class="card-link">Iniciar <i class="fas fa-arrow-right"></i></a>
-                </article>
-
-                <article class="card service-card" data-cat="concentraciones" data-name="notificar concentración notificación operación">
-                    <div class="card-icon"><i class="fas fa-bell"></i></div>
-                    <span class="card-tag">Concentraciones económicas</span>
-                    <h3>Notificar una concentración</h3>
-                    <p>Notifique una operación de concentración conforme al procedimiento y los umbrales legalmente previstos.</p>
-                    <a href="#" class="card-link">Iniciar <i class="fas fa-arrow-right"></i></a>
-                </article>
-
-                <article class="card service-card" data-cat="procedimiento" data-name="presentar descargos ofrecer prueba defensa procedimiento administrativo">
-                    <div class="card-icon"><i class="fas fa-scale-balanced"></i></div>
-                    <span class="card-tag">Procedimiento y cumplimiento</span>
-                    <h3>Presentar descargos y ofrecer prueba</h3>
-                    <p>Ejercite su defensa dentro de un procedimiento administrativo: argumentos, documentos, diligencias y prueba.</p>
-                    <a href="#" class="card-link">Iniciar <i class="fas fa-arrow-right"></i></a>
-                </article>
-
-                <article class="card service-card" data-cat="procedimiento" data-name="solicitar exención reducción de sanción compromisos cese beneficio">
-                    <div class="card-icon"><i class="fas fa-shield-halved"></i></div>
-                    <span class="card-tag">Procedimiento y cumplimiento</span>
-                    <h3>Solicitar exención o reducción de sanción</h3>
-                    <p>Acceda a los mecanismos especiales previstos legalmente, incluidos compromisos de cese y terminación anticipada.</p>
-                    <a href="#" class="card-link">Iniciar <i class="fas fa-arrow-right"></i></a>
-                </article>
-
-                <article class="card service-card" data-cat="promocion" data-name="reportar barrera regulatoria competencia reporte ciudadano">
-                    <div class="card-icon"><i class="fas fa-road-barrier"></i></div>
-                    <span class="card-tag">Promoción y desarrollo</span>
-                    <h3>Reportar una barrera regulatoria</h3>
-                    <p>Reporte ciudadano de normas, procedimientos o prácticas que restrinjan indebidamente la competencia. No requiere interés jurídico directo.</p>
-                    <a href="#" class="card-link">Reportar <i class="fas fa-arrow-right"></i></a>
-                </article>
-
-                <article class="card service-card" data-cat="promocion" data-name="solicitar opinión técnica proyecto normativo regulación entidad pública">
-                    <div class="card-icon"><i class="fas fa-file-lines"></i></div>
-                    <span class="card-tag">Promoción y desarrollo</span>
-                    <h3>Solicitar una opinión técnica</h3>
-                    <p>Solicite opinión sobre proyectos normativos, regulaciones o actuaciones de entidades públicas con incidencia en competencia.</p>
-                    <a href="#" class="card-link">Solicitar <i class="fas fa-arrow-right"></i></a>
-                </article>
-
-                <article class="card service-card" data-cat="promocion" data-name="realizar consulta orientación ley competencia asesoría general">
-                    <div class="card-icon"><i class="fas fa-comments"></i></div>
-                    <span class="card-tag">Promoción y desarrollo</span>
-                    <h3>Realizar una consulta u orientación</h3>
-                    <p>Resuelva dudas generales sobre la Ley de Competencia, posibles prácticas, concentraciones y eficiencias.</p>
-                    <a href="#" class="card-link">Consultar <i class="fas fa-arrow-right"></i></a>
-                </article>
-
-                <article class="card service-card" data-cat="transversal" data-name="consultar estado expediente seguimiento número de gestión">
-                    <div class="card-icon"><i class="fas fa-folder-open"></i></div>
-                    <span class="card-tag">Servicio transversal</span>
-                    <h3>Consultar el estado de mi expediente</h3>
-                    <p>Acceda con su número de expediente y credenciales para conocer la etapa, el responsable y los próximos hitos.</p>
-                    <a href="#" class="card-link">Consultar <i class="fas fa-arrow-right"></i></a>
+                <article class="card" style="border:1px solid rgba(0,39,101,0.12); padding:1.8rem; border-radius:20px; background:#FFFFFF;">
+                    <div style="width:48px; height:48px; border-radius:14px; background:rgba(0,194,224,0.12); color:var(--sc-turquesa-oscuro); display:flex; align-items:center; justify-content:center; font-size:1.3rem; margin-bottom:1.2rem;">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <span style="font-size:0.70rem; font-weight:800; color:var(--sc-turquesa-oscuro); text-transform:uppercase; letter-spacing:0.04em;">Pilar 3 · Orientación</span>
+                    <h3 style="font-size:1.2rem; font-weight:800; color:var(--sc-azul-profundo); margin:0.4rem 0 0.6rem;">Opiniones Técnicas & Consultas</h3>
+                    <p style="font-size:0.88rem; color:var(--text-muted); line-height:1.6; margin-bottom:1rem;">
+                        Emisión de opiniones técnicas sobre proyectos de ley o regulación sectorial, y resolución de consultas formales sobre la interpretación y cumplimiento preventivo de la Ley de Competencia.
+                    </p>
+                    <a href="servicios.html" style="font-size:0.85rem; font-weight:800; color:var(--sc-azul-brillante); display:inline-flex; align-items:center; gap:6px;">Ver servicios de consulta →</a>
                 </article>
 
             </div>
 
-            <p id="emptyState" style="display:none; text-align:center; color:var(--text-muted); font-size:.88rem; padding:2.5rem 0;">
-                <i class="fas fa-circle-info" style="color:var(--cyan-dim); margin-right:.5rem;"></i>
-                No se encontraron servicios con los criterios seleccionados.
-            </p>
+            <!-- CÓMO FUNCIONA EL PROCESO DIGITAL (4 PASOS) -->
+            <div style="background:linear-gradient(135deg, #F8FAFC 0%, #E6F7FA 100%); border:1px solid rgba(0,39,101,0.10); border-radius:24px; padding:2.2rem; margin-bottom:2.5rem;">
+                <h3 style="font-family:'Outfit', sans-serif; font-size:1.3rem; font-weight:800; color:var(--sc-azul-profundo); margin-bottom:1.2rem; text-align:center;">
+                    ¿Cómo funciona la gestión digital de trámites?
+                </h3>
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:18px;">
+                    <div style="background:#FFFFFF; padding:1.2rem; border-radius:16px; border:1px solid rgba(0,39,101,0.08);">
+                        <div style="font-size:0.78rem; font-weight:900; color:var(--sc-azul-brillante); margin-bottom:6px;">PASO 01</div>
+                        <strong style="font-size:0.95rem; color:var(--sc-azul-profundo); display:block; margin-bottom:4px;">Selección del Servicio</strong>
+                        <p style="font-size:0.82rem; color:var(--text-muted);">Ubique la actuación en el Catálogo de Servicios en Línea según su área técnica.</p>
+                    </div>
+                    <div style="background:#FFFFFF; padding:1.2rem; border-radius:16px; border:1px solid rgba(0,39,101,0.08);">
+                        <div style="font-size:0.78rem; font-weight:900; color:var(--sc-azul-brillante); margin-bottom:6px;">PASO 02</div>
+                        <strong style="font-size:0.95rem; color:var(--sc-azul-profundo); display:block; margin-bottom:4px;">Diligenciamiento y Adjuntos</strong>
+                        <p style="font-size:0.82rem; color:var(--text-muted);">Complete el formulario inteligente e inicie la carga de archivos requeridos en formato PDF.</p>
+                    </div>
+                    <div style="background:#FFFFFF; padding:1.2rem; border-radius:16px; border:1px solid rgba(0,39,101,0.08);">
+                        <div style="font-size:0.78rem; font-weight:900; color:var(--sc-azul-brillante); margin-bottom:6px;">PASO 03</div>
+                        <strong style="font-size:0.95rem; color:var(--sc-azul-profundo); display:block; margin-bottom:4px;">Expediente Electrónico Único</strong>
+                        <p style="font-size:0.82rem; color:var(--text-muted);">Se genera su código único (Ej. SC-2026-DEN-000482) para seguimiento permanente.</p>
+                    </div>
+                    <div style="background:#FFFFFF; padding:1.2rem; border-radius:16px; border:1px solid rgba(0,39,101,0.08);">
+                        <div style="font-size:0.78rem; font-weight:900; color:var(--sc-azul-brillante); margin-bottom:6px;">PASO 04</div>
+                        <strong style="font-size:0.95rem; color:var(--sc-azul-profundo); display:block; margin-bottom:4px;">Seguimiento & Notificación</strong>
+                        <p style="font-size:0.82rem; color:var(--text-muted);">Consulte el estado, notificaciones e hitos procesales en tiempo real desde la plataforma.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BANNER DE LLAMADO A LA ACCIÓN DESTACADO HACIA SERVICIOS.HTML -->
+            <div style="background:linear-gradient(135deg, #001942 0%, #002765 60%, #016F89 100%); border-radius:24px; padding:2.5rem; color:#FFFFFF; text-align:center; box-shadow:0 16px 40px rgba(0,39,101,0.22); position:relative; overflow:hidden;">
+                <div style="position:relative; z-index:2; max-width:800px; margin:0 auto;">
+                    <span style="background:rgba(0,194,224,0.18); border:1px solid rgba(0,194,224,0.35); color:var(--cyan-light); font-size:0.78rem; font-weight:800; padding:4px 14px; border-radius:50px; text-transform:uppercase; letter-spacing:0.05em; display:inline-block; margin-bottom:0.8rem;">
+                        <i class="fas fa-laptop-code"></i> Ventanilla Digital de Servicios
+                    </span>
+                    <h3 style="font-family:'Outfit', sans-serif; font-size:clamp(1.5rem, 3.5vw, 2.2rem); font-weight:800; color:#FFFFFF; margin-bottom:0.8rem;">
+                        Acceda al Catálogo para Uso y Gestión de Servicios en Línea
+                    </h3>
+                    <p style="font-size:1rem; color:rgba(255,255,255,0.85); line-height:1.6; margin-bottom:1.8rem;">
+                        Consulte los requisitos, inicie solicitudes de forma 100% digital, adjunte pruebas y gestione sus expedientes electrónicos directamente en nuestra plataforma independiente.
+                    </p>
+                    <div style="display:flex; justify-content:center; gap:14px; flex-wrap:wrap;">
+                        <a href="servicios.html" class="btn-primary" style="font-size:1rem; padding:0.95rem 2.2rem; border-radius:14px;">
+                            <i class="fas fa-list-check"></i> Ir al Catálogo de Servicios en Línea <i class="fas fa-arrow-right"></i>
+                        </a>
+                        <a href="expedientes.html" class="btn-outline" style="font-size:0.95rem; padding:0.95rem 1.8rem; border-radius:14px;">
+                            <i class="fas fa-folder-open"></i> Consulta de Expediente
+                        </a>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 
@@ -2120,6 +2675,11 @@ tbody td.muted { color: var(--text-muted); }
                     El ciudadano ve el estado de su expediente. El analista ve el expediente de competencia
                     completo: información, mercado, conducta, evidencia, actuaciones, plazos y responsables.
                 </p>
+                <div style="margin-top:1.2rem;">
+                    <a href="expedientes.html" class="btn-primary" style="background:linear-gradient(135deg, #002765 0%, #016F89 100%); color:#FFFFFF !important; font-weight:800; font-family:'Outfit', sans-serif; display:inline-flex; align-items:center; gap:8px;">
+                        <i class="fas fa-arrow-up-right-from-square"></i> Abrir Portal Exclusivo de Consulta de Expedientes
+                    </a>
+                </div>
             </div>
 
             <div class="exp-layout">
@@ -2344,53 +2904,438 @@ tbody td.muted { color: var(--text-muted); }
     </section>
 
     <!-- ======================================================================
-         OBSERVATORIO (DARK)
+         OBSERVATORIO E INTELIGENCIA DE COMPETENCIA (DARK + RECHARTS DASHBOARD)
          ====================================================================== -->
     <section class="theme-dark" id="observatorio">
         <div class="container">
             <div class="section-head center">
-                <div class="sec-label">Observatorio e inteligencia de competencia</div>
-                <h2 class="sec-title">La plataforma como infraestructura de información</h2>
+                <div class="sec-label">Observatorio e Inteligencia de Competencia</div>
+                <h2 class="sec-title">Tablero Dinámico de Analítica Institucional</h2>
                 <p class="sec-sub">
-                    Después de unos años, la base de datos del sistema alimenta la política pública
-                    de competencia, los estudios de mercado, la prevención y la fiscalización.
+                    Visualización interactiva con Recharts sobre el volumen de denuncias por sector económico,
+                    la evolución de los tiempos de resolución y la analítica estratégica del mercado en Guatemala.
                 </p>
+                <div style="margin-top:1.4rem; display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+                    <a href="analitica.html" class="btn-primary" style="background: linear-gradient(135deg, #0090E6 0%, #029F9C 100%); color:#FFFFFF !important; font-weight:800; font-family:'Outfit', sans-serif; display:inline-flex; align-items:center; gap:10px; padding:0.85rem 2.2rem; border-radius:50px; box-shadow:0 6px 22px rgba(0, 144, 230, 0.38); text-decoration:none; font-size:0.95rem; transition:all 0.25s ease;">
+                        <i class="fas fa-chart-pie"></i> Ir a la opción "Tablero Analítica" <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
             </div>
 
-            <div class="obs-grid">
-                <div class="obs-item">
-                    <i class="fas fa-chart-column"></i>
-                    <h4>Denuncias y sectores</h4>
-                    <p>Número de denuncias por sector, mercado y tipo de conducta reportada.</p>
-                </div>
-                <div class="obs-item">
-                    <i class="fas fa-users-viewfinder"></i>
-                    <h4>Agentes recurrentes</h4>
-                    <p>Identificación de agentes económicos con participación reiterada en expedientes.</p>
-                </div>
-                <div class="obs-item">
-                    <i class="fas fa-stopwatch"></i>
-                    <h4>Tiempos de resolución</h4>
-                    <p>Medición de plazos por etapa, cuellos de botella y oportunidad de las decisiones.</p>
-                </div>
-                <div class="obs-item">
-                    <i class="fas fa-map-location-dot"></i>
-                    <h4>Patrones geográficos</h4>
-                    <p>Distribución territorial de las actuaciones y de los mercados afectados.</p>
-                </div>
-                <div class="obs-item">
-                    <i class="fas fa-arrow-trend-up"></i>
-                    <h4>Tendencias</h4>
-                    <p>Evolución de consultas, autorizaciones, opiniones técnicas y barreras reportadas.</p>
-                </div>
-                <div class="obs-item">
-                    <i class="fas fa-book-open-reader"></i>
-                    <h4>Precedentes internos</h4>
-                    <p>Recuperación de criterios y resoluciones previas para fortalecer el análisis.</p>
+            <!-- CONTENEDOR RAIZ DEL TABLERO DE RECHARTS -->
+            <div id="observatorio-dashboard-root">
+                <div style="text-align:center; padding:3rem; color:rgba(255,255,255,0.7);">
+                    <i class="fas fa-chart-line fa-spin" style="font-size:2.5rem; color:#00C2E0; margin-bottom:1rem;"></i>
+                    <p style="font-weight:600;">Cargando Tablero Dinámico de Recharts...</p>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- COMPONENTE RECHARTS PARA EL OBSERVATORIO -->
+    <script type="text/babel">
+    (function() {
+        if (!window.React || !window.ReactDOM) {
+            console.error('React o ReactDOM no están disponibles.');
+            return;
+        }
+
+        const { useState, useMemo } = React;
+        const RechartsObj = window.Recharts || {};
+        const {
+            ResponsiveContainer,
+            BarChart,
+            Bar,
+            XAxis,
+            YAxis,
+            CartesianGrid,
+            Tooltip,
+            Legend,
+            AreaChart,
+            Area,
+            PieChart,
+            Pie,
+            Cell,
+            Line
+        } = RechartsObj;
+
+        function ObservatorioRechartsDashboard() {
+            const [periodo, setPeriodo] = useState('all');
+            const [macroproceso, setMacroproceso] = useState('todos');
+
+            const rawSectorData = [
+                { sector: 'Telecomunicaciones & TI', short: 'Telecom', denuncias: 398, resueltos: 362, diasAvg: 38, percent: '28.0%' },
+                { sector: 'Servicios Financieros & Banca', short: 'Financiero', denuncias: 312, resueltos: 295, diasAvg: 42, percent: '22.0%' },
+                { sector: 'Alimentos, Agro & Bebidas', short: 'Alimentos', denuncias: 245, resueltos: 230, diasAvg: 44, percent: '17.2%' },
+                { sector: 'Energía & Carburantes', short: 'Energía', denuncias: 188, resueltos: 175, diasAvg: 45, percent: '13.2%' },
+                { sector: 'Salud & Medicamentos', short: 'Salud', denuncias: 156, resueltos: 148, diasAvg: 40, percent: '11.0%' },
+                { sector: 'Transporte & Logística', short: 'Transporte', denuncias: 121, resueltos: 114, diasAvg: 46, percent: '8.6%' },
+            ];
+
+            const sectorData = useMemo(() => {
+                let mult = 1.0;
+                if (periodo === '2026') mult = 0.38;
+                else if (periodo === '2025') mult = 0.35;
+                else if (periodo === '2024') mult = 0.27;
+
+                let macroMult = 1.0;
+                if (macroproceso === 'defensa') macroMult = 0.65;
+                else if (macroproceso === 'concentraciones') macroMult = 0.25;
+                else if (macroproceso === 'barreras') macroMult = 0.10;
+
+                return rawSectorData.map(item => ({
+                    ...item,
+                    denuncias: Math.round(item.denuncias * mult * macroMult),
+                    resueltos: Math.round(item.resueltos * mult * macroMult),
+                }));
+            }, [periodo, macroproceso]);
+
+            const timeEvolutionData = [
+                { trimestre: 'Q1 2024', diasAvg: 115, faseAdmisibilidad: 28, faseInvestigacion: 87, metaLegal: 60 },
+                { trimestre: 'Q2 2024', diasAvg: 98, faseAdmisibilidad: 22, faseInvestigacion: 76, metaLegal: 60 },
+                { trimestre: 'Q3 2024', diasAvg: 85, faseAdmisibilidad: 18, faseInvestigacion: 67, metaLegal: 60 },
+                { trimestre: 'Q4 2024', diasAvg: 72, faseAdmisibilidad: 14, faseInvestigacion: 58, metaLegal: 60 },
+                { trimestre: 'Q1 2025', diasAvg: 61, faseAdmisibilidad: 11, faseInvestigacion: 50, metaLegal: 60 },
+                { trimestre: 'Q2 2025', diasAvg: 53, faseAdmisibilidad: 9, faseInvestigacion: 44, metaLegal: 60 },
+                { trimestre: 'Q3 2025', diasAvg: 47, faseAdmisibilidad: 8, faseInvestigacion: 39, metaLegal: 60 },
+                { trimestre: 'Q4 2025', diasAvg: 44, faseAdmisibilidad: 7, faseInvestigacion: 37, metaLegal: 60 },
+                { trimestre: 'Q1 2026', diasAvg: 42, faseAdmisibilidad: 6, faseInvestigacion: 36, metaLegal: 60 },
+                { trimestre: 'Q2 2026', diasAvg: 39, faseAdmisibilidad: 5, faseInvestigacion: 34, metaLegal: 60 },
+                { trimestre: 'Q3 2026', diasAvg: 36, faseAdmisibilidad: 5, faseInvestigacion: 31, metaLegal: 60 }
+            ];
+
+            const conductaData = [
+                { name: 'Carteles & Acuerdos', value: 38, color: '#00C2E0' },
+                { name: 'Abuso Posición Dominante', value: 31, color: '#0090E6' },
+                { name: 'Concentraciones No Notificadas', value: 19, color: '#029F9C' },
+                { name: 'Barreras Regulatorias', value: 12, color: '#38EF7D' }
+            ];
+
+            const expedientes = [
+                { code: 'SC-2026-DEN-000142', sector: 'Telecomunicaciones & TI', conducta: 'Abuso de Posición Dominante', dias: 34, estado: 'En Análisis' },
+                { code: 'SC-2026-CON-000089', sector: 'Servicios Financieros & Banca', conducta: 'Concentración Económica', dias: 28, estado: 'Aprobado con Condiciones' },
+                { code: 'SC-2026-DEN-000076', sector: 'Alimentos, Agro & Bebidas', conducta: 'Acuerdo entre Competidores', dias: 41, estado: 'Requerimiento Información' },
+                { code: 'SC-2026-BAR-000034', sector: 'Energía & Carburantes', conducta: 'Barrera Regulatoria', dias: 22, estado: 'Dictamen Emitido' },
+                { code: 'SC-2025-DEN-000912', sector: 'Salud & Medicamentos', conducta: 'Abuso de Posición Dominante', dias: 39, estado: 'Concluido' }
+            ];
+
+            const totalDenuncias = useMemo(() => sectorData.reduce((acc, s) => acc + s.denuncias, 0), [sectorData]);
+            const totalResueltos = useMemo(() => sectorData.reduce((acc, s) => acc + s.resueltos, 0), [sectorData]);
+            const tasaEficacia = totalDenuncias > 0 ? ((totalResueltos / totalDenuncias) * 100).toFixed(1) : '91.8';
+
+            const CustomTooltipSector = ({ active, payload }) => {
+                if (active && payload && payload.length) {
+                    const data = payload[0].payload;
+                    return (
+                        <div className="custom-recharts-tooltip">
+                            <h5>{data.sector}</h5>
+                            <p><span>Denuncias Recibidas:</span> <strong>{data.denuncias}</strong></p>
+                            <p><span>Casos Resueltos:</span> <strong>{data.resueltos}</strong></p>
+                            <p><span>Tiempo Prom. Resolución:</span> <strong>{data.diasAvg} días</strong></p>
+                            <p><span>Participación Mercado:</span> <strong>{data.percent}</strong></p>
+                        </div>
+                    );
+                }
+                return null;
+            };
+
+            const CustomTooltipTime = ({ active, payload }) => {
+                if (active && payload && payload.length) {
+                    const data = payload[0].payload;
+                    return (
+                        <div className="custom-recharts-tooltip">
+                            <h5>{data.trimestre}</h5>
+                            <p><span>Tiempo Promedio Total:</span> <strong>{data.diasAvg} días</strong></p>
+                            <p><span>Fase de Admisibilidad:</span> <strong>{data.faseAdmisibilidad} días</strong></p>
+                            <p><span>Fase Investigativa:</span> <strong>{data.faseInvestigacion} días</strong></p>
+                            <p><span>Límite Legal (Ley):</span> <strong style={{color: '#FF4B4B'}}>{data.metaLegal} días</strong></p>
+                        </div>
+                    );
+                }
+                return null;
+            };
+
+            if (!ResponsiveContainer || !BarChart) {
+                return (
+                    <div style={{textAlign:'center', padding:'2rem', color:'#FFFFFF'}}>
+                        <p>Cargando componentes de gráficos Recharts...</p>
+                    </div>
+                );
+            }
+
+            return (
+                <div>
+                    {/* BARRA DE FILTROS INTERACTIVOS */}
+                    <div className="obs-dashboard-controls">
+                        <div className="obs-filter-group">
+                            <span style={{fontSize:'.76rem', fontWeight:800, color:'#00C2E0', textTransform:'uppercase', letterSpacing:'.06em', marginRight:'4px'}}>
+                                <i className="fas fa-filter"></i> Período:
+                            </span>
+                            <button className={`obs-filter-btn ${periodo === 'all' ? 'active' : ''}`} onClick={() => setPeriodo('all')}>
+                                Histórico (2024-2026)
+                            </button>
+                            <button className={`obs-filter-btn ${periodo === '2026' ? 'active' : ''}`} onClick={() => setPeriodo('2026')}>
+                                2026 (Año Actual)
+                            </button>
+                            <button className={`obs-filter-btn ${periodo === '2025' ? 'active' : ''}`} onClick={() => setPeriodo('2025')}>
+                                2025
+                            </button>
+                            <button className={`obs-filter-btn ${periodo === '2024' ? 'active' : ''}`} onClick={() => setPeriodo('2024')}>
+                                2024
+                            </button>
+                        </div>
+
+                        <div className="obs-filter-group">
+                            <span style={{fontSize:'.76rem', fontWeight:800, color:'#00C2E0', textTransform:'uppercase', letterSpacing:'.06em', marginRight:'4px'}}>
+                                <i className="fas fa-layer-group"></i> Macroproceso:
+                            </span>
+                            <select
+                                value={macroproceso}
+                                onChange={(e) => setMacroproceso(e.target.value)}
+                                style={{
+                                    background: 'rgba(0, 39, 101, 0.85)',
+                                    color: '#FFFFFF',
+                                    border: '1px solid rgba(0, 194, 224, 0.35)',
+                                    borderRadius: '50px',
+                                    padding: '.48rem 1.2rem',
+                                    fontSize: '.78rem',
+                                    fontWeight: 700,
+                                    cursor: 'pointer'
+                                }}
+                            >
+                                <option value="todos">Todos los Macroprocesos</option>
+                                <option value="defensa">Defensa de la Competencia (Carteles & Abuso)</option>
+                                <option value="concentraciones">Concentraciones Económicas M&A</option>
+                                <option value="barreras">Estudios & Barreras Regulatorias</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    {/* TARJETAS DE INDICADORES CLAVE (KPIs) */}
+                    <div className="obs-kpi-grid">
+                        <div className="obs-kpi-card">
+                            <div className="obs-kpi-header">
+                                <span className="obs-kpi-lbl">Total Denuncias & Casos</span>
+                                <div className="obs-kpi-icon"><i className="fas fa-file-invoice"></i></div>
+                            </div>
+                            <div className="obs-kpi-val">{totalDenuncias.toLocaleString()}</div>
+                            <div className="obs-kpi-sub">
+                                <i className="fas fa-arrow-trend-up"></i> +14.2% vs. período previo
+                            </div>
+                        </div>
+
+                        <div className="obs-kpi-card">
+                            <div className="obs-kpi-header">
+                                <span className="obs-kpi-lbl">Tiempo Medio Resolución</span>
+                                <div className="obs-kpi-icon"><i className="fas fa-stopwatch"></i></div>
+                            </div>
+                            <div className="obs-kpi-val">36 días</div>
+                            <div className="obs-kpi-sub">
+                                <i className="fas fa-circle-check"></i> -68.7% reducción con SIC
+                            </div>
+                        </div>
+
+                        <div className="obs-kpi-card">
+                            <div className="obs-kpi-header">
+                                <span className="obs-kpi-lbl">Sector Más Incidente</span>
+                                <div className="obs-kpi-icon"><i className="fas fa-tower-cell"></i></div>
+                            </div>
+                            <div className="obs-kpi-val" style={{fontSize:'1.35rem', color:'#00C2E0'}}>Telecom & TI</div>
+                            <div className="obs-kpi-sub" style={{color:'rgba(255,255,255,0.7)'}}>
+                                28.0% del total nacional
+                            </div>
+                        </div>
+
+                        <div className="obs-kpi-card">
+                            <div className="obs-kpi-header">
+                                <span className="obs-kpi-lbl">Eficacia de Gestión</span>
+                                <div className="obs-kpi-icon"><i className="fas fa-chart-line"></i></div>
+                            </div>
+                            <div className="obs-kpi-val">{tasaEficacia}%</div>
+                            <div className="obs-kpi-sub">
+                                <i className="fas fa-shield-check"></i> En plazo legal oportuno
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* TABLERO DE GRÁFICOS INTERACTIVOS (RECHARTS) */}
+                    <div className="obs-charts-grid">
+                        {/* GRÁFICO 1: NUMERO DE DENUNCIAS POR SECTOR */}
+                        <div className="obs-chart-card">
+                            <div className="obs-chart-title">
+                                <span><i className="fas fa-chart-bar" style={{color:'#00C2E0'}}></i> Denuncias y Casos por Sector Económico</span>
+                                <span className="obs-chart-badge">Recharts BarChart</span>
+                            </div>
+                            <div style={{width:'100%', height:320}}>
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <BarChart data={sectorData} margin={{ top: 10, right: 10, left: -15, bottom: 25 }}>
+                                        <defs>
+                                            <linearGradient id="colorDenuncias" x1="0" y1="0" x2="0" y2="1">
+                                                <stop offset="0%" stopColor="#00C2E0" stopOpacity={1}/>
+                                                <stop offset="100%" stopColor="#0090E6" stopOpacity={0.8}/>
+                                            </linearGradient>
+                                            <linearGradient id="colorResueltos" x1="0" y1="0" x2="0" y2="1">
+                                                <stop offset="0%" stopColor="#029F9C" stopOpacity={1}/>
+                                                <stop offset="100%" stopColor="#38EF7D" stopOpacity={0.8}/>
+                                            </linearGradient>
+                                        </defs>
+                                        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.08)" vertical={false} />
+                                        <XAxis
+                                            dataKey="short"
+                                            stroke="rgba(255,255,255,0.5)"
+                                            tick={{ fill: 'rgba(255,255,255,0.75)', fontSize: 11, fontWeight: 600 }}
+                                            interval={0}
+                                            angle={-15}
+                                            textAnchor="end"
+                                        />
+                                        <YAxis
+                                            stroke="rgba(255,255,255,0.5)"
+                                            tick={{ fill: 'rgba(255,255,255,0.75)', fontSize: 11 }}
+                                        />
+                                        <Tooltip content={<CustomTooltipSector />} />
+                                        <Legend
+                                            verticalAlign="top"
+                                            align="right"
+                                            wrapperStyle={{ paddingBottom: '10px', fontSize: '12px', color: '#FFF' }}
+                                        />
+                                        <Bar name="Denuncias Recibidas" dataKey="denuncias" fill="url(#colorDenuncias)" radius={[6, 6, 0, 0]} />
+                                        <Bar name="Expedientes Resueltos" dataKey="resueltos" fill="url(#colorResueltos)" radius={[6, 6, 0, 0]} />
+                                    </BarChart>
+                                </ResponsiveContainer>
+                            </div>
+                        </div>
+
+                        {/* GRÁFICO 2: EVOLUCIÓN DE TIEMPOS DE RESOLUCIÓN */}
+                        <div className="obs-chart-card">
+                            <div className="obs-chart-title">
+                                <span><i className="fas fa-chart-line" style={{color:'#38EF7D'}}></i> Evolución de Tiempos de Resolución</span>
+                                <span className="obs-chart-badge">Días Promedio (Recharts AreaChart)</span>
+                            </div>
+                            <div style={{width:'100%', height:320}}>
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <AreaChart data={timeEvolutionData} margin={{ top: 10, right: 10, left: -15, bottom: 5 }}>
+                                        <defs>
+                                            <linearGradient id="colorDias" x1="0" y1="0" x2="0" y2="1">
+                                                <stop offset="0%" stopColor="#00C2E0" stopOpacity={0.45}/>
+                                                <stop offset="100%" stopColor="#00C2E0" stopOpacity={0.02}/>
+                                            </linearGradient>
+                                        </defs>
+                                        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.08)" vertical={false} />
+                                        <XAxis
+                                            dataKey="trimestre"
+                                            stroke="rgba(255,255,255,0.5)"
+                                            tick={{ fill: 'rgba(255,255,255,0.75)', fontSize: 10, fontWeight: 600 }}
+                                        />
+                                        <YAxis
+                                            stroke="rgba(255,255,255,0.5)"
+                                            tick={{ fill: 'rgba(255,255,255,0.75)', fontSize: 11 }}
+                                            unit="d"
+                                        />
+                                        <Tooltip content={<CustomTooltipTime />} />
+                                        <Legend verticalAlign="top" align="right" wrapperStyle={{ paddingBottom: '10px', fontSize: '12px' }} />
+                                        <Area type="monotone" name="Días Promedio Resolución" dataKey="diasAvg" stroke="#00C2E0" strokeWidth={3} fillOpacity={1} fill="url(#colorDias)" />
+                                        <Line type="monotone" name="Límite Legal (60 días)" dataKey="metaLegal" stroke="#FF4B4B" strokeWidth={2} strokeDasharray="5 5" dot={false} />
+                                    </AreaChart>
+                                </ResponsiveContainer>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* GRÁFICOS SECUNDARIOS: CONDUCTAS & EXPEDIENTES DE TRANSPARENCIA */}
+                    <div className="obs-charts-grid">
+                        {/* DONUT CHART: TIPOS DE CONDUCTA */}
+                        <div className="obs-chart-card">
+                            <div className="obs-chart-title">
+                                <span><i className="fas fa-chart-pie" style={{color:'#0090E6'}}></i> Distribución por Tipo de Conducta</span>
+                                <span className="obs-chart-badge">Participación %</span>
+                            </div>
+                            <div style={{width:'100%', height:260}}>
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <PieChart>
+                                        <Pie
+                                            data={conductaData}
+                                            cx="50%"
+                                            cy="50%"
+                                            innerRadius={60}
+                                            outerRadius={90}
+                                            paddingAngle={4}
+                                            dataKey="value"
+                                        >
+                                            {conductaData.map((entry, index) => (
+                                                <Cell key={`cell-${index}`} fill={entry.color} stroke="rgba(0, 25, 66, 0.8)" strokeWidth={2} />
+                                            ))}
+                                        </Pie>
+                                        <Tooltip formatter={(value) => `${value}%`} />
+                                        <Legend verticalAlign="bottom" height={36} wrapperStyle={{ fontSize: '11px', color: '#FFF' }} />
+                                    </PieChart>
+                                </ResponsiveContainer>
+                            </div>
+                        </div>
+
+                        {/* REGISTRO DE EXPEDIENTES DE MUESTRA */}
+                        <div className="obs-chart-card" style={{display:'flex', flexDirection:'column', justifyContent:'space-between'}}>
+                            <div className="obs-chart-title">
+                                <span><i className="fas fa-list-check" style={{color:'#029F9C'}}></i> Expedientes Recientes en Monitoreo</span>
+                                <span className="obs-chart-badge">Transparencia SIC</span>
+                            </div>
+                            <div style={{overflowX:'auto'}}>
+                                <table style={{width:'100%', fontSize:'.78rem', borderCollapse:'collapse'}}>
+                                    <thead>
+                                        <tr style={{borderBottom:'1px solid rgba(0, 194, 224, 0.2)', textTransform:'uppercase', color:'rgba(255,255,255,0.6)', letterSpacing:'.05em'}}>
+                                            <th style={{padding:'.6rem .4rem', textAlign:'left'}}>Expediente</th>
+                                            <th style={{padding:'.6rem .4rem', textAlign:'left'}}>Sector</th>
+                                            <th style={{padding:'.6rem .4rem', textAlign:'center'}}>Tiempo</th>
+                                            <th style={{padding:'.6rem .4rem', textAlign:'right'}}>Estado</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {expedientes.map((exp, idx) => (
+                                            <tr key={idx} style={{borderBottom:'1px solid rgba(255,255,255,0.06)'}}>
+                                                <td style={{padding:'.65rem .4rem', fontWeight:700, color:'#00C2E0'}}>{exp.code}</td>
+                                                <td style={{padding:'.65rem .4rem', color:'rgba(255,255,255,0.85)'}}>{exp.sector}</td>
+                                                <td style={{padding:'.65rem .4rem', textAlign:'center', color:'#38EF7D', fontWeight:700}}>{exp.dias} días</td>
+                                                <td style={{padding:'.65rem .4rem', textAlign:'right'}}>
+                                                    <span style={{background:'rgba(0,194,224,0.15)', color:'#00C2E0', border:'1px solid rgba(0,194,224,0.3)', padding:'.18rem .6rem', borderRadius:'50px', fontSize:'.68rem', fontWeight:700}}>
+                                                        {exp.estado}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* ACCIÓN DE EXPORTACIÓN Y LINK A TABLERO COMPLETO */}
+                    <div style={{display:'flex', justifyContent:'center', alignItems:'center', gap:'14px', flexWrap:'wrap', marginTop:'1.8rem'}}>
+                        <a
+                            href="analitica.html"
+                            className="btn-primary"
+                            style={{fontSize:'.85rem', padding:'.7rem 1.8rem', color:'#FFFFFF', background:'linear-gradient(135deg, #0090E6 0%, #029F9C 100%)', borderRadius:'12px', display:'inline-flex', alignItems:'center', gap:'8px', textDecoration:'none', fontWeight:800}}
+                        >
+                            <i className="fas fa-chart-pie"></i> Abrir Tablero Analítica (Mapa & Datos Abiertos) <i className="fas fa-arrow-right"></i>
+                        </a>
+                        <button
+                            onClick={() => {
+                                if (window.showToast) window.showToast('Generando reporte analítico del Observatorio en formato CSV...', 'fa-file-csv');
+                            }}
+                            className="btn-outline"
+                            style={{fontSize:'.84rem', padding:'.68rem 1.6rem', color:'#FFFFFF', borderColor:'rgba(0,194,224,0.4)', background:'rgba(0,194,224,0.08)', borderRadius:'12px'}}
+                        >
+                            <i className="fas fa-download" style={{color:'#00C2E0'}}></i> Exportar Datos del Observatorio (CSV)
+                        </button>
+                    </div>
+                </div>
+            );
+        }
+
+        const container = document.getElementById('observatorio-dashboard-root');
+        if (container) {
+            ReactDOM.createRoot(container).render(<ObservatorioRechartsDashboard />);
+        }
+    })();
+    </script>
 
     <!-- ======================================================================
          CTA FINAL
@@ -2474,6 +3419,309 @@ tbody td.muted { color: var(--text-muted); }
         </div>
     </div>
 </footer>
+
+<!-- ==========================================================================
+     MODAL: FORMULARIO DE DENUNCIA DE PRÁCTICA ANTICOMPETITIVA
+     ========================================================================== -->
+<div class="modal-overlay" id="modalDenuncia" role="dialog" aria-modal="true" aria-labelledby="modalDenunciaTitle">
+    <div class="modal-container">
+        <div class="modal-header">
+            <div>
+                <div class="modal-header-badge">
+                    <i class="fas fa-shield-halved"></i> Defensa de la Competencia · Portal SIC
+                </div>
+                <h2 class="modal-title" id="modalDenunciaTitle">Reportar una posible práctica anticompetitiva</h2>
+                <p class="modal-subtitle">Inicie el registro formal de su denuncia con trazabilidad digital y garantías de reserva de ley.</p>
+            </div>
+            <button class="modal-close-btn" id="closeDenunciaModal" aria-label="Cerrar modal">&times;</button>
+        </div>
+
+        <form id="formDenuncia" style="display:flex; flex-direction:column; flex:1; overflow:hidden;">
+            <div class="modal-body">
+                
+                <!-- PASO 1: MODALIDAD / CONFIDENCIALIDAD -->
+                <div class="form-sec-title" style="margin-top:0;">
+                    <i class="fas fa-user-shield"></i> 1. Tipo y confidencialidad de la denuncia
+                </div>
+                <p style="font-size:.82rem; color:var(--text-muted); margin-bottom:1rem;">
+                    Seleccione la modalidad de presentación según el nivel de protección de identidad requerido:
+                </p>
+
+                <div class="type-selector-grid">
+                    <label class="type-card" id="cardTypeAnonima">
+                        <input type="radio" name="tipoDenuncia" value="Anónima">
+                        <div class="type-card-title">
+                            <i class="fas fa-user-secret" style="color:#016F89;"></i> Anónima
+                        </div>
+                        <div class="type-card-desc">
+                            No se recabará ni almacenará ningún dato personal. Máxima protección para el informante.
+                        </div>
+                    </label>
+
+                    <label class="type-card selected" id="cardTypeConfidencial">
+                        <input type="radio" name="tipoDenuncia" value="Confidencial" checked>
+                        <div class="type-card-title">
+                            <i class="fas fa-lock" style="color:#0090E6;"></i> Confidencial
+                        </div>
+                        <div class="type-card-desc">
+                            Sus datos quedan bajo estricta reserva de identidad legal por la Superintendencia de Competencia.
+                        </div>
+                    </label>
+
+                    <label class="type-card" id="cardTypeAbierta">
+                        <input type="radio" name="tipoDenuncia" value="Abierta (Pública)">
+                        <div class="type-card-title">
+                            <i class="fas fa-users-viewfinder" style="color:#029F9C;"></i> Abierta / Pública
+                        </div>
+                        <div class="type-card-desc">
+                            Se incorpora la identificación del denunciante al expediente administrativo de parte.
+                        </div>
+                    </label>
+                </div>
+
+                <!-- PASO 2: HECHOS (QUÉ, CUÁNDO, DÓNDE, CÓMO) -->
+                <div class="form-sec-title">
+                    <i class="fas fa-file-lines"></i> 2. Detalle de los hechos (¿Qué, Cuándo, Dónde y Cómo?)
+                </div>
+
+                <div class="denuncia-grid-2">
+                    <div class="denuncia-field">
+                        <label for="denTipoConducta">Modalidad o conducta anticompetitiva <span class="req">*</span></label>
+                        <select id="denTipoConducta" required>
+                            <option value="">-- Seleccione la conducta principal --</option>
+                            <option value="Acuerdos entre competidores / Fijación de precios (Cartel)">Acuerdos entre competidores / Fijación de precios (Cartel)</option>
+                            <option value="Reparto de mercados, clientes o licitaciones colusorias">Reparto de mercados, clientes o licitaciones colusorias</option>
+                            <option value="Abuso de posición dominante / Precios depredadores">Abuso de posición dominante / Precios depredadores</option>
+                            <option value="Prácticas de exclusión o boicot comercial">Prácticas de exclusión o boicot comercial</option>
+                            <option value="Negativa injustificada a negociar o acceso a insumos clave">Negativa injustificada a negociar o acceso a insumos clave</option>
+                            <option value="Otra práctica restrictiva de la libre competencia">Otra práctica restrictiva de la libre competencia</option>
+                        </select>
+                    </div>
+
+                    <div class="denuncia-field">
+                        <label for="denEmpresas">Empresas o agentes económicos denunciados <span class="req">*</span></label>
+                        <input type="text" id="denEmpresas" placeholder="Ej. Empresa Alfa S.A. y Distribuidora Beta" required>
+                    </div>
+                </div>
+
+                <div class="denuncia-field">
+                    <label for="denHechos">Descripción detallada de los hechos (¿Qué sucedió?) <span class="req">*</span></label>
+                    <textarea id="denHechos" rows="4" placeholder="Describa con precisión los hechos, cómo operan las empresas denunciadas, la fijación de precios, reparto de clientes o abuso detectado..." required></textarea>
+                </div>
+
+                <div class="denuncia-grid-3">
+                    <div class="denuncia-field">
+                        <label for="denFecha">¿Cuándo sucedió / inició?</label>
+                        <input type="date" id="denFecha">
+                    </div>
+
+                    <div class="denuncia-field">
+                        <label for="denContinua">¿La conducta continúa actualmente?</label>
+                        <select id="denContinua">
+                            <option value="Sí, se mantiene actualmente">Sí, se mantiene actualmente</option>
+                            <option value="No, fue un evento específico">No, fue un evento específico</option>
+                            <option value="Ocurre de forma periódica">Ocurre de forma periódica</option>
+                        </select>
+                    </div>
+
+                    <div class="denuncia-field">
+                        <label for="denSector">Sector / Mercado económico <span class="req">*</span></label>
+                        <select id="denSector" required>
+                            <option value="">-- Seleccione el sector --</option>
+                            <option value="Alimentos y Bebidas">Alimentos y Bebidas</option>
+                            <option value="Medicamentos y Productos de Salud">Medicamentos y Productos de Salud</option>
+                            <option value="Construcción e Insumos">Construcción e Insumos</option>
+                            <option value="Transporte y Logística">Transporte y Logística</option>
+                            <option value="Telecomunicaciones y Tecnología">Telecomunicaciones y Tecnología</option>
+                            <option value="Comercio Minorista / Supermercados">Comercio Minorista / Supermercados</option>
+                            <option value="Agroindustria y Fertilizantes">Agroindustria y Fertilizantes</option>
+                            <option value="Financiero y Seguros">Financiero y Seguros</option>
+                            <option value="Combustibles y Energía">Combustibles y Energía</option>
+                            <option value="Otro sector">Otro sector</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="denuncia-grid-2">
+                    <div class="denuncia-field">
+                        <label for="denDepartamento">Departamento <span class="req">*</span></label>
+                        <select id="denDepartamento" required>
+                            <option value="Guatemala">Guatemala</option>
+                            <option value="Quetzaltenango">Quetzaltenango</option>
+                            <option value="Escuintla">Escuintla</option>
+                            <option value="Sacatepéquez">Sacatepéquez</option>
+                            <option value="Alta Verapaz">Alta Verapaz</option>
+                            <option value="Izabal">Izabal</option>
+                            <option value="Suchitepéquez">Suchitepéquez</option>
+                            <option value="San Marcos">San Marcos</option>
+                            <option value="Chimaltenango">Chimaltenango</option>
+                            <option value="Huehuetenango">Huehuetenango</option>
+                            <option value="Petén">Petén</option>
+                            <option value="Todo el territorio nacional">Todo el territorio nacional</option>
+                        </select>
+                    </div>
+
+                    <div class="denuncia-field">
+                        <label for="denMunicipio">Municipio, dirección o plataforma digital</label>
+                        <input type="text" id="denMunicipio" placeholder="Ej. Zona 10, Mercado Central o Plataforma E-commerce">
+                    </div>
+                </div>
+
+                <div class="denuncia-field">
+                    <label for="denObservaciones">Observaciones o contexto adicional</label>
+                    <textarea id="denObservaciones" rows="2" placeholder="Agregue información complementaria, nombres de testigos o detalles de relevancia procesal..."></textarea>
+                </div>
+
+                <!-- PASO 3: DOCUMENTOS Y EVIDENCIAS -->
+                <div class="form-sec-title">
+                    <i class="fas fa-paperclip"></i> 3. Adjuntar evidencias (Documentos, Fotos o Videos)
+                </div>
+
+                <div class="dropzone-box" id="dropzoneEvidencias">
+                    <i class="fas fa-cloud-arrow-up" style="font-size:2rem; color:#016F89; margin-bottom:.5rem; display:block;"></i>
+                    <strong style="font-size:.9rem; color:var(--sc-azul-profundo);">Arrastre sus archivos aquí o haga clic para seleccionar</strong>
+                    <p style="font-size:.78rem; color:var(--text-muted); margin-top:4px;">Admite documentos (PDF, DOCX, XLSX), imágenes (JPG, PNG) o videos (MP4) hasta 50 MB.</p>
+                    <input type="file" id="inputFileEvidencias" multiple accept=".pdf,.docx,.xlsx,.jpg,.jpeg,.png,.mp4,.zip" style="display:none;">
+                    
+                    <button type="button" class="btn-outline" id="btnCargarDemoFiles" style="margin-top:.8rem; font-size:.78rem; padding:.4rem .9rem;">
+                        <i class="fas fa-wand-magic-sparkles"></i> Cargar 2 archivos de prueba (Demo)
+                    </button>
+                </div>
+
+                <div id="filePreviewList" style="display:flex; flex-wrap:wrap; gap:8px; margin-top:10px;"></div>
+
+                <!-- PASO 4: DATOS DEL DENUNCIANTE (SOLO SI NO ES ANÓNIMA) -->
+                <div id="secDatosDenunciante">
+                    <div class="form-sec-title">
+                        <i class="fas fa-address-card"></i> 4. Datos del denunciante <span style="font-weight:400; font-size:.8rem; color:var(--text-muted);">(Protegidos bajo reserva de ley)</span>
+                    </div>
+
+                    <div class="denuncia-grid-2">
+                        <div class="denuncia-field">
+                            <label for="denNombre">Nombres y Apellidos completos <span class="req">*</span></label>
+                            <input type="text" id="denNombre" placeholder="Ej. Juan Carlos Morales Pérez">
+                        </div>
+
+                        <div class="denuncia-field">
+                            <label for="denDPI">DPI (CUI - 13 dígitos) <span class="req">*</span></label>
+                            <input type="text" id="denDPI" placeholder="Ej. 2481 90481 0101">
+                        </div>
+                    </div>
+
+                    <div class="denuncia-grid-3">
+                        <div class="denuncia-field">
+                            <label for="denNIT">NIT</label>
+                            <input type="text" id="denNIT" placeholder="Ej. 849201-4">
+                        </div>
+
+                        <div class="denuncia-field">
+                            <label for="denTelefono">Teléfono de contacto <span class="req">*</span></label>
+                            <input type="tel" id="denTelefono" placeholder="Ej. +502 5555-1234">
+                        </div>
+
+                        <div class="denuncia-field">
+                            <label for="denCorreo">Correo electrónico <span class="req">*</span></label>
+                            <input type="email" id="denCorreo" placeholder="Ej. ciudadano@ejemplo.gt">
+                        </div>
+                    </div>
+
+                    <div class="denuncia-field">
+                        <label for="denCanalContacto">¿Por qué medio prefiere que la Superintendencia le contacte? <span class="req">*</span></label>
+                        <select id="denCanalContacto">
+                            <option value="Correo Electrónico">Correo Electrónico</option>
+                            <option value="WhatsApp">WhatsApp</option>
+                            <option value="Llamada Telefónica">Llamada Telefónica</option>
+                            <option value="Dirección Física / Notificación Postal">Dirección Física / Notificación Postal</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal-footer" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:nowrap; gap:12px; background:#F8FAFC; border-top:1px solid rgba(0,39,101,0.12); padding:0.9rem 1.4rem;">
+                <button type="button" class="btn-outline" id="btnCancelModalDenuncia" style="padding:0.70rem 1.4rem; border-radius:10px; font-weight:700; font-size:0.86rem;">
+                    <i class="fas fa-xmark"></i> Cancelar
+                </button>
+                <button type="submit" class="btn-submit-denuncia" id="btnSubmitFormDenuncia">
+                    <i class="fas fa-paper-plane"></i> Enviar Denuncia y Generar Expediente
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- ==========================================================================
+     MODAL: CONFIRMACIÓN Y NÚMERO DE EXPEDIENTE GENERADO
+     ========================================================================== -->
+<div class="modal-overlay" id="modalConfirmacionDenuncia" role="dialog" aria-modal="true">
+    <div class="modal-container" style="max-width:680px;">
+        <div class="modal-header" style="background:linear-gradient(135deg, #016F89 0%, #002765 100%);">
+            <div>
+                <div class="modal-header-badge" style="background:rgba(255,255,255,0.2); color:#FFF; border-color:rgba(255,255,255,0.3);">
+                    <i class="fas fa-circle-check"></i> Registro Exitoso
+                </div>
+                <h2 class="modal-title" style="font-size:1.35rem;">¡Denuncia Registrada con Éxito!</h2>
+                <p class="modal-subtitle">Se ha aperturado su expediente electrónico único en el Sistema Integral de Competencia.</p>
+            </div>
+            <button class="modal-close-btn" id="closeConfirmacionModal" aria-label="Cerrar modal">&times;</button>
+        </div>
+
+        <div class="modal-body" style="text-align:center; padding:2rem 1.8rem;">
+            
+            <div style="width:64px; height:64px; border-radius:50%; background:rgba(2,159,156,0.12); color:#029F9C; display:flex; align-items:center; justify-content:center; font-size:2rem; margin:0 auto 1.2rem auto; border:2px solid rgba(2,159,156,0.25);">
+                <i class="fas fa-folder-plus"></i>
+            </div>
+
+            <div style="background:#F4F8FC; border:1px solid rgba(0,39,101,0.15); border-radius:18px; padding:1.4rem; margin-bottom:1.4rem; text-align:left;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; padding-bottom:.8rem; border-bottom:1px dashed rgba(0,39,101,0.15);">
+                    <div>
+                        <span style="font-size:.72rem; font-weight:700; text-transform:uppercase; color:var(--text-muted); display:block;">Número de Expediente Único</span>
+                        <strong style="font-size:1.4rem; color:var(--sc-azul-profundo); font-family:'Outfit', sans-serif;" id="confNumExpediente">SC-2026-DEN-000482</strong>
+                    </div>
+                    <div>
+                        <span style="font-size:.72rem; font-weight:700; text-transform:uppercase; color:var(--text-muted); display:block;">Clave de Acceso</span>
+                        <span style="background:var(--sc-azul-profundo); color:#FFF; font-size:.92rem; font-weight:800; padding:4px 12px; border-radius:8px;" id="confClaveAcceso">SC-8492</span>
+                    </div>
+                </div>
+
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; font-size:.82rem;">
+                    <div>
+                        <span style="color:var(--text-muted);">Modalidad:</span>
+                        <strong id="confModalidad" style="color:#002765; display:block;">Confidencial</strong>
+                    </div>
+                    <div>
+                        <span style="color:var(--text-muted);">Fecha y hora de ingreso:</span>
+                        <strong id="confFecha" style="color:#002765; display:block;">13/09/2026</strong>
+                    </div>
+                    <div>
+                        <span style="color:var(--text-muted);">Sector afectado:</span>
+                        <strong id="confSector" style="color:#002765; display:block;">Alimentos y Bebidas</strong>
+                    </div>
+                    <div>
+                        <span style="color:var(--text-muted);">Canal preferente de contacto:</span>
+                        <strong id="confCanal" style="color:#016F89; display:block;">Correo Electrónico</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background:rgba(0,194,224,0.08); border:1px solid rgba(0,194,224,0.22); border-radius:12px; padding:.9rem 1.1rem; text-align:left; display:flex; gap:12px; align-items:flex-start; margin-bottom:1.2rem;">
+                <i class="fas fa-shield-halved" style="color:#016F89; font-size:1.1rem; margin-top:2px;"></i>
+                <p style="font-size:.80rem; color:#002765; margin:0; line-height:1.4;">
+                    Guarde su número de expediente y clave. Podrá dar seguimiento en tiempo real al estado de admisibilidad, avances y resoluciones desde la sección de <strong>Consulta de Expediente</strong>.
+                </p>
+            </div>
+
+        </div>
+
+        <div class="modal-footer" style="justify-content:center; gap:12px; background:#F8FAFC; border-top:1px solid rgba(0,39,101,0.12); padding:1.2rem 1.8rem;">
+            <button type="button" class="btn-submit-denuncia" id="btnConsultarExpedienteCreado" style="padding:0.85rem 1.8rem;">
+                <i class="fas fa-folder-open"></i>
+                <span style="font-size:0.95rem; font-weight:800;">Consultar este expediente ahora</span>
+            </button>
+            <button type="button" class="btn-outline" id="btnCerrarConfirmacion" style="padding:0.85rem 1.6rem; border-radius:12px; font-weight:700;">Cerrar</button>
+        </div>
+    </div>
+</div>
 
 <!-- ==========================================================================
      TOAST
@@ -2569,18 +3817,30 @@ if (heroCarousel) {
 const menuToggle = document.getElementById('menuToggle');
 const navMenu    = document.getElementById('navMenu');
 
-menuToggle.addEventListener('click', () => {
-    navMenu.classList.toggle('open');
-    const icon = menuToggle.querySelector('i');
-    icon.className = navMenu.classList.contains('open') ? 'fas fa-xmark' : 'fas fa-bars';
-});
-
-navMenu.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-        navMenu.classList.remove('open');
-        menuToggle.querySelector('i').className = 'fas fa-bars';
+if (menuToggle && navMenu) {
+    menuToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = navMenu.classList.toggle('open');
+        const icon = menuToggle.querySelector('i');
+        if (icon) icon.className = isOpen ? 'fas fa-xmark' : 'fas fa-bars';
     });
-});
+
+    document.addEventListener('click', (e) => {
+        if (navMenu.classList.contains('open') && !navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+            navMenu.classList.remove('open');
+            const icon = menuToggle.querySelector('i');
+            if (icon) icon.className = 'fas fa-bars';
+        }
+    });
+
+    navMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            navMenu.classList.remove('open');
+            const icon = menuToggle.querySelector('i');
+            if (icon) icon.className = 'fas fa-bars';
+        });
+    });
+}
 
 /* ==========================================================================
    2. TOAST
@@ -2736,26 +3996,136 @@ optButtons.forEach(btn => {
 renderFlow('acuerdo');
 
 /* ==========================================================================
-   5. CONSULTA DE EXPEDIENTE
+   5. CONSULTA DE EXPEDIENTES (SISTEMA INTEGRAL DE COMPETENCIA)
    ========================================================================== */
+let EXPEDIENTES_STORE = {
+    'SC-2026-DEN-000125': {
+        codigo: 'SC-2026-DEN-000125',
+        clave: 'SC-8492',
+        tipo: 'Denuncia (Confidencial) · Defensa de la Competencia',
+        modalidad: 'Confidencial',
+        asunto: 'Posible acuerdo de fijación de precios en el sector de harinas y granos básicos',
+        estado: 'En análisis',
+        badgeClass: 'badge-cyan',
+        fecha: '10/01/2026',
+        denunciado: 'Molinos Centrales S.A. y Harinas del Sur',
+        denunciante: 'Registrado bajo Reserva de Ley (Art. 38)',
+        contactoPref: 'Correo Electrónico',
+        sector: 'Alimentos y Bebidas',
+        timeline: [
+            { done: true, title: 'Solicitud recibida', desc: 'Expediente generado y acuse digital emitido en la plataforma SIC.' },
+            { done: true, title: 'Validación documental', desc: 'Requisitos de admisibilidad verificados formalmente.' },
+            { done: true, title: 'Asignada a Intendencia de Investigación', desc: 'Asignación técnica según matriz de competencias procesales.' },
+            { done: false, active: true, title: 'En análisis preliminar', desc: 'Investigación en curso. Criterios de colusión analizados.' },
+            { done: false, warn: true, title: 'Requerimiento de información', desc: 'Se solicitó documentación técnica complementaria a agentes económicos.' },
+            { done: false, pending: true, title: 'Informe de admisibilidad', desc: 'Dictamen técnico preliminar de admisibilidad.' },
+            { done: false, pending: true, title: 'Resolución de Intendencia', desc: 'Decisión formal de inicio de instrucción.' }
+        ]
+    }
+};
+
+try {
+    const localExps = localStorage.getItem('SIC_EXPEDIENTES_STORE');
+    if (localExps) {
+        const parsed = JSON.parse(localExps);
+        EXPEDIENTES_STORE = { ...EXPEDIENTES_STORE, ...parsed };
+    }
+} catch (e) {
+    console.warn('LocalStorage error:', e);
+}
+
+function saveExpedientesStore() {
+    try {
+        localStorage.setItem('SIC_EXPEDIENTES_STORE', JSON.stringify(EXPEDIENTES_STORE));
+    } catch(e) {}
+}
+
 const expForm = document.getElementById('expForm');
 
-expForm.addEventListener('submit', (event) => {
-    event.preventDefault();
+function renderExpedienteTimeline(code) {
+    const expCodeClean = code.trim().toUpperCase();
+    let expData = EXPEDIENTES_STORE[expCodeClean];
 
-    const code = document.getElementById('expCode').value.trim() || 'SC-2026-DEN-000125';
-    showToast('Consultando expediente ' + code + '…', 'fa-spinner');
+    if (!expData) {
+        expData = {
+            codigo: expCodeClean,
+            clave: 'SC-1000',
+            tipo: 'Denuncia · Defensa de la Competencia',
+            modalidad: 'Confidencial',
+            asunto: 'Investigación sobre posibles conductas restrictivas de la competencia',
+            estado: 'En verificación',
+            badgeClass: 'badge-cyan',
+            fecha: new Date().toLocaleDateString('es-GT'),
+            denunciado: 'Agentes Económicos Bajo Investigación',
+            denunciante: 'Registrado bajo Reserva de Ley',
+            contactoPref: 'Correo Electrónico',
+            sector: 'Sector Comercial',
+            timeline: [
+                { done: true, title: 'Solicitud recibida', desc: 'Expediente recepcionado con éxito en el Portal SIC.' },
+                { done: false, active: true, title: 'Verificación de admisibilidad', desc: 'Evaluación técnica inicial por la Intendencia de Investigación.' },
+                { done: false, pending: true, title: 'Análisis de mercado relevante', desc: 'Ponderación de cuotas de mercado y posibles barreras de entrada.' },
+                { done: false, pending: true, title: 'Resolución final', desc: 'Notificación oficial al denunciante.' }
+            ]
+        };
+    }
 
-    setTimeout(() => {
-        showToast('Expediente ' + code + ' · Estado: En análisis', 'fa-folder-open');
-        const timeline = document.querySelector('.timeline');
-        if (timeline) {
-            timeline.style.transition = 'opacity .3s ease';
-            timeline.style.opacity = '0.35';
-            setTimeout(() => { timeline.style.opacity = '1'; }, 220);
-        }
-    }, 700);
-});
+    const expDetailCard = document.getElementById('expedienteDetailCard');
+    if (!expDetailCard) return;
+
+    expDetailCard.querySelector('.exp-code').innerHTML = `${expData.codigo} <span>${expData.tipo}</span>`;
+    
+    const badgeEl = expDetailCard.querySelector('.exp-meta span:last-child');
+    if (badgeEl) {
+        badgeEl.className = expData.badgeClass || 'badge-cyan';
+        badgeEl.textContent = expData.estado;
+    }
+
+    let summaryHtml = `
+        <div style="background:#F4F8FC; border-radius:12px; padding:12px 14px; margin-top:10px; margin-bottom:15px; border:1px solid rgba(0,39,101,0.12); font-size:.83rem; line-height:1.45; color:var(--sc-azul-profundo);">
+            <div><strong>Asunto / Hechos:</strong> ${expData.asunto}</div>
+            <div style="margin-top:6px; display:flex; flex-wrap:wrap; gap:12px; font-size:.78rem; color:var(--text-muted);">
+                <span><i class="fas fa-building-flag"></i> Denunciado: <strong>${expData.denunciado}</strong></span>
+                <span><i class="fas fa-user-shield"></i> Modalidad: <strong>${expData.modalidad}</strong></span>
+                <span><i class="fas fa-calendar-day"></i> Fecha: <strong>${expData.fecha}</strong></span>
+            </div>
+        </div>
+    `;
+
+    let timelineHtml = '<div class="timeline">';
+    expData.timeline.forEach(item => {
+        let stateClass = '';
+        if (item.done && !item.active) stateClass = 'done';
+        else if (item.active) stateClass = 'active';
+        else if (item.warn) stateClass = 'warn';
+
+        timelineHtml += `
+            <div class="timeline-item ${stateClass}">
+                <div class="timeline-title">${item.title}</div>
+                <div class="timeline-desc">${item.desc}</div>
+            </div>
+        `;
+    });
+    timelineHtml += '</div>';
+
+    const existingTimeline = expDetailCard.querySelector('.timeline');
+    const existingSummary = expDetailCard.querySelector('div[style*="background:#F4F8FC"]');
+    if (existingSummary) existingSummary.remove();
+    if (existingTimeline) existingTimeline.outerHTML = summaryHtml + timelineHtml;
+}
+
+if (expForm) {
+    expForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        const code = document.getElementById('expCode').value.trim() || 'SC-2026-DEN-000125';
+        showToast('Consultando expediente ' + code + '…', 'fa-spinner');
+
+        setTimeout(() => {
+            renderExpedienteTimeline(code);
+            showToast('Expediente ' + code + ' cargado exitosamente', 'fa-folder-open');
+        }, 500);
+    });
+}
 
 /* ==========================================================================
    6. NAVEGACIÓN ACTIVA SEGÚN SCROLL
@@ -2781,14 +4151,311 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 
 /* ==========================================================================
-   7. ENLACES DE TARJETA (DEMO)
+   7. ENLACES DE TARJETA & MODAL DE DENUNCIA
    ========================================================================== */
-document.querySelectorAll('.card-link').forEach(link => {
-    link.addEventListener('click', (event) => {
-        event.preventDefault();
-        const title = link.closest('.card').querySelector('h3');
-        showToast('Iniciando: ' + title.textContent, 'fa-arrow-right');
+const modalDenuncia = document.getElementById('modalDenuncia');
+const modalConfirmacion = document.getElementById('modalConfirmacionDenuncia');
+const closeDenunciaModalBtn = document.getElementById('closeDenunciaModal');
+const closeConfirmacionModalBtn = document.getElementById('closeConfirmacionModal');
+const btnCancelModalDenuncia = document.getElementById('btnCancelModalDenuncia');
+const btnCerrarConfirmacion = document.getElementById('btnCerrarConfirmacion');
+const formDenuncia = document.getElementById('formDenuncia');
+
+let attachedFiles = [];
+
+function openDenunciaModal() {
+    if (modalDenuncia) {
+        modalDenuncia.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeDenunciaModal() {
+    if (modalDenuncia) {
+        modalDenuncia.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+}
+
+function closeConfirmacionModal() {
+    if (modalConfirmacion) {
+        modalConfirmacion.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+}
+
+document.addEventListener('click', (e) => {
+    // 1. Triggers de Denuncia (Botones, Links con href="#denuncia", .btn-iniciar-denuncia, o tarjetas con data-action de denuncia)
+    const denunciaTrigger = e.target.closest('.btn-iniciar-denuncia, a[href="#denuncia"], button[href="#denuncia"], #btnCardDenuncia');
+    if (denunciaTrigger) {
+        e.preventDefault();
+        const action = denunciaTrigger.dataset.action;
+        const denTipoConducta = document.getElementById('denTipoConducta');
+        if (denTipoConducta && action) {
+            if (action === 'barrera') denTipoConducta.value = 'Barrera regulatoria o restricción indebida';
+            else if (action === 'exencion') denTipoConducta.value = 'Solicitud especial de exención / clemencia';
+            else if (action === 'investigacion') denTipoConducta.value = 'Solicitud de investigación de parte';
+            else denTipoConducta.value = 'Acuerdo entre competidores / Fijación de precios';
+        }
+        openDenunciaModal();
+        return;
+    }
+
+    // 2. Triggers de Motor / Evaluación (a[href="#motor"], .btn-action-motor)
+    const motorTrigger = e.target.closest('a[href="#motor"], .btn-action-motor');
+    if (motorTrigger) {
+        e.preventDefault();
+        const secMotor = document.getElementById('motor');
+        if (secMotor) secMotor.scrollIntoView({ behavior: 'smooth' });
+        const flowType = motorTrigger.dataset.flow || 'acuerdo';
+        const selectCat = document.getElementById('motorCategorySelect');
+        if (selectCat) {
+            selectCat.value = flowType;
+            selectCat.dispatchEvent(new Event('change'));
+        }
+        showToast('Abriendo Asistente Guiado de Evaluación', 'fa-calculator');
+        return;
+    }
+
+    // 3. Triggers de Expediente (a[href="#expediente"], .btn-action-expediente)
+    const expTrigger = e.target.closest('a[href="#expediente"], .btn-action-expediente');
+    if (expTrigger) {
+        e.preventDefault();
+        const secExp = document.getElementById('expediente');
+        if (secExp) secExp.scrollIntoView({ behavior: 'smooth' });
+        const expInput = document.getElementById('expCode');
+        if (expInput) setTimeout(() => expInput.focus(), 400);
+        showToast('Consulta y seguimiento de expediente único', 'fa-folder-open');
+        return;
+    }
+
+    // 4. Click en cualquier tarjeta del catálogo (.service-card)
+    const serviceCard = e.target.closest('.service-card');
+    if (serviceCard && !e.target.closest('a')) {
+        e.preventDefault();
+        const action = serviceCard.dataset.action;
+        const title = serviceCard.querySelector('h3') ? serviceCard.querySelector('h3').textContent : 'Trámite';
+
+        if (action === 'denuncia' || action === 'investigacion' || action === 'exencion' || action === 'barrera') {
+            const denTipoConducta = document.getElementById('denTipoConducta');
+            if (denTipoConducta) {
+                if (action === 'barrera') denTipoConducta.value = 'Barrera regulatoria o restricción indebida';
+                else if (action === 'exencion') denTipoConducta.value = 'Solicitud especial de exención / clemencia';
+                else if (action === 'investigacion') denTipoConducta.value = 'Solicitud de investigación de parte';
+                else denTipoConducta.value = 'Acuerdo entre competidores / Fijación de precios';
+            }
+            openDenunciaModal();
+            showToast('Abriendo formulario: ' + title, 'fa-file-signature');
+        } else if (action === 'concentracion' || action === 'opinion' || action === 'consulta') {
+            const secMotor = document.getElementById('motor');
+            if (secMotor) secMotor.scrollIntoView({ behavior: 'smooth' });
+            const selectCat = document.getElementById('motorCategorySelect');
+            if (selectCat) {
+                selectCat.value = action === 'concentracion' ? 'concentracion' : (action === 'opinion' ? 'abuso' : 'acuerdo');
+                selectCat.dispatchEvent(new Event('change'));
+            }
+            showToast('Iniciando servicio: ' + title, 'fa-calculator');
+        } else if (action === 'expediente' || action === 'aportar' || action === 'descargos') {
+            const secExp = document.getElementById('expediente');
+            if (secExp) secExp.scrollIntoView({ behavior: 'smooth' });
+            const expInput = document.getElementById('expCode');
+            if (expInput) setTimeout(() => expInput.focus(), 400);
+            showToast('Consulta de expediente: ' + title, 'fa-folder-open');
+        } else {
+            showToast('Iniciando: ' + title, 'fa-arrow-right');
+        }
+    }
+});
+
+// Selector de modalidad de denuncia (Anónima / Confidencial / Abierta)
+const cardAnonima = document.getElementById('cardTypeAnonima');
+const cardConfidencial = document.getElementById('cardTypeConfidencial');
+const cardAbierta = document.getElementById('cardTypeAbierta');
+const secDatosDenunciante = document.getElementById('secDatosDenunciante');
+const radioTipos = document.querySelectorAll('input[name="tipoDenuncia"]');
+
+function updateTipoDenunciaUI() {
+    const selectedRadio = document.querySelector('input[name="tipoDenuncia"]:checked');
+    if (!selectedRadio) return;
+
+    [cardAnonima, cardConfidencial, cardAbierta].forEach(card => {
+        if (card) {
+            const input = card.querySelector('input');
+            card.classList.toggle('selected', input && input.checked);
+        }
     });
+
+    const isAnonima = selectedRadio.value === 'Anónima';
+    if (secDatosDenunciante) {
+        secDatosDenunciante.style.display = isAnonima ? 'none' : 'block';
+    }
+
+    const reqInputs = ['denNombre', 'denDPI', 'denTelefono', 'denCorreo'];
+    reqInputs.forEach(id => {
+        const inp = document.getElementById(id);
+        if (inp) {
+            if (isAnonima) {
+                inp.removeAttribute('required');
+            } else {
+                inp.setAttribute('required', 'true');
+            }
+        }
+    });
+}
+
+radioTipos.forEach(radio => radio.addEventListener('change', updateTipoDenunciaUI));
+updateTipoDenunciaUI();
+
+// Dropzone de evidencias
+const dropzoneEvidencias = document.getElementById('dropzoneEvidencias');
+const inputFileEvidencias = document.getElementById('inputFileEvidencias');
+const filePreviewList = document.getElementById('filePreviewList');
+const btnCargarDemoFiles = document.getElementById('btnCargarDemoFiles');
+
+if (dropzoneEvidencias && inputFileEvidencias) {
+    dropzoneEvidencias.addEventListener('click', (e) => {
+        if (e.target !== btnCargarDemoFiles && !btnCargarDemoFiles.contains(e.target)) {
+            inputFileEvidencias.click();
+        }
+    });
+
+    inputFileEvidencias.addEventListener('change', () => {
+        if (inputFileEvidencias.files) {
+            Array.from(inputFileEvidencias.files).forEach(f => {
+                attachedFiles.push({ name: f.name, size: (f.size / 1024).toFixed(1) + ' KB' });
+            });
+            renderFilePreviews();
+        }
+    });
+}
+
+if (btnCargarDemoFiles) {
+    btnCargarDemoFiles.addEventListener('click', (e) => {
+        e.stopPropagation();
+        attachedFiles.push({ name: 'Contrato_Acuerdo_Precios_2026.pdf', size: '1.4 MB' });
+        attachedFiles.push({ name: 'Foto_Evidencia_Reunion.png', size: '820 KB' });
+        renderFilePreviews();
+        showToast('Archivos de demostración cargados', 'fa-paperclip');
+    });
+}
+
+function renderFilePreviews() {
+    if (!filePreviewList) return;
+    filePreviewList.innerHTML = '';
+    attachedFiles.forEach((file, index) => {
+        const chip = document.createElement('div');
+        chip.className = 'file-preview-chip';
+        chip.innerHTML = `
+            <i class="fas fa-file-pdf" style="color:#016F89;"></i>
+            <span>${file.name} (${file.size})</span>
+            <i class="fas fa-xmark remove-file" data-index="${index}" title="Eliminar archivo"></i>
+        `;
+        filePreviewList.appendChild(chip);
+    });
+
+    filePreviewList.querySelectorAll('.remove-file').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const idx = parseInt(e.target.dataset.index, 10);
+            attachedFiles.splice(idx, 1);
+            renderFilePreviews();
+        });
+    });
+}
+
+// Envío de Denuncia
+if (formDenuncia) {
+    formDenuncia.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const tipoRadio = document.querySelector('input[name="tipoDenuncia"]:checked');
+        const tipoModalidad = tipoRadio ? tipoRadio.value : 'Confidencial';
+        const tipoConducta = document.getElementById('denTipoConducta').value;
+        const empresas = document.getElementById('denEmpresas').value;
+        const hechos = document.getElementById('denHechos').value;
+        const fecha = document.getElementById('denFecha').value || new Date().toLocaleDateString('es-GT');
+        const continua = document.getElementById('denContinua').value;
+        const sector = document.getElementById('denSector').value;
+        const departamento = document.getElementById('denDepartamento').value;
+        const municipio = document.getElementById('denMunicipio').value;
+        const observaciones = document.getElementById('denObservaciones').value;
+
+        const denNombre = document.getElementById('denNombre').value || 'Ciudadano en Reserva de Ley';
+        const denDPI = document.getElementById('denDPI').value || 'N/A';
+        const denTelefono = document.getElementById('denTelefono').value || 'N/A';
+        const denCorreo = document.getElementById('denCorreo').value || 'N/A';
+        const denCanal = document.getElementById('denCanalContacto').value || 'Correo Electrónico';
+
+        const randNum = Math.floor(100 + Math.random() * 900);
+        const randPin = Math.floor(1000 + Math.random() * 9000);
+        const expCodigo = `SC-2026-DEN-00${randNum}`;
+        const expClave = `SC-${randPin}`;
+
+        const nuevoExpediente = {
+            codigo: expCodigo,
+            clave: expClave,
+            tipo: `Denuncia (${tipoModalidad}) · Defensa de la Competencia`,
+            modalidad: tipoModalidad,
+            asunto: `${tipoConducta} - ${hechos.length > 70 ? hechos.substring(0, 70) + '...' : hechos}`,
+            estado: 'Recibida · Admisibilidad',
+            badgeClass: 'badge-cyan',
+            fecha: new Date().toLocaleDateString('es-GT'),
+            denunciado: empresas,
+            denunciante: tipoModalidad === 'Anónima' ? 'Anonimato Absoluto Garantizado' : denNombre,
+            contactoPref: denCanal,
+            sector: sector + ' (' + departamento + ')',
+            archivos: attachedFiles.length,
+            timeline: [
+                { done: true, title: 'Denuncia registrada con éxito', desc: 'Expediente electrónico único generado y acuse de recibo timbrado digitalmente.' },
+                { done: false, active: true, title: 'Verificación de admisibilidad', desc: 'El equipo técnico de la Intendencia evalúa el cumplimiento de requisitos formales.' },
+                { done: false, pending: true, title: 'Diligencias de investigación preliminar', desc: 'Recopilación de indicios, pruebas documentales y solicitudes de información.' },
+                { done: false, pending: true, title: 'Dictamen de instrucción procesal', desc: 'Emisión de informe técnico motivado.' },
+                { done: false, pending: true, title: 'Notificación oficial', desc: `Se notificará por el medio preferente indicado (${denCanal}).` }
+            ]
+        };
+
+        EXPEDIENTES_STORE[expCodigo] = nuevoExpediente;
+        saveExpedientesStore();
+
+        document.getElementById('confNumExpediente').textContent = expCodigo;
+        document.getElementById('confClaveAcceso').textContent = expClave;
+        document.getElementById('confModalidad').textContent = tipoModalidad;
+        document.getElementById('confFecha').textContent = new Date().toLocaleDateString('es-GT') + ' - ' + new Date().toLocaleTimeString('es-GT', { hour: '2-digit', minute: '2-digit' });
+        document.getElementById('confSector').textContent = sector + ' (' + departamento + ')';
+        document.getElementById('confCanal').textContent = tipoModalidad === 'Anónima' ? 'Consulta Web (Anonimato)' : denCanal;
+
+        closeDenunciaModal();
+        if (modalConfirmacion) {
+            modalConfirmacion.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        showToast('Denuncia registrada exitosamente: ' + expCodigo, 'fa-circle-check');
+    });
+}
+
+const btnConsultarExpedienteCreado = document.getElementById('btnConsultarExpedienteCreado');
+if (btnConsultarExpedienteCreado) {
+    btnConsultarExpedienteCreado.addEventListener('click', () => {
+        const codigoCreado = document.getElementById('confNumExpediente').textContent;
+        closeConfirmacionModal();
+        window.location.href = `expedientes.html?exp=${encodeURIComponent(codigoCreado)}`;
+    });
+}
+
+if (closeDenunciaModalBtn) closeDenunciaModalBtn.addEventListener('click', closeDenunciaModal);
+if (btnCancelModalDenuncia) btnCancelModalDenuncia.addEventListener('click', closeDenunciaModal);
+if (closeConfirmacionModalBtn) closeConfirmacionModalBtn.addEventListener('click', closeConfirmacionModal);
+if (btnCerrarConfirmacion) btnCerrarConfirmacion.addEventListener('click', closeConfirmacionModal);
+
+[modalDenuncia, modalConfirmacion].forEach(modal => {
+    if (modal) {
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('open');
+                document.body.style.overflow = '';
+            }
+        });
+    }
 });
 </script>
 
